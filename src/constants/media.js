@@ -1,2 +1,8 @@
 export const LOGO_LIGHT = '/assets/logo-light.png'
-export const VSL_VIDEO = '/assets/medigard-vsl.mp4'
+
+const envVsl =
+  typeof import.meta.env.VITE_VSL_VIDEO_URL === 'string'
+    ? import.meta.env.VITE_VSL_VIDEO_URL.trim()
+    : ''
+
+export const VSL_VIDEO = envVsl || '/assets/medigard-vsl.mp4'

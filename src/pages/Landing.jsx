@@ -1,11 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-
-// Color constants based on the provided aesthetic
-const PRIMARY = '#1e293b' // Dark slate for text/headings
-const ACCENT = '#3b82f6'  // Blue for pillars and highlights
-const BG_LIGHT = '#ffffff'
-const BG_SOFT = '#f8fafc'
+import MedigardLogo from '../components/MedigardLogo'
+import VslPlayer from '../components/VslPlayer'
 
 function CTAButton({ children, className = '', primary = true }) {
   return (
@@ -101,14 +97,7 @@ export default function Landing() {
       
       {/* HEADER */}
       <header className="py-6 px-8 flex justify-between items-center border-b border-slate-100 bg-white">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-[#3b82f6] rounded flex items-center justify-center text-white font-bold">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
-          </div>
-          <span className="text-xl font-black tracking-tighter text-[#1e293b]">Medigard</span>
-        </div>
+        <MedigardLogo />
       </header>
 
       {/* HERO SECTION */}
@@ -126,26 +115,8 @@ export default function Landing() {
             <CTAButton>Book Your Free Walkthrough</CTAButton>
           </div>
 
-          {/* VSL SECTION */}
           <div id="vsl" className="max-w-5xl mx-auto mb-32">
-            <div className="aspect-video bg-slate-900 rounded-[2.5rem] shadow-2xl border-8 border-white overflow-hidden relative group cursor-pointer">
-              <img 
-                src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=2000" 
-                className="w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-700"
-                alt="Medigard Dashboard"
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
-                  <svg className="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z"/>
-                  </svg>
-                </div>
-              </div>
-              <div className="absolute bottom-8 left-8 right-8 text-left">
-                <p className="text-white/60 text-xs font-black uppercase tracking-[0.2em] mb-2">Free Training</p>
-                <h3 className="text-white text-2xl md:text-3xl font-black">How to Automate 100% of Medicare Compliance in 30 Days</h3>
-              </div>
-            </div>
+            <VslPlayer title="How to Automate 100% of Medicare Compliance in 30 Days" />
           </div>
 
           {/* 1. THIS IS FOR YOU IF SECTION (Qualification) */}
@@ -342,21 +313,14 @@ export default function Landing() {
       <footer className="py-12 bg-white border-t border-slate-100">
         <div className="container mx-auto px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-8">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 bg-[#3b82f6] rounded flex items-center justify-center text-white text-xs font-bold">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <span className="text-lg font-black tracking-tighter text-[#1e293b]">Medigard</span>
-            </div>
+            <MedigardLogo size="sm" />
             <div className="flex gap-8 text-sm font-bold text-slate-400">
               <Link to="/privacy" className="hover:text-[#1e293b]">Privacy Policy</Link>
               <Link to="/terms" className="hover:text-[#1e293b]">Terms of Service</Link>
             </div>
           </div>
           <div className="text-center text-xs text-slate-400 max-w-3xl mx-auto leading-relaxed">
-            <p className="mb-4">© {new Date().getFullYear()} Medigard Compliance. All rights reserved.</p>
+            <p className="mb-4">© {new Date().getFullYear()} Medigard Compliance Infrastructures. All rights reserved.</p>
             <p>Medigard is an independent compliance automation provider. We are not affiliated with CMS or any government agency. Our system is designed to assist with compliance monitoring but does not guarantee legal immunity.</p>
           </div>
         </div>

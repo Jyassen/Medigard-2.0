@@ -116,7 +116,7 @@ export default function Landing() {
           </div>
 
           <div id="vsl" className="max-w-5xl mx-auto mb-32">
-            <VslPlayer title="How to Automate 100% of Medicare Compliance in 30 Days" />
+            <VslPlayer title="How to Automate 100% of Medicare Compliance in 30 Days" wistiaId="u42b0eiuew" />
           </div>
 
           {/* 1. THIS IS FOR YOU IF SECTION (Qualification) */}
@@ -309,22 +309,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="py-12 bg-white border-t border-slate-100">
-        <div className="container mx-auto px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-8">
-            <MedigardLogo size="sm" />
-            <div className="flex gap-8 text-sm font-bold text-slate-400">
-              <Link to="/privacy" className="hover:text-[#1e293b]">Privacy Policy</Link>
-              <Link to="/terms" className="hover:text-[#1e293b]">Terms of Service</Link>
-            </div>
-          </div>
-          <div className="text-center text-xs text-slate-400 max-w-3xl mx-auto leading-relaxed">
-            <p className="mb-4">© {new Date().getFullYear()} Medigard Compliance Infrastructures. All rights reserved.</p>
-            <p>Medigard is an independent compliance automation provider. We are not affiliated with CMS or any government agency. Our system is designed to assist with compliance monitoring but does not guarantee legal immunity.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }

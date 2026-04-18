@@ -6,3 +6,5 @@ const envVsl =
     : ''
 
 export const VSL_VIDEO = envVsl || '/assets/medigard-vsl.mp4'
+
+export const PRE_VSL_VIDEO = '/assets/PreVSL FINAL_1080p.mp4'

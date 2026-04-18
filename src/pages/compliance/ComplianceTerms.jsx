@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
+import { C } from '../../compliance/constants'
 
-export default function Terms() {
+export default function ComplianceTerms() {
   return (
-    <main className="flex-1">
+    <main className="flex-1 bg-white text-zinc-900">
       <div className="py-16 px-6">
         <div className="container mx-auto max-w-3xl">
           <h1 className="text-5xl font-black text-[#1e293b] mb-8 tracking-tight">Terms of Service</h1>
@@ -25,8 +26,11 @@ export default function Terms() {
             <p>We reserve the right to modify these terms at any time. Continued use of our services constitutes acceptance of updated terms.</p>
           </div>
           <div className="mt-12">
-            <Link to="/" className="text-slate-400 hover:text-[#3b82f6] transition-colors text-sm font-bold uppercase tracking-widest underline">
-              Back to Home
+            <Link
+              to={C.home}
+              className="text-slate-400 hover:text-emerald-600 transition-colors text-sm font-bold uppercase tracking-widest underline"
+            >
+              Back to compliance home
             </Link>
           </div>
         </div>

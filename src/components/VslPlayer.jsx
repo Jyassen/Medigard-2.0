@@ -1,17 +1,41 @@
+import { useEffect } from 'react'
 import { VSL_VIDEO } from '../constants/media'
 
-export default function VslPlayer({ kicker, title, className = '' }) {
+function WistiaEmbed({ mediaId }) {
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.src = `https://fast.wistia.com/embed/${mediaId}.js`
+    script.async = true
+    script.type = 'module'
+    document.head.appendChild(script)
+    return () => { document.head.removeChild(script) }
+  }, [mediaId])
+
+  return (
+    <wistia-player
+      media-id={mediaId}
+      aspect="1.7777777777777777"
+      style={{ display: 'block', width: '100%' }}
+    />
+  )
+}
+
+export default function VslPlayer({ kicker, title, className = '', src, wistiaId }) {
   return (
     <div className={`rounded-[2.5rem] shadow-2xl border-8 border-white overflow-hidden bg-slate-900 ${className}`}>
-      <video
-        className="w-full aspect-video bg-black object-contain"
-        src={VSL_VIDEO}
-        controls
-        playsInline
-        preload="metadata"
-      >
-        Your browser does not support the video tag.
-      </video>
+      {wistiaId ? (
+        <WistiaEmbed mediaId={wistiaId} />
+      ) : (
+        <video
+          className="w-full aspect-video bg-black object-contain"
+          src={src || VSL_VIDEO}
+          controls
+          playsInline
+          preload="metadata"
+        >
+          Your browser does not support the video tag.
+        </video>
+      )}
       {(kicker || title) && (
         <div className="px-6 py-4 bg-slate-900 border-t border-slate-800 text-left">
           {kicker && (

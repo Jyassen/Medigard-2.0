@@ -1,8 +1,16 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import MedigardLogo from '../components/MedigardLogo'
 import VslPlayer from '../components/VslPlayer'
 
 export default function ThankYou() {
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.src = 'https://link.msgsndr.com/js/form_embed.js'
+    script.type = 'text/javascript'
+    document.body.appendChild(script)
+    return () => { document.body.removeChild(script) }
+  }, [])
   return (
     <div className="min-h-screen bg-white font-['Inter'] text-slate-900">
       <header className="py-6 px-8 flex justify-between items-center border-b border-slate-100 bg-white">
@@ -21,15 +29,13 @@ export default function ThankYou() {
             Your information has been received. Now, please select a time on the calendar below to finalize your Compliance Infrastructure Audit.
           </p>
 
-          {/* CALENDAR EMBED PLACEHOLDER */}
-          <div className="max-w-4xl mx-auto mb-20 bg-slate-50 rounded-[2.5rem] border-2 border-dashed border-slate-200 p-12 flex flex-col items-center justify-center min-h-[600px]">
-            <div className="w-16 h-16 bg-slate-200 rounded-full flex items-center justify-center mb-4">
-              <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-black text-slate-400 uppercase tracking-widest">Calendar Embed Placeholder</h3>
-            <p className="text-slate-400 font-medium mt-2">Your Calendly or Cal.com widget will appear here</p>
+          <div className="max-w-4xl mx-auto mb-20 rounded-[2.5rem] overflow-hidden bg-white min-h-[600px]">
+            <iframe
+              src="https://api.leadconnectorhq.com/widget/booking/R708RvYTDmq9qJnkD72t"
+              style={{ width: '100%', border: 'none', overflow: 'hidden', minHeight: '700px' }}
+              scrolling="no"
+              id="R708RvYTDmq9qJnkD72t_1776484078506"
+            />
           </div>
 
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-xs font-black uppercase tracking-widest mb-8 border border-blue-100">
@@ -37,7 +43,7 @@ export default function ThankYou() {
           </div>
 
           <div className="max-w-3xl mx-auto mb-20 text-left">
-            <VslPlayer kicker="Important" title="Watch This Before Our Audit Session" />
+            <VslPlayer kicker="Important" title="Watch This Before Our Audit Session" wistiaId="shurnk5iir" />
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 text-left mb-16">

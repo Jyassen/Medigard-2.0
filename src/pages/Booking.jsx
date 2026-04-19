@@ -13,11 +13,10 @@ export default function Booking() {
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto rounded-[2.5rem] overflow-hidden bg-white min-h-[600px]">
+          <div className="max-w-4xl mx-auto rounded-[2.5rem] overflow-hidden bg-white">
             <iframe
               src="https://api.leadconnectorhq.com/widget/booking/R708RvYTDmq9qJnkD72t"
-              style={{ width: '100%', border: 'none', overflow: 'hidden', minHeight: '700px' }}
-              scrolling="no"
+              style={{ width: '100%', height: '1200px', border: 'none' }}
               id="R708RvYTDmq9qJnkD72t_1776484078506"
             />
           </div>

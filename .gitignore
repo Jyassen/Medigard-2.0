@@ -5,3 +5,6 @@ dist
 
 # Separate GHL/embed sandbox — not part of the main Vite app; keep untracked.
 TryCook site files/
+
+# Internal planning docs — not for version control.
+docs/

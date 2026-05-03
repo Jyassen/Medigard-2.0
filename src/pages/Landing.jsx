@@ -1,20 +1,23 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import MedigardLogo from '../components/MedigardLogo'
 import VslPlayer from '../components/VslPlayer'
 
 function CTAButton({ children, className = '', primary = true }) {
   return (
-    <Link
-      to="/book"
-      className={`inline-block px-10 py-5 rounded-xl text-lg font-bold transition-all text-center transform hover:scale-105 active:scale-95 ${
+    <a
+      href="#booking"
+      onClick={(e) => {
+        e.preventDefault()
+        document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })
+      }}
+      className={`inline-block px-10 py-5 rounded-xl text-lg font-bold transition-all text-center transform hover:scale-105 active:scale-95 cursor-pointer ${
         primary 
           ? 'bg-[#3b82f6] text-white hover:bg-blue-700 shadow-xl shadow-blue-500/20' 
           : 'border-2 border-[#3b82f6] text-[#3b82f6] hover:bg-blue-50'
       } ${className}`}
     >
       {children}
-    </Link>
+    </a>
   )
 }
 
@@ -111,20 +114,32 @@ export default function Landing() {
       {/* HERO SECTION */}
       <section className="pt-24 pb-20 px-6">
         <div className="container mx-auto max-w-6xl text-center">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-[#1e293b] mb-8 leading-[1.05] tracking-tight max-w-5xl mx-auto">
-            Stop Being Blind to 95% of Your Calls <br />
-            <span className="text-[#3b82f6]">Know What CMS Will Find</span>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-[#1e293b] mb-8 leading-[1.08] tracking-tight max-w-5xl mx-auto">
+            One Missed Violation Costs $250K. <span className="text-[#3b82f6]">We Monitor the 95% of Calls You Don't.</span>
           </h1>
           <p className="text-xl md:text-2xl text-slate-500 mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
-            Monitor 100% of calls automatically, pass audits with zero findings, and protect millions in override revenue.
+            Automated call monitoring, real-time violation detection, and audit-ready proof — deployed in 30 days.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-20">
-            <CTAButton>Book Your Free Walkthrough</CTAButton>
+          <div id="vsl" className="max-w-5xl mx-auto mb-16 mt-16">
+            <VslPlayer title="How to Automate 100% of Medicare Compliance in 30 Days" wistiaId="u42b0eiuew" />
           </div>
 
-          <div id="vsl" className="max-w-5xl mx-auto mb-32">
-            <VslPlayer title="How to Automate 100% of Medicare Compliance in 30 Days" wistiaId="u42b0eiuew" />
+          {/* BOOKING CALENDAR — directly below VSL */}
+          <div id="booking" className="max-w-4xl mx-auto mb-32 scroll-mt-8">
+            <h2 className="text-4xl md:text-5xl font-black text-[#1e293b] mb-4 tracking-tight">
+              Book Your Compliance <span className="text-[#3b82f6]">Infrastructure Audit</span>
+            </h2>
+            <p className="text-xl text-slate-500 font-medium leading-relaxed max-w-2xl mx-auto mb-10">
+              Select a time for your 30-minute technical strategy session. We'll map your blind spots and calculate your penalty exposure.
+            </p>
+            <div className="rounded-[2.5rem] overflow-hidden bg-white border border-slate-100 shadow-xl shadow-blue-500/5">
+              <iframe
+                src="https://api.leadconnectorhq.com/widget/booking/R708RvYTDmq9qJnkD72t"
+                style={{ width: '100%', height: '1200px', border: 'none' }}
+                id="R708RvYTDmq9qJnkD72t_landing"
+              />
+            </div>
           </div>
 
           {/* 1. THIS IS FOR YOU IF SECTION (Qualification) */}
@@ -257,6 +272,10 @@ export default function Landing() {
             </div>
           </div>
 
+          <div className="flex flex-col sm:flex-row gap-4 justify-center py-16 border-t border-slate-100">
+            <CTAButton>Book Your Free Walkthrough</CTAButton>
+          </div>
+
           {/* 5. WHAT WE'LL COVER ON THE CALL (The Roadmap) */}
           <div className="py-24 border-y border-slate-100">
             <div className="text-center mb-16">
@@ -281,7 +300,6 @@ export default function Landing() {
             </div>
             <div className="mt-16">
               <CTAButton className="px-12 py-5">Schedule Your Walkthrough</CTAButton>
-              <p className="mt-4 text-slate-400 text-sm font-bold uppercase tracking-widest">⚡ Only 5 slots available for March deployment</p>
             </div>
           </div>
         </div>

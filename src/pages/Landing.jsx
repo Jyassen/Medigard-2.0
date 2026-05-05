@@ -114,8 +114,9 @@ export default function Landing() {
       {/* HERO SECTION */}
       <section className="pt-24 pb-20 px-6">
         <div className="container mx-auto max-w-6xl text-center">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-[#1e293b] mb-8 leading-[1.08] tracking-tight max-w-5xl mx-auto">
-            One Missed Violation Costs $250K. <span className="text-[#3b82f6]">We Monitor the 95% of Calls You Don't.</span>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#1e293b] mb-8 leading-[1.1] tracking-tight max-w-5xl mx-auto">
+            One Missed Violation Costs $250K.<br />
+            <span className="text-[#3b82f6]">We Monitor the 95% of Calls You Don't.</span>
           </h1>
           <p className="text-xl md:text-2xl text-slate-500 mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
             Automated call monitoring, real-time violation detection, and audit-ready proof — deployed in 30 days.

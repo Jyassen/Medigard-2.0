@@ -38,6 +38,10 @@ export default function SiteFooter() {
             or any government agency. Our system is designed to assist with compliance monitoring but
             does not guarantee legal immunity.
           </p>
+          <p>
+            This site is not part of the Facebook Inc. website or Google Inc. In addition, this site is
+            not endorsed by Facebook in any way or by Google.
+          </p>
         </div>
       </div>
     </footer>

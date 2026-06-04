@@ -2,7 +2,17 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SMS_MARKETING_CONSENT_LABEL, SMS_NON_MARKETING_CONSENT_LABEL } from '../smsConsentCopy'
 
-export default function HomeOptIn() {
+export default function HomeOptIn({
+  eyebrow = 'Stay informed',
+  heading = 'Get compliance insights by email',
+  subtext = 'One field, clear consent — updates on Medicare compliance automation and audit readiness. Unsubscribe anytime.',
+  submitLabel = 'Subscribe',
+  source = 'home_opt_in',
+  sectionClass = 'py-20 px-6 border-t border-slate-100 bg-gradient-to-b from-blue-50/40 to-white',
+  containerClass = 'max-w-xl',
+  headingClassName = 'text-3xl md:text-4xl font-black text-[#1e293b] mb-4 tracking-tight',
+  subtextClassName = 'text-slate-600 font-medium mb-8 leading-relaxed',
+}) {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [emailMarketingConsent, setEmailMarketingConsent] = useState(false)
@@ -29,7 +39,7 @@ export default function HomeOptIn() {
             emailMarketingConsent,
             smsMarketingConsent,
             smsNonMarketingConsent,
-            source: 'home_opt_in',
+            source,
           }),
         })
         if (!res.ok) throw new Error('Request failed')
@@ -48,16 +58,13 @@ export default function HomeOptIn() {
   }
 
   return (
-    <section className="py-20 px-6 border-t border-slate-100 bg-gradient-to-b from-blue-50/40 to-white" aria-labelledby="opt-in-heading">
-      <div className="container mx-auto max-w-xl text-center">
-        <p className="text-blue-600 font-black uppercase tracking-[0.2em] text-xs mb-4">Stay informed</p>
-        <h2 id="opt-in-heading" className="text-3xl md:text-4xl font-black text-[#1e293b] mb-4 tracking-tight">
-          Get compliance insights by email
+    <section className={sectionClass} aria-labelledby="opt-in-heading">
+      <div className={`container mx-auto ${containerClass} text-center`}>
+        <p className="text-blue-600 font-black uppercase tracking-[0.2em] text-xs mb-4">{eyebrow}</p>
+        <h2 id="opt-in-heading" className={headingClassName}>
+          {heading}
         </h2>
-        <p className="text-slate-600 font-medium mb-8 leading-relaxed">
-          One field, clear consent — updates on Medicare compliance automation and audit readiness. Unsubscribe
-          anytime.
-        </p>
+        <p className={subtextClassName}>{subtext}</p>
         <form onSubmit={handleSubmit} className="space-y-5 text-left bg-white rounded-3xl border border-slate-100 p-8 shadow-xl shadow-blue-500/5">
           <div className="space-y-2">
             <label htmlFor="optin-email" className="text-xs font-black uppercase tracking-widest text-slate-400">
@@ -143,7 +150,7 @@ export default function HomeOptIn() {
             disabled={status === 'loading'}
             className="w-full bg-[#3b82f6] hover:bg-blue-700 text-white font-black py-4 rounded-xl transition-all shadow-lg shadow-blue-500/20 disabled:opacity-60 text-sm uppercase tracking-widest"
           >
-            {status === 'loading' ? 'Submitting…' : 'Subscribe'}
+            {status === 'loading' ? 'Submitting…' : submitLabel}
           </button>
           {message && (
             <p

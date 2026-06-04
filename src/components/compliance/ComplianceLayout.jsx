@@ -91,6 +91,10 @@ function ComplianceFooter() {
           government agency. Our system is designed to assist with compliance monitoring but does not guarantee
           legal immunity.
         </p>
+        <p className="text-[10px] text-zinc-600 max-w-2xl mx-auto leading-relaxed mt-6">
+          This site is not part of the Facebook Inc. website or Google Inc. In addition, this site is not
+          endorsed by Facebook in any way or by Google.
+        </p>
       </div>
     </footer>
   )

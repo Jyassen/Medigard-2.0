@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import MedigardLogo from '../components/MedigardLogo'
 import VslPlayer from '../components/VslPlayer'
+import HomeOptIn from '../components/HomeOptIn'
 
 function CTAButton({ children, className = '', primary = true }) {
   return (
@@ -23,14 +24,6 @@ function CTAButton({ children, className = '', primary = true }) {
 
 export default function Landing() {
   const [openFaq, setOpenFaq] = useState(null)
-
-  useEffect(() => {
-    const script = document.createElement('script')
-    script.src = 'https://link.msgsndr.com/js/form_embed.js'
-    script.type = 'text/javascript'
-    document.body.appendChild(script)
-    return () => { document.body.removeChild(script) }
-  }, [])
 
   const pillars = [
     {
@@ -336,37 +329,17 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* 8. BOTTOM OPT-IN FORM */}
-      <section className="py-24 px-6 bg-gradient-to-b from-blue-50/40 to-white border-t border-slate-100">
-        <div className="container mx-auto max-w-2xl text-center">
-          <p className="text-blue-600 font-black uppercase tracking-[0.2em] text-xs mb-4">Get Started</p>
-          <h2 className="text-4xl md:text-5xl font-black text-[#1e293b] mb-4 tracking-tight">
-            Ready to See Your Blind Spots?
-          </h2>
-          <p className="text-xl text-slate-500 font-medium mb-10 leading-relaxed">
-            Fill out the form below and we'll get your walkthrough scheduled.
-          </p>
-          <div className="bg-white rounded-3xl border border-slate-100 shadow-xl shadow-blue-500/5 p-6 overflow-hidden">
-            <iframe
-              src="https://api.leadconnectorhq.com/widget/form/Wwb6Zz1dHUZZ5V5ugbc9"
-              style={{ width: '100%', height: '669px', border: 'none', borderRadius: '4px' }}
-              id="inline-Wwb6Zz1dHUZZ5V5ugbc9"
-              data-layout="{'id':'INLINE'}"
-              data-trigger-type="alwaysShow"
-              data-trigger-value=""
-              data-activation-type="alwaysActivated"
-              data-activation-value=""
-              data-deactivation-type="neverDeactivate"
-              data-deactivation-value=""
-              data-form-name="Opt-in Form | A2P Approved"
-              data-height="669"
-              data-layout-iframe-id="inline-Wwb6Zz1dHUZZ5V5ugbc9"
-              data-form-id="Wwb6Zz1dHUZZ5V5ugbc9"
-              title="Opt-in Form | A2P Approved"
-            />
-          </div>
-        </div>
-      </section>
+      <HomeOptIn
+        eyebrow="Get Started"
+        heading="Ready to See Your Blind Spots?"
+        subtext="Fill out the form below and we'll get your walkthrough scheduled."
+        submitLabel="Get Started"
+        source="landing_bottom_opt_in"
+        sectionClass="py-24 px-6 bg-gradient-to-b from-blue-50/40 to-white border-t border-slate-100"
+        containerClass="max-w-2xl"
+        headingClassName="text-4xl md:text-5xl font-black text-[#1e293b] mb-4 tracking-tight"
+        subtextClassName="text-xl text-slate-500 font-medium mb-10 leading-relaxed"
+      />
 
     </div>
   )

@@ -1168,24 +1168,24 @@ async function submitLeadAndShowResults(e){
   const fullMessage=lines.join('\n');
 
   try{
-    const fsResp=await fetch('https://formsubmit.co/ajax/support@medigard.io',{
+    const fsResp=await fetch('/api/send-email',{
       method:'POST',
-      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         name,
         email,
         phone,
-        _subject:'Audit Report — '+name+' | '+overall+'/100 ('+riskLevel+')',
+        subject:'Audit Report — '+name+' | '+overall+'/100 ('+riskLevel+')',
         message:fullMessage
       })
     });
     const fsData=await fsResp.json().catch(()=>({}));
-    console.log('[FormSubmit] status:',fsResp.status,'response:',fsData);
-    if(!fsResp.ok || fsData.success==='false'){
-      console.warn('[FormSubmit] Delivery issue:',fsData);
+    console.log('[send-email] status:',fsResp.status,'response:',fsData);
+    if(!fsResp.ok){
+      console.warn('[send-email] Delivery issue:',fsData);
     }
   }catch(err){
-    console.error('[FormSubmit] Fetch error:',err);
+    console.error('[send-email] Fetch error:',err);
   }
 
   if(typeof fbq==='function') fbq('track','Lead',{content_name:'Audit Report',content_category:'Compliance'});

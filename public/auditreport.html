@@ -288,6 +288,17 @@ body::before{
 .powered{margin-top:1rem;font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);opacity:0.5;letter-spacing:0.06em}
 .error-box{background:rgba(232,75,75,0.1);border:0.5px solid rgba(232,75,75,0.3);border-radius:8px;padding:12px 16px;font-size:13px;color:#F87171;font-family:'DM Mono',monospace;margin-bottom:1rem;display:none}
 
+/* Lead gate screen */
+.lead-gate-wrap{max-width:400px;margin:0 auto;padding:2rem 1.5rem;text-align:center}
+.lead-gate-h2{font-family:'DM Serif Display',serif;font-size:clamp(1.6rem,5vw,2.2rem);color:var(--text);margin:0.5rem 0 0.75rem;line-height:1.2}
+.lead-gate-sub{font-size:14px;color:var(--text-dim);margin-bottom:1.75rem;line-height:1.6}
+.gate-form{display:flex;flex-direction:column;gap:12px;text-align:left}
+.gate-field input{width:100%;background:var(--navy-mid);border:0.5px solid var(--border);border-radius:10px;padding:14px 16px;font-size:14px;font-family:'Syne',sans-serif;color:var(--text);outline:none;transition:border-color 0.18s}
+.gate-field input:focus{border-color:rgba(45,126,248,0.5)}
+.gate-field input::placeholder{color:var(--text-dim);opacity:0.7}
+.gate-submit{width:100%;padding:14px;font-size:15px;margin-top:4px;letter-spacing:0.01em}
+.gate-disclaimer{font-size:11px;color:var(--text-dim);opacity:0.5;margin-top:1rem;line-height:1.5}
+
 @media(max-width:540px){
   .pillars-row{grid-template-columns:repeat(2,1fr)}
   .pillars-grid{grid-template-columns:1fr}
@@ -357,7 +368,30 @@ src="https://www.facebook.com/tr?id=4502890626610049&ev=PageView&noscript=1"
     </div>
   </div>
 
-  <!-- SCREEN 4: RESULTS -->
+  <!-- SCREEN 4: LEAD CAPTURE (gate before results) -->
+  <div class="screen" id="screen-lead">
+    <div class="lead-gate-wrap">
+      <div class="results-kicker">Audit Complete</div>
+      <h2 class="lead-gate-h2">Your results are ready.</h2>
+      <p class="lead-gate-sub">Enter your info below to view your full compliance risk report.</p>
+      <form id="gate-form" onsubmit="submitLeadAndShowResults(event)" class="gate-form" novalidate>
+        <div class="gate-field">
+          <input type="text" id="gate-name" placeholder="Full name" required autocomplete="name">
+        </div>
+        <div class="gate-field">
+          <input type="email" id="gate-email" placeholder="Work email" required autocomplete="email">
+        </div>
+        <div class="gate-field">
+          <input type="tel" id="gate-phone" placeholder="Phone number" required autocomplete="tel">
+        </div>
+        <button type="submit" class="btn-primary gate-submit" id="gate-submit-btn">View My Results →</button>
+        <p id="gate-error" style="display:none;color:var(--danger);font-size:13px;margin-top:0.5rem;text-align:center;">Something went wrong — please try again.</p>
+      </form>
+      <p class="gate-disclaimer">No spam. Your info is used solely to deliver your report and follow up if requested.</p>
+    </div>
+  </div>
+
+  <!-- SCREEN 5: RESULTS -->
   <div class="screen" id="screen-results">
     <div class="results-kicker">Audit Complete</div>
     <h2 class="results-h2" id="results-headline"></h2>
@@ -393,16 +427,6 @@ src="https://www.facebook.com/tr?id=4502890626610049&ev=PageView&noscript=1"
       <p class="cta-body">Medigard automates everything flagged above — monitoring, audit trails, training loops, and audit-ready documentation.</p>
       <div class="cta-buttons">
         <button class="btn-primary" onclick="window.open('https://medigard.io','_blank')">Schedule a Live Demo</button>
-        <button class="btn-secondary" id="get-copy-btn" onclick="showLeadForm()">Get Your Copy</button>
-      </div>
-      <div id="lead-form-wrap" style="display:none;margin-top:1.5rem;">
-        <form id="lead-form" onsubmit="submitLeadForm(event)" style="display:flex;flex-direction:column;gap:10px;max-width:320px;margin:0 auto;">
-          <input type="text" id="lead-name" placeholder="Your name" required style="background:var(--navy);border:0.5px solid var(--border);border-radius:8px;padding:12px 16px;font-size:13px;font-family:'Syne',sans-serif;color:var(--text);outline:none;">
-          <input type="email" id="lead-email" placeholder="Your email" required style="background:var(--navy);border:0.5px solid var(--border);border-radius:8px;padding:12px 16px;font-size:13px;font-family:'Syne',sans-serif;color:var(--text);outline:none;">
-          <button type="submit" class="btn-primary" id="lead-submit-btn" style="width:100%;margin-top:4px;">Send Me the Report</button>
-        </form>
-        <p id="lead-success" style="display:none;color:var(--safe);font-size:13px;margin-top:0.75rem;">✓ We'll send your report shortly.</p>
-        <p id="lead-error" style="display:none;color:var(--danger);font-size:13px;margin-top:0.75rem;">Something went wrong — please try again.</p>
       </div>
       <div class="powered">Medigard Compliance Command System™ · medigard.io</div>
     </div>
@@ -878,6 +902,9 @@ function generateLocalReport(scores){
 }
 
 
+let pendingResult=null;
+let pendingScores=null;
+
 async function runAnalysis(){
   showScreen('screen-loading');
   document.getElementById('load-bar').style.animation='none';
@@ -954,10 +981,14 @@ Include 4-5 gaps ordered High → Medium → Low. Base gaps on their actual answ
     const raw=data.content.map(b=>b.text||'').join('');
     const cleaned=raw.replace(/```json|```/g,'').trim();
     const result=JSON.parse(cleaned);
-    renderResults(result,scores);
+    pendingResult=result;
+    pendingScores=scores;
+    showScreen('screen-lead');
   }catch(e){
     clearInterval(msgInterval);
-    renderResults(localReport,scores);
+    pendingResult=localReport;
+    pendingScores=scores;
+    showScreen('screen-lead');
   }
 }
 
@@ -1056,46 +1087,105 @@ function renderResults(result,scores){
 
 function restartAudit(){startAudit();}
 
-function showLeadForm(){
-  document.getElementById('get-copy-btn').style.display='none';
-  document.getElementById('lead-form-wrap').style.display='block';
-}
-
-async function submitLeadForm(e){
+async function submitLeadAndShowResults(e){
   e.preventDefault();
-  const name=document.getElementById('lead-name').value.trim();
-  const email=document.getElementById('lead-email').value.trim();
-  const btn=document.getElementById('lead-submit-btn');
+  const name=document.getElementById('gate-name').value.trim();
+  const email=document.getElementById('gate-email').value.trim();
+  const phone=document.getElementById('gate-phone').value.trim();
+  const btn=document.getElementById('gate-submit-btn');
   btn.disabled=true;
-  btn.textContent='Sending…';
-  document.getElementById('lead-error').style.display='none';
+  btn.textContent='Loading your report…';
+  document.getElementById('gate-error').style.display='none';
+
+  const overall=pendingScores?Math.round(Object.values(pendingScores).reduce((a,b)=>a+b,0)/4):'N/A';
+  const riskLevel=pendingResult?.riskLevel||'N/A';
+
+  // Build full report body
+  const sep='─────────────────────────────────────';
+  const lines=[];
+
+  lines.push('MEDIGARD COMPLIANCE AUDIT REPORT');
+  lines.push(sep);
+  lines.push('LEAD CONTACT');
+  lines.push('Name:  '+name);
+  lines.push('Email: '+email);
+  lines.push('Phone: '+phone);
+  lines.push('');
+  lines.push(sep);
+  lines.push('OVERALL RESULTS');
+  lines.push('Score:      '+overall+'/100');
+  lines.push('Risk Level: '+riskLevel);
+  lines.push('');
+  if(pendingResult?.headline) lines.push('Headline: '+pendingResult.headline);
+  if(pendingResult?.riskSummary) lines.push('Summary:  '+pendingResult.riskSummary);
+  lines.push('');
+
+  lines.push(sep);
+  lines.push('PILLAR SCORES');
+  if(pendingScores){
+    for(const[pillar,score] of Object.entries(pendingScores)){
+      const bar=Math.round(score/10);
+      lines.push(pillar.padEnd(10)+score+'/100  '+'█'.repeat(bar)+'░'.repeat(10-bar));
+    }
+  }
+  lines.push('');
+
+  if(pendingResult?.pillarFindings){
+    lines.push(sep);
+    lines.push('PILLAR FINDINGS');
+    for(const[pillar,finding] of Object.entries(pendingResult.pillarFindings)){
+      lines.push(pillar+': '+finding);
+    }
+    lines.push('');
+  }
+
+  if(pendingResult?.gaps && pendingResult.gaps.length){
+    lines.push(sep);
+    lines.push('COMPLIANCE GAPS ('+pendingResult.gaps.length+' identified)');
+    pendingResult.gaps.forEach((g,i)=>{
+      lines.push('');
+      lines.push('Gap '+(i+1)+': '+g.title+' ['+g.severity+' — '+g.pillar+']');
+      if(g.plainLanguage) lines.push('What\'s happening: '+g.plainLanguage);
+      if(g.consequence)   lines.push('Cost/Risk:        '+g.consequence);
+      if(g.quickWin)      lines.push('Quick win:        '+g.quickWin);
+      if(g.medigardFix)   lines.push('Medigard fix:     '+g.medigardFix);
+    });
+    lines.push('');
+  }
+
+  lines.push(sep);
+  lines.push('AUDIT QUESTION RESPONSES (12 questions)');
+  try{
+    const{responses}=buildSummary();
+    lines.push(responses);
+  }catch(_){
+    lines.push('(responses unavailable)');
+  }
+  lines.push('');
+  lines.push(sep);
+  lines.push('Report generated by Medigard Compliance Command System™ · medigard.io');
+
+  const fullMessage=lines.join('\n');
 
   try{
-    const resp=await fetch('https://formsubmit.co/ajax/support@medigard.io',{
+    await fetch('https://formsubmit.co/ajax/support@medigard.io',{
       method:'POST',
       headers:{'Content-Type':'application/json','Accept':'application/json'},
       body:JSON.stringify({
         name,
         email,
-        _subject:'New Audit Report Lead — '+name,
-        message:'Audit report requested by '+name+' ('+email+')'
+        phone,
+        _subject:'Audit Report — '+name+' | '+overall+'/100 ('+riskLevel+')',
+        message:fullMessage
       })
     });
-    if(resp.ok){
-      if(typeof fbq==='function') fbq('track','Lead',{content_name:'Audit Report',content_category:'Compliance'});
-      document.getElementById('lead-form').style.display='none';
-      document.getElementById('lead-success').style.display='block';
-    }else{
-      throw new Error('fail');
-    }
-  }catch(err){
-    btn.disabled=false;
-    btn.textContent='Send Me the Report';
-    document.getElementById('lead-error').style.display='block';
-  }
+  }catch(_){}
+
+  if(typeof fbq==='function') fbq('track','Lead',{content_name:'Audit Report',content_category:'Compliance'});
+  renderResults(pendingResult,pendingScores);
 }
 
-document.getElementById('q-progress-text').textContent='Question 1 of 12';
+
 </script>
 </body>
 </html>

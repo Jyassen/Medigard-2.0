@@ -25,7 +25,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Medigard Audit <onboarding@resend.dev>',
+        from: 'Medigard Audit <audit@comms.medigard.io>',
         to: ['support@medigard.io'],
         reply_to: email,
         subject: subject || `Audit Report — ${name}`,

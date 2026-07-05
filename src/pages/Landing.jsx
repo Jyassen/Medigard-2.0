@@ -116,7 +116,7 @@ export default function Landing() {
           </p>
           
           <div id="vsl" className="max-w-5xl mx-auto mb-16 mt-16">
-            <VslPlayer title="How to Automate 100% of Medicare Compliance in 30 Days" wistiaId="u42b0eiuew" />
+            <VslPlayer title="How to Automate 100% of Medicare Compliance in 30 Days" wistiaId="0pdsraeq1g" wistiaAspect="1.0" />
           </div>
 
           {/* BOOKING CALENDAR — directly below VSL */}

@@ -115,7 +115,7 @@ export default function Landing() {
             Automated call monitoring, real-time violation detection, and audit-ready proof — deployed in 30 days.
           </p>
           
-          <div id="vsl" className="max-w-5xl mx-auto mb-16 mt-16">
+          <div id="vsl" className="max-w-2xl mx-auto mb-16 mt-16">
             <VslPlayer title="How to Automate 100% of Medicare Compliance in 30 Days" wistiaId="0pdsraeq1g" wistiaAspect="1.0" />
           </div>
 

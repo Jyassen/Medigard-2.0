@@ -68,6 +68,7 @@ function OfferFooter() {
 
 export default function OfferLayout() {
   const { pathname } = useLocation();
+  const isV3 = pathname === ROUTES.offerV3;
   useFunnelTracking(pathname);
 
   useEffect(() => {
@@ -84,10 +85,10 @@ export default function OfferLayout() {
   }, [pathname]);
 
   return (
-    <div className="offer-shell">
-      <OfferNav />
+    <div className={isV3 ? "offer-v3-shell" : "offer-shell"}>
+      {isV3 ? null : <OfferNav />}
       <Outlet />
-      <OfferFooter />
+      {isV3 ? null : <OfferFooter />}
     </div>
   );
 }

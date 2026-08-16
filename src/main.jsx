@@ -18,6 +18,7 @@ import LaunchPrivacy from "./pages/launch/LaunchPrivacy";
 import LaunchTerms from "./pages/launch/LaunchTerms";
 import OfferHome from "./pages/offer/OfferHome";
 import OfferHomeV2 from "./pages/offer/OfferHomeV2";
+import OfferHomeV3 from "./pages/offer/OfferHomeV3";
 import OfferBooking from "./pages/offer/OfferBooking";
 import OfferThankYou from "./pages/offer/OfferThankYou";
 import OfferContact from "./pages/offer/OfferContact";
@@ -57,6 +58,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/offer" element={<OfferLayout />}>
           <Route index element={<OfferHome />} />
           <Route path="v2" element={<OfferHomeV2 />} />
+          <Route path="v3" element={<OfferHomeV3 />} />
           <Route path="book" element={<OfferBooking />} />
           <Route path="thank-you" element={<OfferThankYou />} />
           <Route path="contact" element={<OfferContact />} />

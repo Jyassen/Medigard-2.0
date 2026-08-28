@@ -27,8 +27,17 @@ describe("OfferHomeV2", () => {
       level: 1,
       name: `${OFFER_V2.hero.headline} ${OFFER_V2.hero.headlineAccent}`,
     });
-    expect(heading.closest(".hero")).toHaveClass("hero-v2");
-    expect(heading.nextElementSibling).toHaveAttribute("id", "vsl");
+    const hero = heading.closest(".hero");
+    expect(hero).toHaveClass("hero-v2");
+    const [kicker, title, vsl, proof, copy, actions] = hero.children;
+    expect(kicker).toHaveClass("eyebrow");
+    expect(title.tagName).toBe("H1");
+    expect(vsl).toHaveAttribute("id", "vsl");
+    expect(proof).toHaveClass("proof-strip");
+    expect(proof).toHaveTextContent("Built in 60 days");
+    expect(proof).toHaveTextContent("Full calendars");
+    expect(copy).toHaveClass("hero-copy");
+    expect(actions).toHaveClass("hero-actions");
     expect(container.querySelector("wistia-player")).toHaveAttribute(
       "media-id",
       GROWTH_VSL_WISTIA_ID,
@@ -36,6 +45,12 @@ describe("OfferHomeV2", () => {
     expect(
       screen.getAllByRole("link", { name: /Book Your Review/i })[0],
     ).toHaveAttribute("href", "#book");
+    expect(
+      screen.getByRole("link", { name: /Privacy Policy/i }),
+    ).toHaveAttribute("href", "/offer/v2/privacy");
+    expect(
+      screen.queryByRole("link", { name: /^Compliance$/i }),
+    ).not.toBeInTheDocument();
     expect(
       screen.getByRole("heading", {
         level: 2,

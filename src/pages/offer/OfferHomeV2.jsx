@@ -1,4 +1,5 @@
 import BookingWidget from "../../components/BookingWidget";
+import { useOfferPaths } from "../../components/offer/OfferFunnelContext";
 import VslPlayer from "../../components/VslPlayer";
 import {
   BOOKING_URLS,
@@ -14,6 +15,7 @@ import {
 import { OFFER_V2 } from "../../offer/copyV2";
 
 export default function OfferHomeV2() {
+  const paths = useOfferPaths();
   const bookingSrc = withSource(BOOKING_URLS.compliance, CRM_SOURCES.offerBook);
 
   return (
@@ -31,6 +33,14 @@ export default function OfferHomeV2() {
             wistiaAspect={GROWTH_VSL_ASPECT}
           />
         </div>
+        <div className="proof-strip">
+          {OFFER_V2.proof.map((item) => (
+            <div key={item.value}>
+              <strong>{item.value}</strong>
+              <span>{item.label}</span>
+            </div>
+          ))}
+        </div>
         <p className="hero-copy">{OFFER_V2.hero.subhead}</p>
         <div className="hero-actions">
           <a className="btn" href="#book">
@@ -39,14 +49,6 @@ export default function OfferHomeV2() {
           <a className="text-link" href="#how-it-works">
             See how it works ↓
           </a>
-        </div>
-        <div className="proof-strip">
-          {OFFER_V2.proof.map((item) => (
-            <div key={item.value}>
-              <strong>{item.value}</strong>
-              <span>{item.label}</span>
-            </div>
-          ))}
         </div>
       </section>
 
@@ -62,6 +64,7 @@ export default function OfferHomeV2() {
             <BookingWidget
               src={bookingSrc}
               title="Schedule a Medigard agency review"
+              thankYouTo={paths.thanks}
             />
           ) : (
             <a

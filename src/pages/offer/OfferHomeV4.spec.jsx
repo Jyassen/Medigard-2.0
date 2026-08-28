@@ -30,8 +30,10 @@ describe("OfferHomeV4", () => {
       }),
     ).toBeInTheDocument();
     expect(
-      screen.getAllByRole("link", { name: OFFER_V4.hero.cta })[0],
-    ).toHaveAttribute("href", "#book");
+      screen.getAllByRole("link", { name: OFFER_V4.hero.cta }).map((el) =>
+        el.getAttribute("href"),
+      ),
+    ).toEqual(["/offer/v4#book", "#book", "#book"]);
     expect(screen.getByTitle("See how Medigard works")).toBeInTheDocument();
     expect(
       screen.getByRole("heading", {
@@ -40,8 +42,14 @@ describe("OfferHomeV4", () => {
       }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: /Open agency review calendar/i }),
-    ).toHaveAttribute("href", expect.stringContaining("source=medigard_offer"));
+      screen.getByTitle("Schedule a Medigard agency review"),
+    ).toHaveAttribute("src", expect.stringContaining("R708RvYTDmq9qJnkD72t"));
+    expect(
+      screen.getByTitle("Schedule a Medigard agency review"),
+    ).toHaveAttribute("src", expect.stringContaining("source=medigard_offer"));
+    expect(
+      screen.queryByRole("link", { name: /Open agency review calendar/i }),
+    ).not.toBeInTheDocument();
   }, 15000);
 
   test("keeps v4 inside the offer funnel and restates the system boundary", () => {
@@ -54,7 +62,7 @@ describe("OfferHomeV4", () => {
     expect(screen.getByText("Calendar fill")).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: /Privacy Policy/i }),
-    ).toHaveAttribute("href", ROUTES.offerPrivacy);
+    ).toHaveAttribute("href", "/offer/v4/privacy");
     expect(
       screen.queryByText("You do not have a lead problem."),
     ).not.toBeInTheDocument();

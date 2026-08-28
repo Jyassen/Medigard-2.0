@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
+import { useOfferPaths } from "../../components/offer/OfferFunnelContext";
 import { LEGAL_BUSINESS_NAME } from "../../smsConsentCopy";
-import { O } from "../../offer/constants";
 import { getSiteOrigin } from "../../site";
 
 export default function OfferContact() {
+  const paths = useOfferPaths();
   const origin = getSiteOrigin();
   const contactEmail = import.meta.env.VITE_CONTACT_EMAIL;
 
@@ -40,7 +41,7 @@ export default function OfferContact() {
           )}
           <p className="lead">
             For a structured look at your agency,{" "}
-            <Link className="text-link" to={O.book}>
+            <Link className="text-link" to={paths.book}>
               book your agency review
             </Link>{" "}
             so we can prepare.

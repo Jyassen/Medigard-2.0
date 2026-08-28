@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { ROUTES } from "../../constants/routes";
 import { O } from "../../offer/constants";
 import { OFFER } from "../../offer/copy";
 
@@ -235,11 +234,6 @@ export default function OfferHome() {
             </div>
             <h3>{OFFER.compliance.inOffer.title}</h3>
             <p>{OFFER.compliance.inOffer.desc}</p>
-            <p>
-              <Link className="text-link" to={ROUTES.t65}>
-                See T-65 guidance
-              </Link>
-            </p>
           </article>
           <article className="card">
             <div className="section-kicker">
@@ -247,11 +241,6 @@ export default function OfferHome() {
             </div>
             <h3>{OFFER.compliance.adjacent.title}</h3>
             <p>{OFFER.compliance.adjacent.desc}</p>
-            <p>
-              <Link className="text-link" to={ROUTES.compliance}>
-                See Compliance for agencies
-              </Link>
-            </p>
           </article>
         </div>
       </section>

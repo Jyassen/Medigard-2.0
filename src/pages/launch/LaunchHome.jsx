@@ -2,10 +2,14 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import HomeOptIn from "../../components/HomeOptIn";
 import BookingWidget from "../../components/BookingWidget";
-import { BOOKING_URLS } from "../../constants/funnels";
+import {
+  BOOKING_URLS,
+  canEmbedBooking,
+  CRM_SOURCES,
+  withSource,
+} from "../../constants/funnels";
 import { GROWTH } from "../../growth/copy";
 import { G } from "../../growth/constants";
-import { ROUTES } from "../../constants/routes";
 
 function CTAButton({ children, className = "", primary = true }) {
   return (
@@ -37,9 +41,8 @@ const stageStyles = [
 
 export default function LaunchHome() {
   const [openFaq, setOpenFaq] = useState(null);
-  const embedsCalendar = BOOKING_URLS.growth.startsWith(
-    "https://api.leadconnectorhq.com/widget/booking/",
-  );
+  const bookingSrc = withSource(BOOKING_URLS.growth, CRM_SOURCES.growthBook);
+  const embedsCalendar = canEmbedBooking(BOOKING_URLS.growth);
 
   return (
     <main className="flex-1">
@@ -82,9 +85,10 @@ export default function LaunchHome() {
             </p>
             {embedsCalendar ? (
               <BookingWidget
-                src={BOOKING_URLS.growth}
+                src={bookingSrc}
                 title="Schedule a Medigard Growth Order review"
                 className="border border-slate-100 shadow-xl shadow-teal-500/5"
+                thankYouTo={G.thanks}
               />
             ) : (
               <div className="rounded-[2.5rem] border border-slate-100 bg-slate-50 p-12 shadow-xl shadow-teal-500/5">
@@ -94,7 +98,7 @@ export default function LaunchHome() {
                   launched.
                 </p>
                 <a
-                  href={BOOKING_URLS.growth}
+                  href={bookingSrc}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-block rounded-xl bg-[#137f73] px-10 py-5 text-lg font-bold text-white transition-colors hover:bg-[#0f665d]"
@@ -420,15 +424,9 @@ export default function LaunchHome() {
                 </h3>
                 <p className="mb-6 font-medium leading-relaxed text-slate-600">
                   TCPA/CMS-safe funnels and named ownership so current producers
-                  get usable conversations. See the T-65 path for the consumer
-                  side.
+                  get usable conversations. Consumer-side T-65 work lives on its
+                  own Medigard path, not this funnel.
                 </p>
-                <Link
-                  to={ROUTES.t65}
-                  className="text-sm font-black uppercase tracking-widest text-[#137f73] underline"
-                >
-                  See T-65 guidance
-                </Link>
               </div>
               <div className="rounded-3xl border border-slate-200 bg-slate-50 p-8">
                 <p className="mb-2 text-xs font-black uppercase tracking-widest text-emerald-700">
@@ -437,16 +435,10 @@ export default function LaunchHome() {
                 <h3 className="mb-3 text-xl font-black text-[#1e293b]">
                   Oversight as you scale
                 </h3>
-                <p className="mb-6 font-medium leading-relaxed text-slate-600">
+                <p className="font-medium leading-relaxed text-slate-600">
                   When the primary need is documented monitoring and audit-ready
                   review, that is a different Medigard system.
                 </p>
-                <Link
-                  to={ROUTES.compliance}
-                  className="text-sm font-black uppercase tracking-widest text-[#137f73] underline"
-                >
-                  See Compliance for agencies
-                </Link>
               </div>
             </div>
           </div>

@@ -68,7 +68,7 @@ describe("OfferHomeV3", () => {
     expect(screen.getByText("Layer 01 · Consumer growth")).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: /Privacy Policy/i }),
-    ).toHaveAttribute("href", ROUTES.offerPrivacy);
+    ).toHaveAttribute("href", "/offer/v3/privacy");
     expect(
       screen.queryByText("You do not have a lead problem."),
     ).not.toBeInTheDocument();

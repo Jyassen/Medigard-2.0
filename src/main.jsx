@@ -42,10 +42,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/" element={<Hub />} />
           <Route path="/leads/t65" element={<T65Gate />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
         </Route>
+        <Route path="/thank-you" element={<ThankYou />} />
 
         <Route path="/launch" element={<GrowthLayout />}>
           <Route index element={<LaunchHome />} />
@@ -59,8 +59,20 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/offer" element={<OfferLayout />}>
           <Route index element={<OfferHome />} />
           <Route path="v2" element={<OfferHomeV2 />} />
+          <Route path="v2/thank-you" element={<OfferThankYou />} />
+          <Route path="v2/contact" element={<OfferContact />} />
+          <Route path="v2/privacy" element={<OfferPrivacy />} />
+          <Route path="v2/terms" element={<OfferTerms />} />
           <Route path="v3" element={<OfferHomeV3 />} />
+          <Route path="v3/thank-you" element={<OfferThankYou />} />
+          <Route path="v3/contact" element={<OfferContact />} />
+          <Route path="v3/privacy" element={<OfferPrivacy />} />
+          <Route path="v3/terms" element={<OfferTerms />} />
           <Route path="v4" element={<OfferHomeV4 />} />
+          <Route path="v4/thank-you" element={<OfferThankYou />} />
+          <Route path="v4/contact" element={<OfferContact />} />
+          <Route path="v4/privacy" element={<OfferPrivacy />} />
+          <Route path="v4/terms" element={<OfferTerms />} />
           <Route path="book" element={<OfferBooking />} />
           <Route path="thank-you" element={<OfferThankYou />} />
           <Route path="contact" element={<OfferContact />} />

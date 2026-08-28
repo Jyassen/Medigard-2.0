@@ -1,5 +1,10 @@
 import BookingWidget from "../../components/BookingWidget";
-import { BOOKING_URLS } from "../../constants/funnels";
+import {
+  BOOKING_URLS,
+  canEmbedBooking,
+  CRM_SOURCES,
+  withSource,
+} from "../../constants/funnels";
 import { Link } from "react-router-dom";
 import { G } from "../../growth/constants";
 
@@ -12,9 +17,8 @@ const reviewItems = [
 ];
 
 export default function LaunchBooking() {
-  const embedsCalendar = BOOKING_URLS.growth.startsWith(
-    "https://api.leadconnectorhq.com/widget/booking/",
-  );
+  const bookingSrc = withSource(BOOKING_URLS.growth, CRM_SOURCES.growthBook);
+  const embedsCalendar = canEmbedBooking(BOOKING_URLS.growth);
 
   return (
     <main className="flex-1 px-6 py-16 md:py-24">
@@ -65,9 +69,10 @@ export default function LaunchBooking() {
         >
           {embedsCalendar ? (
             <BookingWidget
-              src={BOOKING_URLS.growth}
+              src={bookingSrc}
               title="Schedule a Medigard Growth agency review"
               className="w-full"
+              thankYouTo={G.thanks}
             />
           ) : (
             <div className="max-w-lg text-center">
@@ -82,7 +87,7 @@ export default function LaunchBooking() {
                 not allow secure in-page embedding.
               </p>
               <a
-                href={BOOKING_URLS.growth}
+                href={bookingSrc}
                 target="_blank"
                 rel="noreferrer"
                 className="mt-8 inline-flex min-h-14 items-center justify-center rounded-xl bg-[#137f73] px-7 text-sm font-black text-white transition-colors hover:bg-[#0f665d]"

@@ -1,9 +1,17 @@
 import { describe, expect, test } from "vitest";
+import { ROUTES } from "./routes";
 import {
   BOOKING_URLS,
   canEmbedBooking,
   CRM_SOURCES,
+  FUNNEL_IDS,
+  FUNNEL_STORAGE_KEY,
   getFunnelSource,
+  HUB_THANK_YOU,
+  isGhlBookingCompleteMessage,
+  rememberFunnel,
+  resolveBookingThankYouPath,
+  thankYouPathForFunnel,
   withSource,
 } from "./funnels";
 
@@ -42,5 +50,62 @@ describe("canEmbedBooking", () => {
       canEmbedBooking(BOOKING_URLS.compliance),
       canEmbedBooking("https://example.com/widget/booking/demo"),
     ]).toEqual([true, true, false]);
+  });
+});
+
+describe("thankYouPathForFunnel", () => {
+  test("keeps each live funnel on its own pre-call page", () => {
+    expect([
+      thankYouPathForFunnel(FUNNEL_IDS.offerV2),
+      thankYouPathForFunnel(FUNNEL_IDS.offerV3),
+      thankYouPathForFunnel(FUNNEL_IDS.offer),
+      thankYouPathForFunnel(FUNNEL_IDS.launch),
+      thankYouPathForFunnel(FUNNEL_IDS.compliance),
+      thankYouPathForFunnel(FUNNEL_IDS.hub),
+    ]).toEqual([
+      ROUTES.offerV2ThankYou,
+      ROUTES.offerV3ThankYou,
+      ROUTES.offerThankYou,
+      ROUTES.launchThankYou,
+      "/compliance/thank-you",
+      HUB_THANK_YOU,
+    ]);
+  });
+});
+
+describe("resolveBookingThankYouPath", () => {
+  test("prefers the stored offer variant over the shared GHL thank-you URL", () => {
+    expect(
+      resolveBookingThankYouPath({ storedFunnel: FUNNEL_IDS.offerV2 }),
+    ).toBe(ROUTES.offerV2ThankYou);
+  });
+
+  test("routes a source query to the matching funnel when no visit is stored", () => {
+    expect(
+      resolveBookingThankYouPath({
+        search: "?source=medigard_offer_booking",
+        storedFunnel: FUNNEL_IDS.hub,
+      }),
+    ).toBe(ROUTES.offerThankYou);
+  });
+});
+
+describe("rememberFunnel", () => {
+  test("does not overwrite an offer visit when GHL lands on /thank-you", () => {
+    sessionStorage.setItem(FUNNEL_STORAGE_KEY, FUNNEL_IDS.offerV2);
+    expect(rememberFunnel(HUB_THANK_YOU)).toBe(FUNNEL_IDS.offerV2);
+    expect(sessionStorage.getItem(FUNNEL_STORAGE_KEY)).toBe(FUNNEL_IDS.offerV2);
+  });
+});
+
+describe("isGhlBookingCompleteMessage", () => {
+  test("recognizes the HighLevel iframe booking-complete payload", () => {
+    expect(
+      isGhlBookingCompleteMessage([
+        "msgsndr-booking-complete",
+        { calendarId: "x" },
+      ]),
+    ).toBe(true);
+    expect(isGhlBookingCompleteMessage({ type: "page-loaded" })).toBe(false);
   });
 });

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import MedigardLogo from "../MedigardLogo";
 import { G, growthBenefitsTo } from "../../growth/constants";
-import { ROUTES } from "../../constants/routes";
 import { getSiteOrigin } from "../../site";
 import { useFunnelTracking } from "../../hooks/useFunnelTracking";
 
@@ -89,9 +88,6 @@ function GrowthFooter() {
           </Link>
           <Link to={G.contact} className="hover:text-[#137f73]">
             Contact Us
-          </Link>
-          <Link to={ROUTES.compliance} className="hover:text-[#137f73]">
-            Compliance
           </Link>
         </div>
         <p className="mb-6 text-sm font-medium text-slate-500">

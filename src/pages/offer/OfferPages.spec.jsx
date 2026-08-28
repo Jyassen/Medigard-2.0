@@ -80,6 +80,26 @@ describe("OfferThankYou", () => {
       }),
     ).not.toBeInTheDocument();
   });
+
+  test("keeps the v2 pre-call VSL inside the v2 theme after booking", () => {
+    const { container } = renderOffer("/offer/v2/thank-you", OfferThankYou);
+
+    expect(container.querySelector("wistia-player")).toHaveAttribute(
+      "media-id",
+      PRE_CALL_VSL_WISTIA_ID,
+    );
+    expect(
+      screen.getByRole("link", { name: /Back to Medigard/i }),
+    ).toHaveAttribute("href", ROUTES.offerV2);
+    expect(
+      screen.queryByRole("link", { name: /^Compliance$/i }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByText("Your audit session has been booked", {
+        exact: false,
+      }),
+    ).not.toBeInTheDocument();
+  });
 });
 
 describe("offer legal pages", () => {

@@ -53,11 +53,11 @@ describe("OfferHome", () => {
       screen.getByText("Buyers shopping another lead package"),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: /See T-65 guidance/i }),
-    ).toHaveAttribute("href", ROUTES.t65);
+      screen.queryByRole("link", { name: /See T-65 guidance/i }),
+    ).not.toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: /See Compliance for agencies/i }),
-    ).toHaveAttribute("href", ROUTES.compliance);
+      screen.queryByRole("link", { name: /See Compliance for agencies/i }),
+    ).not.toBeInTheDocument();
   });
 });
 

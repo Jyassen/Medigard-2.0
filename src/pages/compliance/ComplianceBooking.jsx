@@ -1,5 +1,6 @@
 import BookingWidget from "../../components/BookingWidget";
 import { BOOKING_URLS } from "../../constants/funnels";
+import { C } from "../../compliance/constants";
 
 const reviewItems = [
   "Map your current call monitoring and QA process",
@@ -63,6 +64,7 @@ export default function ComplianceBooking() {
             src={BOOKING_URLS.compliance}
             title="Schedule a Medigard compliance infrastructure review"
             className="border border-zinc-200"
+            thankYouTo={C.thanks}
           />
         </div>
       </section>

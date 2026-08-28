@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import BookingWidget from "../../components/BookingWidget";
+import { useOfferPaths } from "../../components/offer/OfferFunnelContext";
 import {
   BOOKING_URLS,
   canEmbedBooking,
@@ -7,10 +8,10 @@ import {
   withSource,
 } from "../../constants/funnels";
 import { VSL_VIDEO } from "../../constants/media";
-import { O } from "../../offer/constants";
 import { OFFER } from "../../offer/copy";
 
 export default function OfferBooking() {
+  const paths = useOfferPaths();
   const bookingSrc = withSource(BOOKING_URLS.compliance, CRM_SOURCES.offerBook);
   const embedsCalendar = canEmbedBooking(BOOKING_URLS.compliance);
 
@@ -62,7 +63,7 @@ export default function OfferBooking() {
             </ul>
             <p className="lead">
               Prefer email first?{" "}
-              <Link className="text-link" to={O.contact}>
+              <Link className="text-link" to={paths.contact}>
                 Contact the team.
               </Link>
             </p>
@@ -79,6 +80,7 @@ export default function OfferBooking() {
             <BookingWidget
               src={bookingSrc}
               title="Schedule a Medigard agency review"
+              thankYouTo={paths.thanks}
             />
           ) : (
             <a

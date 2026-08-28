@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import VslPlayer from "../../components/VslPlayer";
+import { useOfferPaths } from "../../components/offer/OfferFunnelContext";
 import {
   GROWTH_VSL_ASPECT,
   PRE_CALL_VSL_WISTIA_ID,
   PRE_VSL_VIDEO,
 } from "../../constants/media";
-import { O } from "../../offer/constants";
 
 const nextSteps = [
   {
@@ -34,6 +34,7 @@ const prepItems = [
 ];
 
 export default function OfferThankYou() {
+  const paths = useOfferPaths();
   return (
     <main className="thank-page">
       <section className="thank-hero container narrow">
@@ -102,7 +103,7 @@ export default function OfferThankYou() {
           leads. It is what happens after the lead comes in.”
         </p>
         <p>
-          <Link className="text-link" to={O.home}>
+          <Link className="text-link" to={paths.home}>
             ← Back to Medigard
           </Link>
         </p>

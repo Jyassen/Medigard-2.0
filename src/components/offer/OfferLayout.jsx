@@ -1,13 +1,17 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { LOGO_VARIATION } from "../../constants/media";
-import { ROUTES } from "../../constants/routes";
-import { O, offerHowTo } from "../../offer/constants";
+import { offerPaths, offerVariantFromPath } from "../../offer/constants";
 import { getSiteOrigin } from "../../site";
 import { useFunnelTracking } from "../../hooks/useFunnelTracking";
+import { OfferFunnelContext } from "./OfferFunnelContext";
+import { OfferV3Footer, OfferV3Header } from "./OfferV3Chrome";
+import { OfferV4Footer, OfferV4Header } from "./OfferV4Chrome";
 import "../../offer/offer.css";
+import "../../offer/offer-v3.css";
+import "../../offer/offer-v4.css";
 
-function OfferLogo({ to = O.home }) {
+function OfferLogo({ to }) {
   return (
     <Link to={to} aria-label="Medigard home" className="brand">
       <img
@@ -20,24 +24,24 @@ function OfferLogo({ to = O.home }) {
   );
 }
 
-function OfferNav() {
+function OfferNav({ paths }) {
   const { pathname } = useLocation();
-  const onHome = pathname === O.home;
-  const onV2 = pathname === ROUTES.offerV2;
+  const onV2 = paths.variant === "v2";
+  const onHome = pathname === paths.home;
 
   return (
     <header className="nav container">
-      <OfferLogo to={onV2 ? ROUTES.offerV2 : O.home} />
+      <OfferLogo to={paths.home} />
       {onV2 ? (
-        <a className="btn btn-small" href="#book">
+        <a className="btn btn-small" href={`${paths.home}#book`}>
           Book a Review
         </a>
       ) : onHome ? (
-        <Link className="btn btn-small" to={O.book}>
+        <Link className="btn btn-small" to={paths.book}>
           Book a Review
         </Link>
       ) : (
-        <Link className="text-link" to={O.home}>
+        <Link className="text-link" to={paths.home}>
           ← Back home
         </Link>
       )}
@@ -45,20 +49,19 @@ function OfferNav() {
   );
 }
 
-function OfferFooter() {
+function OfferFooter({ paths }) {
   const year = new Date().getFullYear();
   return (
     <footer className="footer container">
       <div>
-        <OfferLogo />
+        <OfferLogo to={paths.home} />
         <span>Growth infrastructure for Medicare agencies.</span>
       </div>
       <div className="footer-links">
-        <Link to={offerHowTo}>How it works</Link>
-        <Link to={O.contact}>Contact</Link>
-        <Link to={O.privacy}>Privacy Policy</Link>
-        <Link to={O.terms}>Terms &amp; Conditions</Link>
-        <Link to={ROUTES.compliance}>Compliance</Link>
+        <Link to={paths.howTo}>How it works</Link>
+        <Link to={paths.contact}>Contact</Link>
+        <Link to={paths.privacy}>Privacy Policy</Link>
+        <Link to={paths.terms}>Terms &amp; Conditions</Link>
       </div>
       <p className="footer-note">
         © {year} Medigard Compliance Systems LLC. All rights reserved. We
@@ -73,11 +76,13 @@ function OfferFooter() {
 
 export default function OfferLayout() {
   const { pathname } = useLocation();
-  const ownChrome = pathname === ROUTES.offerV3 || pathname === ROUTES.offerV4;
+  const variant = offerVariantFromPath(pathname);
+  const paths = offerPaths(variant);
+  const onLanding = pathname === paths.home;
   const shellClass = {
-    [ROUTES.offerV3]: "offer-v3-shell",
-    [ROUTES.offerV4]: "offer-v4-shell",
-  }[pathname];
+    v3: "offer-v3-shell",
+    v4: "offer-v4-shell",
+  }[variant];
   useFunnelTracking(pathname);
 
   useEffect(() => {
@@ -93,11 +98,42 @@ export default function OfferLayout() {
     link.setAttribute("href", href);
   }, [pathname]);
 
+  const themed =
+    variant === "v3" ? (
+      <>
+        <OfferV3Header paths={paths} />
+        {onLanding ? (
+          <Outlet />
+        ) : (
+          <div className="offer-shell offer-variant-subpage">
+            <Outlet />
+          </div>
+        )}
+        <OfferV3Footer paths={paths} />
+      </>
+    ) : variant === "v4" ? (
+      <>
+        <OfferV4Header paths={paths} />
+        {onLanding ? (
+          <Outlet />
+        ) : (
+          <div className="offer-shell offer-variant-subpage">
+            <Outlet />
+          </div>
+        )}
+        <OfferV4Footer paths={paths} />
+      </>
+    ) : (
+      <>
+        <OfferNav paths={paths} />
+        <Outlet />
+        <OfferFooter paths={paths} />
+      </>
+    );
+
   return (
-    <div className={shellClass || "offer-shell"}>
-      {ownChrome ? null : <OfferNav />}
-      <Outlet />
-      {ownChrome ? null : <OfferFooter />}
-    </div>
+    <OfferFunnelContext.Provider value={paths}>
+      <div className={shellClass || "offer-shell"}>{themed}</div>
+    </OfferFunnelContext.Provider>
   );
 }

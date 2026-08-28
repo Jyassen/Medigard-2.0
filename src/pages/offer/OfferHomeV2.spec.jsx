@@ -23,12 +23,11 @@ describe("OfferHomeV2", () => {
   test("plays the live Wistia VSL and embeds the GHL review calendar on the page", () => {
     const { container } = renderV2();
 
-    expect(
-      screen.getByRole("heading", {
-        level: 1,
-        name: `${OFFER_V2.hero.headline} ${OFFER_V2.hero.headlineAccent}`,
-      }),
-    ).toBeInTheDocument();
+    const heading = screen.getByRole("heading", {
+      level: 1,
+      name: `${OFFER_V2.hero.headline} ${OFFER_V2.hero.headlineAccent}`,
+    });
+    expect(heading.nextElementSibling).toHaveAttribute("id", "vsl");
     expect(container.querySelector("wistia-player")).toHaveAttribute(
       "media-id",
       GROWTH_VSL_WISTIA_ID,

@@ -23,6 +23,14 @@ export default function OfferHomeV2() {
         <h1>
           {OFFER_V2.hero.headline} <span>{OFFER_V2.hero.headlineAccent}</span>
         </h1>
+        <div className="vsl-slot" id="vsl">
+          <VslPlayer
+            title="See how the Medigard Growth System works"
+            src={VSL_VIDEO}
+            wistiaId={GROWTH_VSL_WISTIA_ID || undefined}
+            wistiaAspect={GROWTH_VSL_ASPECT}
+          />
+        </div>
         <p className="hero-copy">{OFFER_V2.hero.subhead}</p>
         <div className="hero-actions">
           <a className="btn" href="#book">
@@ -39,22 +47,6 @@ export default function OfferHomeV2() {
               <span>{item.label}</span>
             </div>
           ))}
-        </div>
-        <div
-          className="vsl-slot"
-          id="vsl"
-          style={{
-            marginTop: "2.5rem",
-            maxWidth: "56rem",
-            marginInline: "auto",
-          }}
-        >
-          <VslPlayer
-            title="See how the Medigard Growth System works"
-            src={VSL_VIDEO}
-            wistiaId={GROWTH_VSL_WISTIA_ID || undefined}
-            wistiaAspect={GROWTH_VSL_ASPECT}
-          />
         </div>
       </section>
 

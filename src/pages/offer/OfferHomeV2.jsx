@@ -18,7 +18,7 @@ export default function OfferHomeV2() {
 
   return (
     <main>
-      <section className="hero container">
+      <section className="hero container hero-v2">
         <div className="eyebrow">{OFFER_V2.hero.kicker}</div>
         <h1>
           {OFFER_V2.hero.headline} <span>{OFFER_V2.hero.headlineAccent}</span>

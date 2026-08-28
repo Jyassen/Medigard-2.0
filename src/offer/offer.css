@@ -112,8 +112,19 @@
   max-width: 980px;
 }
 
-.offer-shell .hero .vsl-slot {
-  max-width: 56rem;
+.offer-shell .hero-v2 > .eyebrow {
+  text-align: center;
+}
+
+.offer-shell .hero-v2 h1 {
+  max-width: none;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.offer-shell .hero-v2 .vsl-slot {
+  width: 100%;
+  max-width: none;
   margin: 2rem auto 0;
 }
 

@@ -27,6 +27,7 @@ describe("OfferHomeV2", () => {
       level: 1,
       name: `${OFFER_V2.hero.headline} ${OFFER_V2.hero.headlineAccent}`,
     });
+    expect(heading.closest(".hero")).toHaveClass("hero-v2");
     expect(heading.nextElementSibling).toHaveAttribute("id", "vsl");
     expect(container.querySelector("wistia-player")).toHaveAttribute(
       "media-id",

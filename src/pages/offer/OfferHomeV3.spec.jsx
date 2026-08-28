@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import OfferLayout from "../../components/offer/OfferLayout";
-import { LOGO_VARIATION } from "../../constants/media";
+import { GROWTH_VSL_WISTIA_ID, LOGO_VARIATION } from "../../constants/media";
 import { ROUTES } from "../../constants/routes";
 import { OFFER_V3 } from "../../offer/copyV3";
 import OfferHomeV3 from "./OfferHomeV3";
@@ -21,7 +21,7 @@ function renderV3() {
 
 describe("OfferHomeV3", () => {
   test("uses the short-form LP chrome, VSL, and on-page review calendar", () => {
-    renderV3();
+    const { container } = renderV3();
 
     expect(
       screen.getByRole("heading", { level: 1, name: OFFER_V3.hero.headline }),
@@ -30,6 +30,10 @@ describe("OfferHomeV3", () => {
       screen.getByText("Medicare Agency Owners - Growth Minded Operators"),
     ).toBeInTheDocument();
     expect(screen.getByTitle("See how Medigard works")).toBeInTheDocument();
+    expect(container.querySelector("wistia-player")).toHaveAttribute(
+      "media-id",
+      GROWTH_VSL_WISTIA_ID,
+    );
     expect(
       screen.getAllByRole("link", { name: OFFER_V3.hero.cta })[0],
     ).toHaveAttribute("href", "#book");
@@ -40,8 +44,14 @@ describe("OfferHomeV3", () => {
       }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: /Open agency review calendar/i }),
-    ).toHaveAttribute("href", expect.stringContaining("source=medigard_offer"));
+      screen.getByTitle("Schedule a Medigard agency review"),
+    ).toHaveAttribute("src", expect.stringContaining("R708RvYTDmq9qJnkD72t"));
+    expect(
+      screen.getByTitle("Schedule a Medigard agency review"),
+    ).toHaveAttribute("src", expect.stringContaining("source=medigard_offer"));
+    expect(
+      screen.queryByRole("link", { name: /Open agency review calendar/i }),
+    ).not.toBeInTheDocument();
     expect(
       screen.queryByRole("link", { name: /Book a Review/i }),
     ).not.toBeInTheDocument();

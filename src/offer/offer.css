@@ -569,6 +569,18 @@
   color: #64748b;
 }
 
+.offer-shell .home-calendar {
+  max-width: 760px;
+  margin: 32px auto 0;
+  position: static;
+}
+
+.offer-shell .video-frame .thank-vsl {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
 .offer-shell .fine {
   display: block;
   color: #64748b;

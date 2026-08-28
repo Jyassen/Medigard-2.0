@@ -34,3 +34,21 @@ export function withSource(url, source) {
   attributedUrl.searchParams.set("source", source);
   return attributedUrl.toString();
 }
+
+const BOOKING_EMBED_HOSTS = new Set([
+  "api.leadconnectorhq.com",
+  "link.msgsndr.com",
+]);
+
+export function canEmbedBooking(url) {
+  if (!url) return false;
+  try {
+    const parsed = new URL(url);
+    return (
+      BOOKING_EMBED_HOSTS.has(parsed.hostname) &&
+      parsed.pathname.startsWith("/widget/booking/")
+    );
+  } catch {
+    return false;
+  }
+}

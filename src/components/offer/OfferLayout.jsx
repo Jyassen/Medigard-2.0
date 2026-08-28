@@ -23,11 +23,16 @@ function OfferLogo({ to = O.home }) {
 function OfferNav() {
   const { pathname } = useLocation();
   const onHome = pathname === O.home;
+  const onV2 = pathname === ROUTES.offerV2;
 
   return (
     <header className="nav container">
-      <OfferLogo />
-      {onHome ? (
+      <OfferLogo to={onV2 ? ROUTES.offerV2 : O.home} />
+      {onV2 ? (
+        <a className="btn btn-small" href="#book">
+          Book a Review
+        </a>
+      ) : onHome ? (
         <Link className="btn btn-small" to={O.book}>
           Book a Review
         </Link>
@@ -68,7 +73,11 @@ function OfferFooter() {
 
 export default function OfferLayout() {
   const { pathname } = useLocation();
-  const isV3 = pathname === ROUTES.offerV3;
+  const ownChrome = pathname === ROUTES.offerV3 || pathname === ROUTES.offerV4;
+  const shellClass = {
+    [ROUTES.offerV3]: "offer-v3-shell",
+    [ROUTES.offerV4]: "offer-v4-shell",
+  }[pathname];
   useFunnelTracking(pathname);
 
   useEffect(() => {
@@ -85,10 +94,10 @@ export default function OfferLayout() {
   }, [pathname]);
 
   return (
-    <div className={isV3 ? "offer-v3-shell" : "offer-shell"}>
-      {isV3 ? null : <OfferNav />}
+    <div className={shellClass || "offer-shell"}>
+      {ownChrome ? null : <OfferNav />}
       <Outlet />
-      {isV3 ? null : <OfferFooter />}
+      {ownChrome ? null : <OfferFooter />}
     </div>
   );
 }

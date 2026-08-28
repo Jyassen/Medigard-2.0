@@ -14,6 +14,7 @@ describe("ROUTES", () => {
       offer: "/offer",
       offerV2: "/offer/v2",
       offerV3: "/offer/v3",
+      offerV4: "/offer/v4",
       offerBook: "/offer/book",
       offerThankYou: "/offer/thank-you",
       offerContact: "/offer/contact",

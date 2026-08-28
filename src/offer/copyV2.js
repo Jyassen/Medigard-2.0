@@ -11,6 +11,13 @@ export const OFFER_V2 = {
     { value: "Full calendars", label: "appointments booked for your agents" },
     { value: "Active agents", label: "recruited, trained, producing" },
   ],
+  booking: {
+    kicker: "Book your review",
+    heading: "Pick a time.",
+    headingAccent: "We'll confirm by email.",
+    subhead:
+      "Choose a slot for your 30-minute review. Come ready with one producer who should already be working—but is not.",
+  },
   problem: {
     kicker: "The problem",
     heading: "Growing usually means",

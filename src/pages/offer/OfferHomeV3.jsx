@@ -1,7 +1,18 @@
 import { Link } from "react-router-dom";
 import BookingWidget from "../../components/BookingWidget";
-import { BOOKING_URLS, CRM_SOURCES, withSource } from "../../constants/funnels";
-import { LOGO_VARIATION, VSL_VIDEO } from "../../constants/media";
+import {
+  BOOKING_URLS,
+  canEmbedBooking,
+  CRM_SOURCES,
+  withSource,
+} from "../../constants/funnels";
+import VslPlayer from "../../components/VslPlayer";
+import {
+  GROWTH_VSL_ASPECT,
+  GROWTH_VSL_WISTIA_ID,
+  LOGO_VARIATION,
+  VSL_VIDEO,
+} from "../../constants/media";
 import { ROUTES } from "../../constants/routes";
 import { O } from "../../offer/constants";
 import { OFFER_V3 } from "../../offer/copyV3";
@@ -21,10 +32,8 @@ function V3Logo({ to = ROUTES.offerV3 }) {
 }
 
 export default function OfferHomeV3() {
-  const bookingSrc = withSource(BOOKING_URLS.growth, CRM_SOURCES.offerBook);
-  const embedsCalendar = BOOKING_URLS.growth.startsWith(
-    "https://api.leadconnectorhq.com/widget/booking/",
-  );
+  const bookingSrc = withSource(BOOKING_URLS.compliance, CRM_SOURCES.offerBook);
+  const embedsCalendar = canEmbedBooking(BOOKING_URLS.compliance);
   const year = new Date().getFullYear();
 
   return (
@@ -43,13 +52,11 @@ export default function OfferHomeV3() {
               <h1>{OFFER_V3.hero.headline}</h1>
               <p className="v3-hero-sub">{OFFER_V3.hero.subhead}</p>
             </div>
-            <div className="v3-video">
-              <video
+            <div className="v3-video" title="See how Medigard works">
+              <VslPlayer
                 src={VSL_VIDEO}
-                controls
-                playsInline
-                preload="metadata"
-                title="See how Medigard works"
+                wistiaId={GROWTH_VSL_WISTIA_ID || undefined}
+                wistiaAspect={GROWTH_VSL_ASPECT}
               />
             </div>
             <a className="v3-cta" href="#book">

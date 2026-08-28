@@ -1,15 +1,18 @@
 import { Link } from "react-router-dom";
 import BookingWidget from "../../components/BookingWidget";
-import { BOOKING_URLS, CRM_SOURCES, withSource } from "../../constants/funnels";
+import {
+  BOOKING_URLS,
+  canEmbedBooking,
+  CRM_SOURCES,
+  withSource,
+} from "../../constants/funnels";
 import { VSL_VIDEO } from "../../constants/media";
 import { O } from "../../offer/constants";
 import { OFFER } from "../../offer/copy";
 
 export default function OfferBooking() {
-  const bookingSrc = withSource(BOOKING_URLS.growth, CRM_SOURCES.offerBook);
-  const embedsCalendar = BOOKING_URLS.growth.startsWith(
-    "https://api.leadconnectorhq.com/widget/booking/",
-  );
+  const bookingSrc = withSource(BOOKING_URLS.compliance, CRM_SOURCES.offerBook);
+  const embedsCalendar = canEmbedBooking(BOOKING_URLS.compliance);
 
   return (
     <main className="booking-page">

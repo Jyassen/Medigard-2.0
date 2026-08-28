@@ -1,5 +1,11 @@
 import { describe, expect, test } from "vitest";
-import { CRM_SOURCES, getFunnelSource, withSource } from "./funnels";
+import {
+  BOOKING_URLS,
+  canEmbedBooking,
+  CRM_SOURCES,
+  getFunnelSource,
+  withSource,
+} from "./funnels";
 
 describe("getFunnelSource", () => {
   test("maps each public route family to its CRM source", () => {
@@ -26,5 +32,15 @@ describe("withSource", () => {
     ).toBe(
       "https://example.com/path?campaign=summer&source=medigard_t65_handoff",
     );
+  });
+});
+
+describe("canEmbedBooking", () => {
+  test("embeds the live GHL widget calendars and rejects unknown hosts", () => {
+    expect([
+      canEmbedBooking(BOOKING_URLS.growth),
+      canEmbedBooking(BOOKING_URLS.compliance),
+      canEmbedBooking("https://example.com/widget/booking/demo"),
+    ]).toEqual([true, true, false]);
   });
 });

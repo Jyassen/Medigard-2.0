@@ -1,5 +1,10 @@
 import { Link } from "react-router-dom";
-import { PRE_VSL_VIDEO } from "../../constants/media";
+import VslPlayer from "../../components/VslPlayer";
+import {
+  GROWTH_VSL_ASPECT,
+  PRE_CALL_VSL_WISTIA_ID,
+  PRE_VSL_VIDEO,
+} from "../../constants/media";
 import { O } from "../../offer/constants";
 
 const nextSteps = [
@@ -59,16 +64,15 @@ export default function OfferThankYou() {
       </section>
       <section className="section container narrow">
         <div className="video-frame">
-          <video
-            src={PRE_VSL_VIDEO}
-            controls
-            playsInline
-            preload="metadata"
+          <VslPlayer
+            kicker="PRE-CALL BRIEFING"
             title="Watch this before the call"
+            className="thank-vsl"
+            src={PRE_VSL_VIDEO}
+            wistiaId={PRE_CALL_VSL_WISTIA_ID || undefined}
+            wistiaAspect={GROWTH_VSL_ASPECT}
           />
           <div className="asset-copy">
-            <div className="section-kicker">PRE-CALL BRIEFING</div>
-            <h3>Watch this before the call</h3>
             <p>
               A short briefing so we can hit the ground running on appointments,
               recruiting, follow-up, and getting new agents working.

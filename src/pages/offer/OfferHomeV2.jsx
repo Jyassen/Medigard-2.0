@@ -1,8 +1,21 @@
-import { Link } from "react-router-dom";
-import { O } from "../../offer/constants";
+import BookingWidget from "../../components/BookingWidget";
+import VslPlayer from "../../components/VslPlayer";
+import {
+  BOOKING_URLS,
+  canEmbedBooking,
+  CRM_SOURCES,
+  withSource,
+} from "../../constants/funnels";
+import {
+  GROWTH_VSL_ASPECT,
+  GROWTH_VSL_WISTIA_ID,
+  VSL_VIDEO,
+} from "../../constants/media";
 import { OFFER_V2 } from "../../offer/copyV2";
 
 export default function OfferHomeV2() {
+  const bookingSrc = withSource(BOOKING_URLS.compliance, CRM_SOURCES.offerBook);
+
   return (
     <main>
       <section className="hero container">
@@ -12,9 +25,9 @@ export default function OfferHomeV2() {
         </h1>
         <p className="hero-copy">{OFFER_V2.hero.subhead}</p>
         <div className="hero-actions">
-          <Link className="btn" to={O.book}>
+          <a className="btn" href="#book">
             Book Your Review <span>→</span>
-          </Link>
+          </a>
           <a className="text-link" href="#how-it-works">
             See how it works ↓
           </a>
@@ -26,6 +39,54 @@ export default function OfferHomeV2() {
               <span>{item.label}</span>
             </div>
           ))}
+        </div>
+        <div
+          className="vsl-slot"
+          id="vsl"
+          style={{
+            marginTop: "2.5rem",
+            maxWidth: "56rem",
+            marginInline: "auto",
+          }}
+        >
+          <VslPlayer
+            title="See how the Medigard Growth System works"
+            src={VSL_VIDEO}
+            wistiaId={GROWTH_VSL_WISTIA_ID || undefined}
+            wistiaAspect={GROWTH_VSL_ASPECT}
+          />
+        </div>
+      </section>
+
+      <section className="section container" id="book">
+        <div className="section-kicker">{OFFER_V2.booking.kicker}</div>
+        <h2>
+          {OFFER_V2.booking.heading}{" "}
+          <span>{OFFER_V2.booking.headingAccent}</span>
+        </h2>
+        <p className="lead">{OFFER_V2.booking.subhead}</p>
+        <div className="calendar-card home-calendar">
+          {canEmbedBooking(BOOKING_URLS.compliance) ? (
+            <BookingWidget
+              src={bookingSrc}
+              title="Schedule a Medigard agency review"
+            />
+          ) : (
+            <a
+              className="btn full"
+              href={bookingSrc}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open agency review calendar →
+            </a>
+          )}
+          <small className="fine">
+            By booking, you agree to receive scheduling messages. Message
+            frequency varies; message and data rates may apply. Reply STOP to
+            unsubscribe. This is an agency fit review. We do not promise
+            revenue, enrollments, commissions, or what agents write.
+          </small>
         </div>
       </section>
 
@@ -118,9 +179,9 @@ export default function OfferHomeV2() {
           <div className="section-kicker">{OFFER_V2.guarantee.kicker}</div>
           <h2>{OFFER_V2.guarantee.heading}</h2>
           <p className="lead light">{OFFER_V2.guarantee.body}</p>
-          <Link className="btn btn-gold" to={O.book}>
+          <a className="btn btn-gold" href="#book">
             See If You’re a Fit →
-          </Link>
+          </a>
         </div>
       </section>
 
@@ -155,9 +216,9 @@ export default function OfferHomeV2() {
         <div className="container">
           <h2>{OFFER_V2.cta.heading}</h2>
           <p>{OFFER_V2.cta.subhead}</p>
-          <Link className="btn btn-gold" to={O.book}>
+          <a className="btn btn-gold" href="#book">
             Book Your Review →
-          </Link>
+          </a>
         </div>
       </section>
     </main>

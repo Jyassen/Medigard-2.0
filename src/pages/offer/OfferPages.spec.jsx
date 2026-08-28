@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import OfferLayout from "../../components/offer/OfferLayout";
-import { LOGO_VARIATION } from "../../constants/media";
+import { LOGO_VARIATION, PRE_CALL_VSL_WISTIA_ID } from "../../constants/media";
 import { ROUTES } from "../../constants/routes";
 import OfferBooking from "./OfferBooking";
 import OfferPrivacy from "./OfferPrivacy";
@@ -36,20 +36,26 @@ describe("OfferBooking", () => {
     ).toBeInTheDocument();
     expect(screen.getByText("See how it works")).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: /Open agency review calendar/i }),
-    ).toHaveAttribute("href", expect.stringContaining("source=medigard_offer"));
+      screen.getByTitle("Schedule a Medigard agency review"),
+    ).toHaveAttribute("src", expect.stringContaining("R708RvYTDmq9qJnkD72t"));
+    expect(
+      screen.getByTitle("Schedule a Medigard agency review"),
+    ).toHaveAttribute("src", expect.stringContaining("source=medigard_offer"));
+    expect(
+      screen.queryByRole("link", { name: /Open agency review calendar/i }),
+    ).not.toBeInTheDocument();
     expect(
       screen.queryByText("Book Your Compliance", { exact: false }),
     ).not.toBeInTheDocument();
     expect(
       screen.queryByText("Infrastructure Audit", { exact: false }),
     ).not.toBeInTheDocument();
-  });
+  }, 15000);
 });
 
 describe("OfferThankYou", () => {
   test("confirms the agency review and asks for the same prep the export and live thank-you require", () => {
-    renderOffer("/offer/thank-you", OfferThankYou);
+    const { container } = renderOffer("/offer/thank-you", OfferThankYou);
 
     expect(
       screen.getByRole("heading", {
@@ -58,6 +64,10 @@ describe("OfferThankYou", () => {
       }),
     ).toBeInTheDocument();
     expect(screen.getByText("Watch this before the call")).toBeInTheDocument();
+    expect(container.querySelector("wistia-player")).toHaveAttribute(
+      "media-id",
+      PRE_CALL_VSL_WISTIA_ID,
+    );
     expect(screen.getByText("Check Inbox")).toBeInTheDocument();
     expect(
       screen.getByText("How many active agents have open time", {

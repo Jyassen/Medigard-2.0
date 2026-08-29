@@ -58,7 +58,7 @@ export default function SiteNav() {
           T-65
         </NavLink>
         <NavLink
-          to={ROUTES.compliance}
+          to={ROUTES.complianceV2}
           className={linkClass}
           onClick={() => setOpen(false)}
         >

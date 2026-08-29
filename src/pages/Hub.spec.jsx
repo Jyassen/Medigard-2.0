@@ -19,7 +19,7 @@ describe("Hub", () => {
     ).toEqual([
       { label: "Explore Growth", href: "/launch" },
       { label: "Explore T-65", href: "/leads/t65" },
-      { label: "Explore Compliance", href: "/compliance" },
+      { label: "Explore Compliance", href: "/compliance/v2" },
     ]);
   });
 

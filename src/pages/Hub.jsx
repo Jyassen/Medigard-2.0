@@ -29,7 +29,7 @@ const systems = [
     description:
       "Give established agencies and FMOs clearer oversight, documented workflows, and a more audit-ready operating posture—when scale cannot create a compliance problem.",
     action: "Explore Compliance",
-    to: ROUTES.compliance,
+    to: ROUTES.complianceV2,
     accent: "border-[#4f7d68] text-[#315d49]",
   },
 ];

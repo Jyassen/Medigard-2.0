@@ -46,7 +46,7 @@ function ComplianceNav() {
           } lg:flex w-full lg:w-auto flex-col lg:flex-row lg:items-center gap-6 lg:gap-8`}
         >
           <NavLink
-            to={ROUTES.home}
+            to={ROUTES.systems}
             className={link}
             onClick={() => setOpen(false)}
             end
@@ -102,7 +102,7 @@ function ComplianceFooter() {
         </div>
         <div className="flex flex-wrap justify-center gap-6 md:gap-10 text-xs font-black uppercase tracking-[0.2em] text-zinc-400 mb-8">
           <Link
-            to={ROUTES.home}
+            to={ROUTES.systems}
             className="hover:text-emerald-400 transition-colors"
           >
             Medigard Systems

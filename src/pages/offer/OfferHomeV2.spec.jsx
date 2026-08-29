@@ -7,11 +7,12 @@ import { ROUTES } from "../../constants/routes";
 import { OFFER_V2 } from "../../offer/copyV2";
 import OfferHomeV2 from "./OfferHomeV2";
 
-function renderV2() {
+function renderV2(path = ROUTES.home) {
   return render(
-    <MemoryRouter initialEntries={[ROUTES.offerV2]}>
+    <MemoryRouter initialEntries={[path]}>
       <Routes>
         <Route element={<OfferLayout />}>
+          <Route path={ROUTES.home} element={<OfferHomeV2 />} />
           <Route path={ROUTES.offerV2} element={<OfferHomeV2 />} />
         </Route>
       </Routes>
@@ -47,7 +48,15 @@ describe("OfferHomeV2", () => {
     ).toHaveAttribute("href", "#book");
     expect(
       screen.getByRole("link", { name: /Privacy Policy/i }),
-    ).toHaveAttribute("href", "/offer/v2/privacy");
+    ).toHaveAttribute("href", ROUTES.privacy);
+    expect(screen.getByRole("link", { name: /Terms/i })).toHaveAttribute(
+      "href",
+      ROUTES.terms,
+    );
+    expect(screen.getByRole("link", { name: /^T-65$/i })).toHaveAttribute(
+      "href",
+      ROUTES.t65,
+    );
     expect(
       screen.queryByRole("link", { name: /^Compliance$/i }),
     ).not.toBeInTheDocument();
@@ -67,4 +76,22 @@ describe("OfferHomeV2", () => {
       screen.queryByRole("link", { name: /Open agency review calendar/i }),
     ).not.toBeInTheDocument();
   }, 15000);
+
+  test("keeps the /offer/v2 URL as the same homepage", () => {
+    renderV2(ROUTES.offerV2);
+
+    expect(
+      screen.getByRole("heading", {
+        level: 1,
+        name: `${OFFER_V2.hero.headline} ${OFFER_V2.hero.headlineAccent}`,
+      }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /^T-65$/i })).toHaveAttribute(
+      "href",
+      ROUTES.t65,
+    );
+    expect(
+      screen.getByRole("link", { name: /Privacy Policy/i }),
+    ).toHaveAttribute("href", ROUTES.privacy);
+  });
 });

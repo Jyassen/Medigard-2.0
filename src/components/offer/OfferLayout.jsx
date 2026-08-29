@@ -1,6 +1,7 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { LOGO_VARIATION } from "../../constants/media";
+import { ROUTES } from "../../constants/routes";
 import { offerPaths, offerVariantFromPath } from "../../offer/constants";
 import { getSiteOrigin } from "../../site";
 import { useFunnelTracking } from "../../hooks/useFunnelTracking";
@@ -59,6 +60,7 @@ function OfferFooter({ paths }) {
       </div>
       <div className="footer-links">
         <Link to={paths.howTo}>How it works</Link>
+        <Link to={ROUTES.t65}>T-65</Link>
         <Link to={paths.contact}>Contact</Link>
         <Link to={paths.privacy}>Privacy Policy</Link>
         <Link to={paths.terms}>Terms &amp; Conditions</Link>
@@ -88,7 +90,12 @@ export default function OfferLayout() {
   useEffect(() => {
     const origin = getSiteOrigin();
     if (!origin) return;
-    const href = `${origin}${pathname}`;
+    const canonicalPath =
+      variant === "v2" &&
+      (pathname === ROUTES.home || pathname === ROUTES.offerV2)
+        ? ROUTES.home
+        : pathname;
+    const href = `${origin}${canonicalPath}`;
     let link = document.querySelector('link[rel="canonical"]');
     if (!link) {
       link = document.createElement("link");
@@ -96,7 +103,7 @@ export default function OfferLayout() {
       document.head.appendChild(link);
     }
     link.setAttribute("href", href);
-  }, [pathname]);
+  }, [pathname, variant]);
 
   const themed =
     variant === "v3" ? (

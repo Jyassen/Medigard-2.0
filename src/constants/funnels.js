@@ -30,6 +30,7 @@ export const FUNNEL_IDS = {
   offerV3: "offer-v3",
   offerV4: "offer-v4",
   compliance: "compliance",
+  complianceV2: "compliance-v2",
   t65: "t65",
 };
 
@@ -38,8 +39,10 @@ export const FUNNEL_STORAGE_KEY = "medigard_funnel";
 export const HUB_THANK_YOU = "/thank-you";
 
 export function getFunnelSource(pathname) {
+  if (pathname === "/" || pathname.startsWith("/offer")) {
+    return CRM_SOURCES.offer;
+  }
   if (pathname.startsWith("/launch")) return CRM_SOURCES.growth;
-  if (pathname.startsWith("/offer")) return CRM_SOURCES.offer;
   if (pathname.startsWith("/leads/t65")) return CRM_SOURCES.t65;
   if (pathname.startsWith("/compliance")) return CRM_SOURCES.compliance;
   return CRM_SOURCES.hub;
@@ -70,12 +73,16 @@ export function canEmbedBooking(url) {
   }
 }
 
+const SITE_WIDE_PATHS = new Set([ROUTES.privacy, ROUTES.terms, ROUTES.contact]);
+
 export function funnelFromPathname(pathname) {
+  if (pathname === "/") return FUNNEL_IDS.offerV2;
   if (pathname.startsWith("/offer/v4")) return FUNNEL_IDS.offerV4;
   if (pathname.startsWith("/offer/v3")) return FUNNEL_IDS.offerV3;
   if (pathname.startsWith("/offer/v2")) return FUNNEL_IDS.offerV2;
   if (pathname.startsWith("/offer")) return FUNNEL_IDS.offer;
   if (pathname.startsWith("/launch")) return FUNNEL_IDS.launch;
+  if (pathname.startsWith("/compliance/v2")) return FUNNEL_IDS.complianceV2;
   if (pathname.startsWith("/compliance")) return FUNNEL_IDS.compliance;
   if (pathname.startsWith("/leads/t65")) return FUNNEL_IDS.t65;
   return FUNNEL_IDS.hub;
@@ -95,6 +102,8 @@ export function thankYouPathForFunnel(funnelId) {
       return ROUTES.launchThankYou;
     case FUNNEL_IDS.compliance:
       return "/compliance/thank-you";
+    case FUNNEL_IDS.complianceV2:
+      return HUB_THANK_YOU;
     default:
       return HUB_THANK_YOU;
   }
@@ -118,7 +127,9 @@ export function readStoredFunnel() {
 }
 
 export function rememberFunnel(pathname) {
-  if (pathname === HUB_THANK_YOU) return readStoredFunnel();
+  if (pathname === HUB_THANK_YOU || SITE_WIDE_PATHS.has(pathname)) {
+    return readStoredFunnel();
+  }
   const funnel = funnelFromPathname(pathname);
   try {
     sessionStorage.setItem(FUNNEL_STORAGE_KEY, funnel);

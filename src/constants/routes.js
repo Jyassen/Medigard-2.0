@@ -1,5 +1,6 @@
 export const ROUTES = {
   home: "/",
+  systems: "/systems",
   launch: "/launch",
   launchBook: "/launch/book",
   launchThankYou: "/launch/thank-you",
@@ -20,6 +21,7 @@ export const ROUTES = {
   offerTerms: "/offer/terms",
   t65: "/leads/t65",
   compliance: "/compliance",
+  complianceV2: "/compliance/v2",
   complianceBook: "/compliance/book",
   privacy: "/privacy",
   terms: "/terms",

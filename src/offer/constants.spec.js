@@ -5,12 +5,16 @@ import { O, offerPaths, offerVariantFromPath } from "./constants";
 describe("offerVariantFromPath", () => {
   test("reads the offer theme from the URL prefix", () => {
     expect([
+      offerVariantFromPath("/"),
+      offerVariantFromPath("/privacy"),
+      offerVariantFromPath("/terms"),
+      offerVariantFromPath("/contact"),
       offerVariantFromPath("/offer"),
       offerVariantFromPath("/offer/v2"),
       offerVariantFromPath("/offer/v2/thank-you"),
       offerVariantFromPath("/offer/v3/privacy"),
       offerVariantFromPath("/offer/v4/contact"),
-    ]).toEqual(["v1", "v2", "v2", "v3", "v4"]);
+    ]).toEqual(["v2", "v2", "v2", "v2", "v1", "v2", "v2", "v3", "v4"]);
   });
 });
 
@@ -22,16 +26,16 @@ describe("offerPaths", () => {
     expect(O.thanks).toBe(ROUTES.offerThankYou);
   });
 
-  test("nests v2 legal and thank-you pages under /offer/v2", () => {
+  test("puts v2 on the site homepage with canonical privacy and terms", () => {
     expect(offerPaths("v2")).toEqual({
       variant: "v2",
-      home: ROUTES.offerV2,
-      book: `${ROUTES.offerV2}#book`,
+      home: ROUTES.home,
+      book: `${ROUTES.home}#book`,
       thanks: ROUTES.offerV2ThankYou,
-      contact: "/offer/v2/contact",
-      privacy: "/offer/v2/privacy",
-      terms: "/offer/v2/terms",
-      howTo: { pathname: ROUTES.offerV2, hash: "#how-it-works" },
+      contact: ROUTES.contact,
+      privacy: ROUTES.privacy,
+      terms: ROUTES.terms,
+      howTo: { pathname: ROUTES.home, hash: "#how-it-works" },
     });
   });
 });

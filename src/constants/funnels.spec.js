@@ -6,6 +6,7 @@ import {
   CRM_SOURCES,
   FUNNEL_IDS,
   FUNNEL_STORAGE_KEY,
+  funnelFromPathname,
   getFunnelSource,
   HUB_THANK_YOU,
   isGhlBookingCompleteMessage,
@@ -28,7 +29,25 @@ describe("getFunnelSource", () => {
       CRM_SOURCES.offer,
       CRM_SOURCES.t65,
       CRM_SOURCES.compliance,
-      "medigard_hub",
+      CRM_SOURCES.offer,
+    ]);
+  });
+});
+
+describe("funnelFromPathname", () => {
+  test("treats the homepage as offer v2 and the old VSL page as compliance v2", () => {
+    expect([
+      funnelFromPathname("/"),
+      funnelFromPathname("/offer/v2"),
+      funnelFromPathname("/compliance/v2"),
+      funnelFromPathname("/compliance"),
+      funnelFromPathname("/systems"),
+    ]).toEqual([
+      FUNNEL_IDS.offerV2,
+      FUNNEL_IDS.offerV2,
+      FUNNEL_IDS.complianceV2,
+      FUNNEL_IDS.compliance,
+      FUNNEL_IDS.hub,
     ]);
   });
 });
@@ -61,6 +80,7 @@ describe("thankYouPathForFunnel", () => {
       thankYouPathForFunnel(FUNNEL_IDS.offer),
       thankYouPathForFunnel(FUNNEL_IDS.launch),
       thankYouPathForFunnel(FUNNEL_IDS.compliance),
+      thankYouPathForFunnel(FUNNEL_IDS.complianceV2),
       thankYouPathForFunnel(FUNNEL_IDS.hub),
     ]).toEqual([
       ROUTES.offerV2ThankYou,
@@ -68,6 +88,7 @@ describe("thankYouPathForFunnel", () => {
       ROUTES.offerThankYou,
       ROUTES.launchThankYou,
       "/compliance/thank-you",
+      HUB_THANK_YOU,
       HUB_THANK_YOU,
     ]);
   });
@@ -95,6 +116,15 @@ describe("rememberFunnel", () => {
     sessionStorage.setItem(FUNNEL_STORAGE_KEY, FUNNEL_IDS.offerV2);
     expect(rememberFunnel(HUB_THANK_YOU)).toBe(FUNNEL_IDS.offerV2);
     expect(sessionStorage.getItem(FUNNEL_STORAGE_KEY)).toBe(FUNNEL_IDS.offerV2);
+  });
+
+  test("keeps the current funnel when someone opens privacy or terms", () => {
+    sessionStorage.setItem(FUNNEL_STORAGE_KEY, FUNNEL_IDS.complianceV2);
+    expect(rememberFunnel(ROUTES.privacy)).toBe(FUNNEL_IDS.complianceV2);
+    expect(rememberFunnel(ROUTES.terms)).toBe(FUNNEL_IDS.complianceV2);
+    expect(sessionStorage.getItem(FUNNEL_STORAGE_KEY)).toBe(
+      FUNNEL_IDS.complianceV2,
+    );
   });
 });
 

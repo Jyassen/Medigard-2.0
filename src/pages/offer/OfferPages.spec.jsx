@@ -90,7 +90,7 @@ describe("OfferThankYou", () => {
     );
     expect(
       screen.getByRole("link", { name: /Back to Medigard/i }),
-    ).toHaveAttribute("href", ROUTES.offerV2);
+    ).toHaveAttribute("href", ROUTES.home);
     expect(
       screen.queryByRole("link", { name: /^Compliance$/i }),
     ).not.toBeInTheDocument();

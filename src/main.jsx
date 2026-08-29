@@ -6,10 +6,7 @@ import ComplianceLayout from "./components/compliance/ComplianceLayout";
 import GrowthLayout from "./components/growth/GrowthLayout";
 import OfferLayout from "./components/offer/OfferLayout";
 import Hub from "./pages/Hub";
-import Contact from "./pages/Contact";
 import ThankYou from "./pages/ThankYou";
-import Privacy from "./pages/Privacy";
-import Terms from "./pages/Terms";
 import LaunchHome from "./pages/launch/LaunchHome";
 import LaunchBooking from "./pages/launch/LaunchBooking";
 import LaunchThankYou from "./pages/launch/LaunchThankYou";
@@ -26,6 +23,7 @@ import OfferContact from "./pages/offer/OfferContact";
 import OfferPrivacy from "./pages/offer/OfferPrivacy";
 import OfferTerms from "./pages/offer/OfferTerms";
 import T65Gate from "./pages/leads/T65Gate";
+import Landing from "./pages/Landing";
 import ComplianceHome from "./pages/compliance/ComplianceHome";
 import ComplianceContact from "./pages/compliance/ComplianceContact";
 import ComplianceBooking from "./pages/compliance/ComplianceBooking";
@@ -38,12 +36,15 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
+        <Route element={<OfferLayout />}>
+          <Route path="/" element={<OfferHomeV2 />} />
+          <Route path="/contact" element={<OfferContact />} />
+          <Route path="/privacy" element={<OfferPrivacy />} />
+          <Route path="/terms" element={<OfferTerms />} />
+        </Route>
         <Route element={<MainLayout />}>
-          <Route path="/" element={<Hub />} />
+          <Route path="/systems" element={<Hub />} />
           <Route path="/leads/t65" element={<T65Gate />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/terms" element={<Terms />} />
         </Route>
         <Route path="/thank-you" element={<ThankYou />} />
 
@@ -80,6 +81,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="terms" element={<OfferTerms />} />
         </Route>
 
+        <Route path="/compliance/v2" element={<Landing />} />
         <Route
           path="/compliance/services"
           element={
@@ -112,7 +114,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         />
         <Route
           path="/book"
-          element={<Navigate to="/compliance/book" replace />}
+          element={<Navigate to={{ pathname: "/", hash: "#book" }} replace />}
         />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

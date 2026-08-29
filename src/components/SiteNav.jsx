@@ -15,7 +15,7 @@ export default function SiteNav() {
     ? ROUTES.launchBook
     : pathname.startsWith(ROUTES.compliance)
       ? ROUTES.complianceBook
-      : ROUTES.contact;
+      : { pathname: ROUTES.home, hash: "#book" };
 
   return (
     <header className="sticky top-0 z-50 flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 bg-white/95 px-6 py-3 backdrop-blur md:px-8">
@@ -41,7 +41,7 @@ export default function SiteNav() {
           onClick={() => setOpen(false)}
           end
         >
-          Systems
+          Home
         </NavLink>
         <NavLink
           to={ROUTES.launch}

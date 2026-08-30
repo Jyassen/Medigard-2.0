@@ -3,7 +3,7 @@ import { ROUTES } from "./routes";
 export const BOOKING_URLS = {
   growth:
     import.meta.env.VITE_GROWTH_BOOKING_URL ||
-    "https://link.msgsndr.com/widget/booking/ghl_9m4gg4h7x7fwhp3sxncc?source=medigard_growth",
+    "https://api.leadconnectorhq.com/widget/booking/SETykFwwf8aabbIIsSUN?source=medigard_growth",
   compliance:
     import.meta.env.VITE_COMPLIANCE_BOOKING_URL ||
     "https://api.leadconnectorhq.com/widget/booking/R708RvYTDmq9qJnkD72t?source=medigard_compliance",

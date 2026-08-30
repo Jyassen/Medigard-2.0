@@ -16,7 +16,7 @@ import { OFFER_V2 } from "../../offer/copyV2";
 
 export default function OfferHomeV2() {
   const paths = useOfferPaths();
-  const bookingSrc = withSource(BOOKING_URLS.compliance, CRM_SOURCES.offerBook);
+  const bookingSrc = withSource(BOOKING_URLS.growth, CRM_SOURCES.offerBook);
 
   return (
     <main>
@@ -60,7 +60,7 @@ export default function OfferHomeV2() {
         </h2>
         <p className="lead">{OFFER_V2.booking.subhead}</p>
         <div className="calendar-card home-calendar">
-          {canEmbedBooking(BOOKING_URLS.compliance) ? (
+          {canEmbedBooking(BOOKING_URLS.growth) ? (
             <BookingWidget
               src={bookingSrc}
               title="Schedule a Medigard agency review"

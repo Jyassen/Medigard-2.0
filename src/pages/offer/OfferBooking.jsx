@@ -12,8 +12,8 @@ import { OFFER } from "../../offer/copy";
 
 export default function OfferBooking() {
   const paths = useOfferPaths();
-  const bookingSrc = withSource(BOOKING_URLS.compliance, CRM_SOURCES.offerBook);
-  const embedsCalendar = canEmbedBooking(BOOKING_URLS.compliance);
+  const bookingSrc = withSource(BOOKING_URLS.growth, CRM_SOURCES.offerBook);
+  const embedsCalendar = canEmbedBooking(BOOKING_URLS.growth);
 
   return (
     <main className="booking-page">

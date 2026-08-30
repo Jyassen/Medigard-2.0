@@ -68,7 +68,7 @@ describe("OfferHomeV2", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByTitle("Schedule a Medigard agency review"),
-    ).toHaveAttribute("src", expect.stringContaining("R708RvYTDmq9qJnkD72t"));
+    ).toHaveAttribute("src", expect.stringContaining("SETykFwwf8aabbIIsSUN"));
     expect(
       screen.getByTitle("Schedule a Medigard agency review"),
     ).toHaveAttribute("src", expect.stringContaining("source=medigard_offer"));

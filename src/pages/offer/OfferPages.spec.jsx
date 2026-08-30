@@ -37,7 +37,7 @@ describe("OfferBooking", () => {
     expect(screen.getByText("See how it works")).toBeInTheDocument();
     expect(
       screen.getByTitle("Schedule a Medigard agency review"),
-    ).toHaveAttribute("src", expect.stringContaining("R708RvYTDmq9qJnkD72t"));
+    ).toHaveAttribute("src", expect.stringContaining("SETykFwwf8aabbIIsSUN"));
     expect(
       screen.getByTitle("Schedule a Medigard agency review"),
     ).toHaveAttribute("src", expect.stringContaining("source=medigard_offer"));

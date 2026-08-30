@@ -68,6 +68,14 @@ describe("canEmbedBooking", () => {
   });
 });
 
+describe("BOOKING_URLS.growth", () => {
+  test("defaults to the live LeadConnector growth calendar", () => {
+    expect(BOOKING_URLS.growth).toContain(
+      "https://api.leadconnectorhq.com/widget/booking/SETykFwwf8aabbIIsSUN",
+    );
+  });
+});
+
 describe("thankYouPathForFunnel", () => {
   test("keeps each live funnel on its own pre-call page", () => {
     expect([

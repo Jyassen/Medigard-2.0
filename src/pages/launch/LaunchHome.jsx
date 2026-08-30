@@ -73,7 +73,7 @@ export default function LaunchHome() {
             </Link>
           </div>
 
-          <div id="booking" className="mx-auto mb-32 max-w-4xl scroll-mt-24">
+          <div id="booking" className="mx-auto mb-32 max-w-6xl scroll-mt-24">
             <h2 className="mb-4 text-4xl font-black tracking-tight text-[#1e293b] md:text-5xl">
               {GROWTH.booking.heading}{" "}
               <span className="text-[#137f73]">

@@ -16,8 +16,8 @@ import { OFFER_V3 } from "../../offer/copyV3";
 
 export default function OfferHomeV3() {
   const paths = useOfferPaths();
-  const bookingSrc = withSource(BOOKING_URLS.compliance, CRM_SOURCES.offerBook);
-  const embedsCalendar = canEmbedBooking(BOOKING_URLS.compliance);
+  const bookingSrc = withSource(BOOKING_URLS.growth, CRM_SOURCES.offerBook);
+  const embedsCalendar = canEmbedBooking(BOOKING_URLS.growth);
 
   return (
     <main>

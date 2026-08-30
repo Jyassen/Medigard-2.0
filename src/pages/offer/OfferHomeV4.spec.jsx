@@ -30,9 +30,9 @@ describe("OfferHomeV4", () => {
       }),
     ).toBeInTheDocument();
     expect(
-      screen.getAllByRole("link", { name: OFFER_V4.hero.cta }).map((el) =>
-        el.getAttribute("href"),
-      ),
+      screen
+        .getAllByRole("link", { name: OFFER_V4.hero.cta })
+        .map((el) => el.getAttribute("href")),
     ).toEqual(["/offer/v4#book", "#book", "#book"]);
     expect(screen.getByTitle("See how Medigard works")).toBeInTheDocument();
     expect(
@@ -43,7 +43,7 @@ describe("OfferHomeV4", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByTitle("Schedule a Medigard agency review"),
-    ).toHaveAttribute("src", expect.stringContaining("R708RvYTDmq9qJnkD72t"));
+    ).toHaveAttribute("src", expect.stringContaining("SETykFwwf8aabbIIsSUN"));
     expect(
       screen.getByTitle("Schedule a Medigard agency review"),
     ).toHaveAttribute("src", expect.stringContaining("source=medigard_offer"));

@@ -320,7 +320,7 @@
 }
 
 .offer-v4-shell .v4-calendar {
-  padding: 24px;
+  padding: 12px 8px 0;
   border: 1px solid var(--v4-line);
   border-radius: 18px;
   background: var(--v4-paper);
@@ -497,8 +497,18 @@
   }
 
   .offer-v4-shell .v4-book-grid {
-    grid-template-columns: 0.85fr 1.15fr;
-    align-items: start;
+    grid-template-columns: 1fr;
+  }
+
+  .offer-v4-shell .v4-book-points {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0 28px;
+  }
+
+  .offer-v4-shell .v4-book-points li {
+    border-bottom: 0;
+    padding: 0 0 8px;
   }
 
   .offer-v4-shell .v4-split {

@@ -15,10 +15,14 @@ describe("BookingWidget", () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByTitle("Growth infrastructure calendar")).toHaveAttribute(
+    const calendar = screen.getByTitle("Growth infrastructure calendar");
+    expect(calendar).toHaveAttribute(
       "src",
       "https://example.com/calendar?source=launch",
     );
+    expect(calendar).toHaveAttribute("allow", "payment");
+    expect(calendar).toHaveClass("!h-[700px]");
+    expect(calendar).not.toHaveClass("min-h-[1100px]");
   });
 
   test("sends a completed GHL booking to the funnel thank-you page", () => {

@@ -189,7 +189,7 @@
   border-radius: 20px;
   background: #fff;
   color: var(--v3-navy);
-  padding: 28px 24px 8px;
+  padding: 12px 8px 0;
 }
 
 .offer-v3-shell .v3-calendar .v3-cta {
@@ -476,8 +476,18 @@
   }
 
   .offer-v3-shell .v3-book-grid {
-    grid-template-columns: 0.85fr 1.15fr;
-    align-items: start;
+    grid-template-columns: 1fr;
+  }
+
+  .offer-v3-shell .v3-book-points {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0 28px;
+  }
+
+  .offer-v3-shell .v3-book-points li {
+    border-bottom: 0;
+    padding: 0 0 8px;
   }
 
   .offer-v3-shell .v3-close-grid {

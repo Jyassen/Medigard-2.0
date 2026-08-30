@@ -49,4 +49,12 @@ describe("LaunchHome", () => {
       screen.getByText("Buyers shopping the cheapest possible lead source"),
     ).toBeInTheDocument();
   });
+
+  test("embeds the live growth calendar on the page", () => {
+    renderHome();
+
+    expect(
+      screen.getByTitle("Schedule a Medigard Growth Order review"),
+    ).toHaveAttribute("src", expect.stringContaining("SETykFwwf8aabbIIsSUN"));
+  });
 });

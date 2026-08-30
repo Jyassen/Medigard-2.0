@@ -22,7 +22,7 @@ export default function LaunchBooking() {
 
   return (
     <main className="flex-1 px-6 py-16 md:py-24">
-      <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[0.75fr_1.25fr]">
+      <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)]">
         <section>
           <p className="mb-6 text-xs font-black uppercase tracking-[0.2em] text-[#137f73]">
             Agency Scale Infrastructure
@@ -65,7 +65,7 @@ export default function LaunchBooking() {
 
         <section
           aria-label="Schedule your agency growth review"
-          className="flex min-h-[560px] items-center justify-center rounded-[2.5rem] border border-slate-100 bg-slate-50 p-8"
+          className="rounded-[2rem] border border-slate-100 bg-white p-3 sm:p-4"
         >
           {embedsCalendar ? (
             <BookingWidget

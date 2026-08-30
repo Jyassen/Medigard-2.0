@@ -5,6 +5,8 @@ import {
   isGhlBookingOrigin,
 } from "../constants/funnels";
 
+const GHL_FORM_EMBED_SRC = "https://link.msgsndr.com/js/form_embed.js";
+
 export default function BookingWidget({
   src,
   title,
@@ -12,6 +14,17 @@ export default function BookingWidget({
   thankYouTo,
 }) {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (document.querySelector(`script[src="${GHL_FORM_EMBED_SRC}"]`)) {
+      return undefined;
+    }
+    const script = document.createElement("script");
+    script.src = GHL_FORM_EMBED_SRC;
+    script.async = true;
+    document.body.appendChild(script);
+    return undefined;
+  }, []);
 
   useEffect(() => {
     if (!thankYouTo) return undefined;
@@ -31,9 +44,12 @@ export default function BookingWidget({
       <iframe
         src={src}
         title={title}
-        className="block min-h-[1100px] w-full border-0"
+        allow="payment"
+        scrolling="no"
+        className="block !h-[700px] w-full border-0"
         loading="lazy"
         referrerPolicy="strict-origin-when-cross-origin"
+        style={{ overflow: "hidden" }}
       />
     </div>
   );

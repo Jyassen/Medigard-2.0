@@ -37,12 +37,22 @@ export default function OfferThankYou() {
   const paths = useOfferPaths();
   return (
     <main className="thank-page">
-      <section className="thank-hero container narrow">
+      <section className="thank-hero container">
         <div className="success-icon">✓</div>
         <div className="eyebrow">REVIEW REQUEST RECEIVED</div>
         <h1>
-          Your review is <span>almost confirmed.</span>
+          Your review is <span>confirmed</span>
         </h1>
+        <div className="vsl-slot" id="vsl">
+          <VslPlayer
+            kicker="PRE-CALL BRIEFING"
+            title="Watch this before the call"
+            className="thank-vsl"
+            src={PRE_VSL_VIDEO}
+            wistiaId={PRE_CALL_VSL_WISTIA_ID || undefined}
+            wistiaAspect={GROWTH_VSL_ASPECT}
+          />
+        </div>
         <p className="hero-copy">
           Check your inbox for the calendar invite and accept the time. Before
           we meet, pick one producer who should already be working—but is not.
@@ -64,22 +74,6 @@ export default function OfferThankYou() {
         </div>
       </section>
       <section className="section container narrow">
-        <div className="video-frame">
-          <VslPlayer
-            kicker="PRE-CALL BRIEFING"
-            title="Watch this before the call"
-            className="thank-vsl"
-            src={PRE_VSL_VIDEO}
-            wistiaId={PRE_CALL_VSL_WISTIA_ID || undefined}
-            wistiaAspect={GROWTH_VSL_ASPECT}
-          />
-          <div className="asset-copy">
-            <p>
-              A short briefing so we can hit the ground running on appointments,
-              recruiting, follow-up, and getting new agents working.
-            </p>
-          </div>
-        </div>
         <div className="notice">
           <div className="section-kicker">BEFORE THE CALL</div>
           <h2>Bring a few simple numbers.</h2>

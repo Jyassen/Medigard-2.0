@@ -54,15 +54,20 @@ describe("OfferBooking", () => {
 });
 
 describe("OfferThankYou", () => {
-  test("confirms the agency review and asks for the same prep the export and live thank-you require", () => {
+  test("confirms the agency review with the pre-call VSL directly under the headline", () => {
     const { container } = renderOffer("/offer/thank-you", OfferThankYou);
 
-    expect(
-      screen.getByRole("heading", {
-        level: 1,
-        name: /Your review is\s*almost confirmed\./,
-      }),
-    ).toBeInTheDocument();
+    const heading = screen.getByRole("heading", {
+      level: 1,
+      name: "Your review is confirmed",
+    });
+    const hero = heading.closest(".thank-hero");
+    const [icon, kicker, title, vsl, copy] = hero.children;
+    expect(icon).toHaveClass("success-icon");
+    expect(kicker).toHaveClass("eyebrow");
+    expect(title.tagName).toBe("H1");
+    expect(vsl).toHaveAttribute("id", "vsl");
+    expect(copy).toHaveClass("hero-copy");
     expect(screen.getByText("Watch this before the call")).toBeInTheDocument();
     expect(container.querySelector("wistia-player")).toHaveAttribute(
       "media-id",
@@ -79,11 +84,19 @@ describe("OfferThankYou", () => {
         exact: false,
       }),
     ).not.toBeInTheDocument();
+    expect(
+      screen.queryByText("almost confirmed", { exact: false }),
+    ).not.toBeInTheDocument();
   });
 
   test("keeps the v2 pre-call VSL inside the v2 theme after booking", () => {
     const { container } = renderOffer("/offer/v2/thank-you", OfferThankYou);
 
+    const heading = screen.getByRole("heading", {
+      level: 1,
+      name: "Your review is confirmed",
+    });
+    expect(heading.nextElementSibling).toHaveAttribute("id", "vsl");
     expect(container.querySelector("wistia-player")).toHaveAttribute(
       "media-id",
       PRE_CALL_VSL_WISTIA_ID,
@@ -91,6 +104,23 @@ describe("OfferThankYou", () => {
     expect(
       screen.getByRole("link", { name: /Back to Medigard/i }),
     ).toHaveAttribute("href", ROUTES.home);
+    expect(
+      screen.queryByRole("link", { name: /Book a Review/i }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("link", { name: /How it works/i }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /Privacy Policy/i }),
+    ).toHaveAttribute("href", ROUTES.privacy);
+    expect(screen.getByRole("link", { name: /Terms/i })).toHaveAttribute(
+      "href",
+      ROUTES.terms,
+    );
+    expect(screen.getByRole("link", { name: /^Contact$/i })).toHaveAttribute(
+      "href",
+      ROUTES.contact,
+    );
     expect(
       screen.queryByRole("link", { name: /^Compliance$/i }),
     ).not.toBeInTheDocument();

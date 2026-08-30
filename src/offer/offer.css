@@ -488,6 +488,27 @@
   text-align: center;
 }
 
+.offer-shell .thank-hero .vsl-slot {
+  width: 100%;
+  max-width: none;
+  margin: 2rem auto 0;
+}
+
+.offer-shell .thank-hero .hero-copy {
+  max-width: 42rem;
+  margin: 1.5rem auto 0;
+}
+
+.offer-shell .thank-hero .detail-grid {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.offer-shell .thank-hero .thank-vsl {
+  border-radius: 16px;
+}
+
 .offer-shell .booking-hero h1,
 .offer-shell .thank-hero h1,
 .offer-shell .legal h1 {

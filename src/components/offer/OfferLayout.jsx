@@ -29,11 +29,12 @@ function OfferNav({ paths }) {
   const { pathname } = useLocation();
   const onV2 = paths.variant === "v2";
   const onHome = pathname === paths.home;
+  const onThanks = pathname === paths.thanks;
 
   return (
     <header className="nav container">
       <OfferLogo to={paths.home} />
-      {onV2 ? (
+      {onThanks ? null : onV2 ? (
         <a className="btn btn-small" href={`${paths.home}#book`}>
           Book a Review
         </a>
@@ -51,6 +52,8 @@ function OfferNav({ paths }) {
 }
 
 function OfferFooter({ paths }) {
+  const { pathname } = useLocation();
+  const onThanks = pathname === paths.thanks;
   const year = new Date().getFullYear();
   return (
     <footer className="footer container">
@@ -59,11 +62,21 @@ function OfferFooter({ paths }) {
         <span>Growth infrastructure for Medicare agencies.</span>
       </div>
       <div className="footer-links">
-        <Link to={paths.howTo}>How it works</Link>
-        <Link to={ROUTES.t65}>T-65</Link>
-        <Link to={paths.contact}>Contact</Link>
-        <Link to={paths.privacy}>Privacy Policy</Link>
-        <Link to={paths.terms}>Terms &amp; Conditions</Link>
+        {onThanks ? (
+          <>
+            <Link to={paths.contact}>Contact</Link>
+            <Link to={paths.privacy}>Privacy Policy</Link>
+            <Link to={paths.terms}>Terms &amp; Conditions</Link>
+          </>
+        ) : (
+          <>
+            <Link to={paths.howTo}>How it works</Link>
+            <Link to={ROUTES.t65}>T-65</Link>
+            <Link to={paths.contact}>Contact</Link>
+            <Link to={paths.privacy}>Privacy Policy</Link>
+            <Link to={paths.terms}>Terms &amp; Conditions</Link>
+          </>
+        )}
       </div>
       <p className="footer-note">
         © {year} Medigard Compliance Systems LLC. All rights reserved. We

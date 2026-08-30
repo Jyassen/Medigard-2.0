@@ -24,7 +24,6 @@ describe("ROUTES", () => {
       offerContact: "/offer/contact",
       offerPrivacy: "/offer/privacy",
       offerTerms: "/offer/terms",
-      t65: "/leads/t65",
       compliance: "/compliance",
       complianceV2: "/compliance/v2",
       complianceBook: "/compliance/book",

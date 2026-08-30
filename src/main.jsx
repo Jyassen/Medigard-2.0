@@ -22,7 +22,6 @@ import OfferThankYou from "./pages/offer/OfferThankYou";
 import OfferContact from "./pages/offer/OfferContact";
 import OfferPrivacy from "./pages/offer/OfferPrivacy";
 import OfferTerms from "./pages/offer/OfferTerms";
-import T65Gate from "./pages/leads/T65Gate";
 import Landing from "./pages/Landing";
 import ComplianceHome from "./pages/compliance/ComplianceHome";
 import ComplianceContact from "./pages/compliance/ComplianceContact";
@@ -44,7 +43,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </Route>
         <Route element={<MainLayout />}>
           <Route path="/systems" element={<Hub />} />
-          <Route path="/leads/t65" element={<T65Gate />} />
         </Route>
         <Route path="/thank-you" element={<ThankYou />} />
 

@@ -14,16 +14,6 @@ const systems = [
   },
   {
     number: "02",
-    label: "Consumer conversations",
-    name: "T-65 Guidance",
-    description:
-      "Connect turning-65 consumers with clear Medicare guidance and route qualified local conversations to prepared producers.",
-    action: "Explore T-65",
-    to: ROUTES.t65,
-    accent: "border-[#e8a23a] text-[#a86512]",
-  },
-  {
-    number: "03",
     label: "Protect the scale",
     name: "Medigard Compliance",
     description:
@@ -52,8 +42,7 @@ export default function Hub() {
               Medicare agencies do not primarily have a lead problem, a
               recruiting problem, or a CRM problem. They have an
               order-of-operations problem. Medigard installs the systems that
-              close that gap—without forcing three buyers into one generic
-              pitch.
+              close that gap—without forcing every buyer into one generic pitch.
             </p>
           </div>
         </div>
@@ -64,7 +53,7 @@ export default function Hub() {
           <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
               <p className="mb-3 font-mono text-xs font-bold uppercase tracking-[0.24em] text-[#5b7067]">
-                Three focused systems
+                Two focused systems
               </p>
               <h2
                 id="choose-system"

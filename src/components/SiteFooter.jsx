@@ -14,9 +14,6 @@ export default function SiteFooter() {
             <Link to={ROUTES.launch} className="hover:text-[#1e293b]">
               Growth
             </Link>
-            <Link to={ROUTES.t65} className="hover:text-[#1e293b]">
-              T-65
-            </Link>
             <Link to={ROUTES.complianceV2} className="hover:text-[#1e293b]">
               Compliance
             </Link>

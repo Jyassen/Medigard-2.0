@@ -51,13 +51,6 @@ export default function SiteNav() {
           Growth
         </NavLink>
         <NavLink
-          to={ROUTES.t65}
-          className={linkClass}
-          onClick={() => setOpen(false)}
-        >
-          T-65
-        </NavLink>
-        <NavLink
           to={ROUTES.complianceV2}
           className={linkClass}
           onClick={() => setOpen(false)}

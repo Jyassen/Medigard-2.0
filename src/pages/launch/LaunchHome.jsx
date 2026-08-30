@@ -424,8 +424,7 @@ export default function LaunchHome() {
                 </h3>
                 <p className="mb-6 font-medium leading-relaxed text-slate-600">
                   TCPA/CMS-safe funnels and named ownership so current producers
-                  get usable conversations. Consumer-side T-65 work lives on its
-                  own Medigard path, not this funnel.
+                  get usable conversations.
                 </p>
               </div>
               <div className="rounded-3xl border border-slate-200 bg-slate-50 p-8">

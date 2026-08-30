@@ -53,12 +53,12 @@ describe("OfferHomeV2", () => {
       "href",
       ROUTES.terms,
     );
-    expect(screen.getByRole("link", { name: /^T-65$/i })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: /^Compliance$/i })).toHaveAttribute(
       "href",
-      ROUTES.t65,
+      ROUTES.complianceV2,
     );
     expect(
-      screen.queryByRole("link", { name: /^Compliance$/i }),
+      screen.queryByRole("link", { name: /^T-65$/i }),
     ).not.toBeInTheDocument();
     expect(
       screen.getByRole("heading", {
@@ -86,10 +86,13 @@ describe("OfferHomeV2", () => {
         name: `${OFFER_V2.hero.headline} ${OFFER_V2.hero.headlineAccent}`,
       }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /^T-65$/i })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: /^Compliance$/i })).toHaveAttribute(
       "href",
-      ROUTES.t65,
+      ROUTES.complianceV2,
     );
+    expect(
+      screen.queryByRole("link", { name: /^T-65$/i }),
+    ).not.toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: /Privacy Policy/i }),
     ).toHaveAttribute("href", ROUTES.privacy);

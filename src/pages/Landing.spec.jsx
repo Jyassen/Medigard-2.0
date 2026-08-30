@@ -44,5 +44,8 @@ describe("Landing", () => {
       "href",
       ROUTES.terms,
     );
+    expect(
+      screen.queryByRole("link", { name: /^T-65$/i }),
+    ).not.toBeInTheDocument();
   });
 });

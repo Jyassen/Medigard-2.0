@@ -9,15 +9,12 @@ export const BOOKING_URLS = {
     "https://api.leadconnectorhq.com/widget/booking/R708RvYTDmq9qJnkD72t?source=medigard_compliance",
 };
 
-export const T65_APP_URL = import.meta.env.VITE_T65_APP_URL || "";
-
 export const CRM_SOURCES = {
   hub: "medigard_hub",
   growth: "medigard_growth",
   growthBook: "medigard_growth_booking",
   offer: "medigard_offer",
   offerBook: "medigard_offer_booking",
-  t65: "medigard_t65_handoff",
   compliance: "medigard_compliance",
   complianceBook: "medigard_compliance_booking",
 };
@@ -31,7 +28,6 @@ export const FUNNEL_IDS = {
   offerV4: "offer-v4",
   compliance: "compliance",
   complianceV2: "compliance-v2",
-  t65: "t65",
 };
 
 export const FUNNEL_STORAGE_KEY = "medigard_funnel";
@@ -43,7 +39,6 @@ export function getFunnelSource(pathname) {
     return CRM_SOURCES.offer;
   }
   if (pathname.startsWith("/launch")) return CRM_SOURCES.growth;
-  if (pathname.startsWith("/leads/t65")) return CRM_SOURCES.t65;
   if (pathname.startsWith("/compliance")) return CRM_SOURCES.compliance;
   return CRM_SOURCES.hub;
 }
@@ -84,7 +79,6 @@ export function funnelFromPathname(pathname) {
   if (pathname.startsWith("/launch")) return FUNNEL_IDS.launch;
   if (pathname.startsWith("/compliance/v2")) return FUNNEL_IDS.complianceV2;
   if (pathname.startsWith("/compliance")) return FUNNEL_IDS.compliance;
-  if (pathname.startsWith("/leads/t65")) return FUNNEL_IDS.t65;
   return FUNNEL_IDS.hub;
 }
 
@@ -114,7 +108,6 @@ export function funnelFromCrmSource(source) {
   if (source.includes("offer")) return FUNNEL_IDS.offer;
   if (source.includes("growth")) return FUNNEL_IDS.launch;
   if (source.includes("compliance")) return FUNNEL_IDS.compliance;
-  if (source.includes("t65")) return FUNNEL_IDS.t65;
   return "";
 }
 
@@ -143,11 +136,7 @@ export function resolveBookingThankYouPath({
   search = "",
   storedFunnel = FUNNEL_IDS.hub,
 } = {}) {
-  if (
-    storedFunnel &&
-    storedFunnel !== FUNNEL_IDS.hub &&
-    storedFunnel !== FUNNEL_IDS.t65
-  ) {
+  if (storedFunnel && storedFunnel !== FUNNEL_IDS.hub) {
     return thankYouPathForFunnel(storedFunnel);
   }
   const query = search.startsWith("?") ? search.slice(1) : search;

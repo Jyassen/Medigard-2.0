@@ -19,8 +19,8 @@ export default function Contact() {
           </h1>
           <p className="text-lg text-slate-600 font-medium mb-10 leading-relaxed">
             Reach Medigard Compliance Systems LLC (d/b/a Medigard) for questions
-            about Agency Scale Infrastructure, T-65 guidance, compliance
-            systems, implementation, or partnerships.
+            about Agency Scale Infrastructure, compliance systems,
+            implementation, or partnerships.
           </p>
           <div className="rounded-3xl border border-slate-100 bg-slate-50/80 p-10 space-y-6">
             {origin && (

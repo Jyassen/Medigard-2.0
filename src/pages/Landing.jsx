@@ -573,9 +573,6 @@ export default function Landing() {
         <div className="container mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <MedigardLogo size="sm" />
           <div className="flex flex-wrap justify-center gap-6 md:gap-8 text-sm font-bold text-slate-400">
-            <Link to={ROUTES.t65} className="hover:text-[#1e293b]">
-              T-65
-            </Link>
             <Link to={ROUTES.privacy} className="hover:text-[#1e293b]">
               Privacy Policy
             </Link>

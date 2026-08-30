@@ -18,7 +18,6 @@ describe("Hub", () => {
       })),
     ).toEqual([
       { label: "Explore Growth", href: "/launch" },
-      { label: "Explore T-65", href: "/leads/t65" },
       { label: "Explore Compliance", href: "/compliance/v2" },
     ]);
   });
@@ -37,7 +36,8 @@ describe("Hub", () => {
       }),
     ).toBeInTheDocument();
     expect(screen.getByText("Agency Scale Infrastructure")).toBeInTheDocument();
-    expect(screen.queryByText("T-65 Lead System")).not.toBeInTheDocument();
-    expect(screen.queryByText("Explore T-65 Leads")).not.toBeInTheDocument();
+    expect(screen.getByText("Two focused systems")).toBeInTheDocument();
+    expect(screen.queryByText("T-65 Guidance")).not.toBeInTheDocument();
+    expect(screen.queryByText("Explore T-65")).not.toBeInTheDocument();
   });
 });

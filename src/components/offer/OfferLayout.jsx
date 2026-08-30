@@ -71,7 +71,7 @@ function OfferFooter({ paths }) {
         ) : (
           <>
             <Link to={paths.howTo}>How it works</Link>
-            <Link to={ROUTES.t65}>T-65</Link>
+            <Link to={ROUTES.complianceV2}>Compliance</Link>
             <Link to={paths.contact}>Contact</Link>
             <Link to={paths.privacy}>Privacy Policy</Link>
             <Link to={paths.terms}>Terms &amp; Conditions</Link>

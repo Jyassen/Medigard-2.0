@@ -2,6 +2,9 @@
   "buildCommand": "bash -c 'if command -v git-lfs >/dev/null 2>&1; then git lfs install && git lfs pull; fi' && npm run build",
   "rewrites": [
     { "source": "/auditreport", "destination": "/auditreport.html" },
+    { "source": "/scorecard", "destination": "/scorecard.html" },
+    { "source": "/capacity", "destination": "/capacity.html" },
+    { "source": "/bottleneck", "destination": "/bottleneck.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

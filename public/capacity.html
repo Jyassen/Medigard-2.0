@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medigard — Agent-to-Lead Capacity Calculator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --white:#fff;--navy:#102a43;--slate:#64748b;--slate2:#53677a;
+  --teal:#159a9c;--teal-dark:#117779;--teal-deep:#0f4c4d;
+  --gold:#d4a853;--gold-text:#a97e2f;--red:#d1495b;--red-text:#c23a4b;
+  --border:#dbe5ea;--border-soft:rgba(219,229,234,.7);
+  --bg-soft:#f5f8fa;--teal-bg:#e7f5f4;--teal-bg2:#f3fafc;--teal-border:#c5e4e5;
+  --gold-bg:#fff8e9;--gold-border:#ecdcb4;--red-bg:#fdeef0;--red-border:#eec7cd;
+  --sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --radius:14px;--radius-sm:10px;
+}
+html{-webkit-font-smoothing:antialiased}
+body{background:var(--white);color:var(--navy);font-family:var(--sans);line-height:1.6}
+.nav{width:min(1120px,calc(100% - 40px));margin:auto;min-height:88px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--border-soft)}
+.offer-logo{height:60px;width:auto;display:block}
+.nav-tag{font-size:.7rem;letter-spacing:.14em;font-weight:900;text-transform:uppercase;color:var(--teal);text-align:right}
+.wrap{width:min(800px,calc(100% - 40px));margin:0 auto;padding:44px 0 90px}
+.eyebrow{font-size:.76rem;letter-spacing:.15em;font-weight:900;color:var(--teal);text-transform:uppercase;margin-bottom:16px}
+h1.title{font-size:clamp(2.1rem,4.6vw,3.2rem);line-height:1.02;letter-spacing:-.045em;color:var(--navy);margin-bottom:16px;max-width:640px}
+h1.title b{color:var(--teal);font-weight:800}
+.lead{font-size:1.12rem;color:var(--slate);line-height:1.7;max-width:640px;margin-bottom:26px}
+.lead em{color:var(--navy);font-style:italic;font-weight:500}
+.card{border:1px solid var(--border);border-radius:var(--radius);background:var(--white);overflow:hidden;margin-bottom:18px}
+.card-hd{background:var(--bg-soft);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.card-hd-t{font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);font-weight:800}
+.card-bd{padding:22px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ig label{display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:800;margin-bottom:7px}
+.ig label span{color:var(--teal);text-transform:none;letter-spacing:0;font-size:.72rem}
+.ig-wrap{position:relative}
+.ig input{width:100%;padding:13px 15px;font-size:1.25rem;font-weight:700;color:var(--navy);font-family:var(--sans);border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-soft);transition:.15s}
+.ig input:focus{outline:2px solid var(--teal);background:var(--white)}
+.ig-suffix{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:.95rem;color:var(--slate);pointer-events:none;font-weight:600}
+.ig-note{font-size:.78rem;color:var(--slate);margin-top:7px;line-height:1.4}
+.verdict{border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:18px;transition:all .2s;background:var(--bg-soft)}
+.v-eye{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:9px;color:var(--slate);font-weight:900}
+.v-head{font-size:1.6rem;font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-bottom:11px;color:var(--navy)}
+.v-body{font-size:1rem;color:var(--slate2);line-height:1.7}
+.bars{margin:20px 0 4px}
+.bar-row{margin-bottom:16px}
+.bar-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
+.bar-name{font-size:.85rem;color:var(--slate);font-weight:600}
+.bar-val{font-size:1rem;color:var(--navy);font-weight:800}
+.bar-track{height:16px;border-radius:8px;background:var(--white);overflow:hidden;border:1px solid var(--border)}
+.bar-fill{height:100%;border-radius:8px;width:0;transition:width .4s ease,background .2s}
+.metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px}
+.metric{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 18px}
+.metric-lbl{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);font-weight:800;margin-bottom:8px;line-height:1.4}
+.metric-val{font-size:1.7rem;font-weight:800;color:var(--navy);line-height:1;letter-spacing:-.02em}
+.metric-sub{font-size:.78rem;color:var(--slate);margin-top:7px;line-height:1.4}
+.metric-val.pos{color:var(--red-text)}
+.metric-val.neg{color:var(--gold-text)}
+.metric-val.ok{color:var(--teal-deep)}
+.plan{border:1px solid var(--teal-border);border-radius:var(--radius);background:var(--teal-bg2);padding:18px 20px;margin-top:18px}
+.plan-hd{font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);font-weight:900;margin-bottom:10px}
+.plan-t{font-size:1rem;color:var(--slate2);line-height:1.7}
+.disc{font-size:.78rem;color:var(--slate);line-height:1.7;margin-top:30px;padding-top:18px;border-top:1px solid var(--border)}
+.foot{margin-top:26px;padding-top:22px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.foot span{font-size:.85rem;color:var(--slate)}
+.foot b{color:var(--navy);font-weight:800}
+@media(max-width:640px){
+  .wrap{padding:30px 0 70px}
+  .grid{grid-template-columns:1fr}
+  .metrics{grid-template-columns:1fr}
+  .foot{flex-direction:column;align-items:flex-start;gap:4px}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <img src="/assets/logo-variation.png" alt="Medigard — Growth + Compliance" class="offer-logo" decoding="async">
+  <span class="nav-tag">Agent-to-Lead Capacity<br>Calculator · Resource 02</span>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Before your Growth Infrastructure Review</div>
+  <h1 class="title">More leads aren’t growth if you <b>can’t work them.</b></h1>
+  <p class="lead">This compares the appointments your lead flow generates against the appointments your active agents can actually work. It shows you — in one number — whether you’re <em>starving calendars</em>, <em>wasting leads</em>, or balanced. Enter rough numbers; you don’t need them to be perfect.</p>
+
+  <div class="card">
+    <div class="card-hd"><span class="card-hd-t">Your numbers</span><span class="card-hd-t" style="color:var(--teal)">per week</span></div>
+    <div class="card-bd">
+      <div class="grid">
+        <div class="ig"><label>Active producing agents</label><div class="ig-wrap"><input type="number" id="agents" value="8" min="0" step="1"></div><div class="ig-note">Producers who can take appointments today.</div></div>
+        <div class="ig"><label>Appointments generated <span>/ week</span></label><div class="ig-wrap"><input type="number" id="appts" value="120" min="0" step="1"></div><div class="ig-note">Booked appointments from your current lead flow.</div></div>
+        <div class="ig"><label>Show rate</label><div class="ig-wrap"><input type="number" id="show" value="65" min="0" max="100" step="1"><span class="ig-suffix">%</span></div><div class="ig-note">Share of booked appointments that actually show.</div></div>
+        <div class="ig"><label>Appointments one agent can work <span>/ week</span></label><div class="ig-wrap"><input type="number" id="cap" value="20" min="1" step="1"></div><div class="ig-note">A healthy weekly load for one producer.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="verdict" id="verdict">
+    <div class="v-eye" id="vEye">Your read</div>
+    <div class="v-head" id="vHead">—</div>
+    <div class="v-body" id="vBody"></div>
+    <div class="bars">
+      <div class="bar-row">
+        <div class="bar-top"><span class="bar-name">Demand — appointments that show / wk</span><span class="bar-val" id="demandVal">0</span></div>
+        <div class="bar-track"><div class="bar-fill" id="demandBar" style="background:var(--teal)"></div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-top"><span class="bar-name">Capacity — appointments agents can work / wk</span><span class="bar-val" id="capVal">0</span></div>
+        <div class="bar-track"><div class="bar-fill" id="capBar" style="background:var(--navy)"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="metric-lbl">Weekly gap</div><div class="metric-val" id="mGap">0</div><div class="metric-sub" id="mGapSub">demand vs capacity</div></div>
+    <div class="metric"><div class="metric-lbl">Capacity utilization</div><div class="metric-val" id="mUtil">0%</div><div class="metric-sub">how full your agents are</div></div>
+    <div class="metric"><div class="metric-lbl" id="mFixLbl">To balance</div><div class="metric-val" id="mFix">—</div><div class="metric-sub" id="mFixSub"></div></div>
+  </div>
+
+  <div class="plan">
+    <div class="plan-hd">What this means for the call</div>
+    <div class="plan-t" id="planT"></div>
+  </div>
+
+  <p class="disc">Estimates only, based on the numbers you enter. Real capacity depends on appointment length, agent tenure, product mix, and season. Medigard builds the calendar-fill and recruiting infrastructure and ramps signed agents to working — we do not guarantee sales, commissions, or enrollments.</p>
+  <div class="foot"><span><b>Medigard</b> · Growth infrastructure for Medicare agencies</span><span>Calendar first · Scale infra next · Productivity last</span></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const num=id=>Math.max(0,+$(id).value||0);
+const fmt=n=>Math.round(n).toLocaleString();
+
+function calc(){
+  const agents=num('agents');
+  const appts=num('appts');
+  const show=Math.min(100,num('show'));
+  const per=Math.max(1,num('cap'));
+
+  const demand=appts*show/100;
+  const capacity=agents*per;
+  const gap=demand-capacity;
+  const util=capacity>0?Math.round((demand/capacity)*100):0;
+
+  const max=Math.max(demand,capacity,1);
+  $('demandBar').style.width=(demand/max*100)+'%';
+  $('capBar').style.width=(capacity/max*100)+'%';
+  $('demandVal').textContent=fmt(demand);
+  $('capVal').textContent=fmt(capacity);
+
+  const gm=$('mGap');
+  gm.textContent=(gap>0?'+':'')+fmt(gap);
+  gm.className='metric-val '+(gap>capacity*0.1?'pos':(gap<-capacity*0.1?'neg':'ok'));
+  $('mGapSub').textContent=gap>0?'appts/wk fall through':(gap<0?'appts/wk of idle capacity':'well matched');
+
+  const um=$('mUtil');
+  um.textContent=util+'%';
+  um.className='metric-val '+(util>110?'pos':(util<90?'neg':'ok'));
+
+  const v=$('verdict'),eye=$('vEye'),head=$('vHead'),body=$('vBody'),plan=$('planT');
+  const fixLbl=$('mFixLbl'),fix=$('mFix'),fixSub=$('mFixSub');
+
+  if(agents===0 && appts===0){
+    v.style.borderColor='var(--border)';v.style.background='var(--bg-soft)';
+    eye.style.color='var(--slate)';eye.textContent='Your read';
+    head.style.color='var(--navy)';head.textContent='Enter your numbers above';
+    body.textContent='The read updates live as you type.';
+    fixLbl.textContent='To balance';fix.textContent='—';fix.className='metric-val';fixSub.textContent='';
+    plan.textContent='Fill in your agents and appointment volume to see where your growth is capped.';
+    return;
+  }
+
+  if(gap>capacity*0.1){
+    const overflow=gap, needAgents=Math.ceil(overflow/per);
+    paint(v,eye,head,body,'red','Capped by capacity','Wasted leads',
+      'You’re generating '+fmt(overflow)+' more appointments a week than your '+agents+' agents can work. They show up, but no one’s free to take them — so you’re paying to book appointments that fall through. More lead spend won’t fix this. You need capacity, not leads.');
+    fixLbl.textContent='Working agents to add';fix.textContent='+'+needAgents;fix.className='metric-val pos';
+    fixSub.textContent='to absorb the overflow';
+    plan.textContent='Your constraint is the recruit rail. To convert the demand you already create, you need roughly '+needAgents+' more working producer'+(needAgents===1?'':'s')+' — which is exactly why recruiting has to run in parallel with lead flow, not after it. On the call we’ll map the Attract → Book → 30-day ramp so signed names become working capacity before this overflow keeps leaking.';
+  } else if(gap<-capacity*0.1){
+    const shortfall=-gap, needAppts=Math.ceil(shortfall/(show/100||1));
+    paint(v,eye,head,body,'gold','Idle capacity','Starved calendars',
+      'Your '+agents+' agents can work '+fmt(shortfall)+' more appointments a week than your lead flow delivers. That’s payroll burning on empty calendars while producers wait. Recruiting more agents right now would deepen the hole. You need calendar fill, not headcount.');
+    fixLbl.textContent='Appointments to add';fix.textContent='+'+fmt(needAppts);fix.className='metric-val neg';
+    fixSub.textContent='booked/wk to fill agents';
+    plan.textContent='Your constraint is the calendar rail. To keep your current producers busy you need about '+fmt(needAppts)+' more booked appointments a week (at a '+show+'% show rate). On the call we’ll map compliant lead flow and speed-to-lead routing to fill those calendars first — before you add a single seat.';
+  } else {
+    paint(v,eye,head,body,'teal','Well matched','Balanced — for now',
+      'Your appointment supply and your '+agents+' agents’ capacity are within ~10% of each other. That’s the sweet spot — but it’s fragile. The moment you add agents or turn up lead spend without the other, you tip back into starved calendars or wasted leads. Growth has to move both rails together.');
+    fixLbl.textContent='Headroom';fix.textContent=util+'%';fix.className='metric-val ok';
+    fixSub.textContent='utilized — room to scale';
+    plan.textContent='You’re balanced at your current size, which makes this the right moment to build the machine that keeps both rails in sync as you scale. On the call we’ll map how to add appointments and agents in lockstep so you never re-create the forced choice at a bigger size.';
+  }
+}
+
+function paint(v,eye,head,body,c,eyeTxt,headTxt,bodyTxt){
+  const map={red:['#c23a4b','var(--red-border)','var(--red-bg)'],
+             gold:['#a97e2f','var(--gold-border)','var(--gold-bg)'],
+             teal:['#0f7c7e','var(--teal-border)','var(--teal-bg)']};
+  const [col,bord,bg]=map[c];
+  v.style.borderColor=bord;v.style.background=bg;
+  eye.style.color=col;eye.textContent=eyeTxt;
+  head.style.color=col;head.textContent=headTxt;
+  body.textContent=bodyTxt;
+}
+
+['agents','appts','show','cap'].forEach(id=>$(id).addEventListener('input',calc));
+calc();
+</script>
+</body>
+</html>

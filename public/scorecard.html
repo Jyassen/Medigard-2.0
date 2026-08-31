@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medigard — Growth Infrastructure Scorecard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --white:#fff;--navy:#102a43;--slate:#64748b;--slate2:#53677a;
+  --teal:#159a9c;--teal-dark:#117779;--teal-deep:#0f4c4d;
+  --gold:#d4a853;--gold-text:#a97e2f;--red:#d1495b;--red-text:#c23a4b;
+  --border:#dbe5ea;--border-soft:rgba(219,229,234,.7);
+  --bg-soft:#f5f8fa;--teal-bg:#e7f5f4;--teal-bg2:#f3fafc;--teal-border:#c5e4e5;
+  --sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --radius:14px;--radius-sm:10px;
+}
+html{-webkit-font-smoothing:antialiased}
+body{background:var(--white);color:var(--navy);font-family:var(--sans);line-height:1.6}
+.nav{width:min(1120px,calc(100% - 40px));margin:auto;min-height:88px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--border-soft)}
+.offer-logo{height:60px;width:auto;display:block}
+.nav-tag{font-size:.7rem;letter-spacing:.14em;font-weight:900;text-transform:uppercase;color:var(--teal);text-align:right}
+.wrap{width:min(720px,calc(100% - 40px));margin:0 auto;padding:44px 0 90px;min-height:60vh}
+.eyebrow{font-size:.76rem;letter-spacing:.15em;font-weight:900;color:var(--teal);text-transform:uppercase;margin-bottom:16px}
+
+/* SCREENS */
+.screen{display:none;animation:fade .35s ease}
+.screen.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* HERO */
+h1.title{font-size:clamp(2.1rem,4.6vw,3rem);line-height:1.05;letter-spacing:-.045em;color:var(--navy);margin-bottom:16px}
+h1.title b{color:var(--teal);font-weight:800}
+.lead{font-size:1.1rem;color:var(--slate);line-height:1.7;margin-bottom:26px}
+.chips{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:30px}
+.chip{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-soft);padding:12px 8px;text-align:center}
+.chip .n{display:block;font-weight:800;color:var(--teal);font-size:.9rem;margin-bottom:3px}
+.chip .l{font-size:.72rem;color:var(--slate);font-weight:600;line-height:1.2}
+.start-btn{display:inline-flex;align-items:center;gap:10px;background:var(--teal);color:#fff;border:none;padding:16px 26px;border-radius:var(--radius-sm);font-family:inherit;font-size:1.05rem;font-weight:800;cursor:pointer;box-shadow:0 8px 18px rgba(21,154,156,.18);transition:.2s}
+.start-btn:hover{background:var(--teal-dark);transform:translateY(-1px)}
+.start-btn svg{width:16px;height:16px;fill:#fff}
+.disclaimer{font-size:.8rem;color:var(--slate);margin-top:16px}
+
+/* PROGRESS */
+.progress-header{margin-bottom:26px}
+.progress-meta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px}
+.progress-label{font-size:.8rem;font-weight:700;color:var(--slate);letter-spacing:.02em}
+.progress-system{font-size:.72rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
+.progress-track{height:6px;border-radius:6px;background:var(--bg-soft);overflow:hidden;border:1px solid var(--border)}
+.progress-fill{height:100%;border-radius:6px;background:var(--teal);width:0;transition:width .4s ease}
+
+/* QUESTION */
+.q-section{font-size:.72rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
+.q-text{font-size:clamp(1.35rem,3.2vw,1.7rem);font-weight:800;letter-spacing:-.02em;line-height:1.25;color:var(--navy);margin-bottom:24px}
+.options{display:grid;gap:11px;margin-bottom:20px}
+.option{display:flex;align-items:flex-start;gap:14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--white);padding:17px 19px;cursor:pointer;transition:border-color .12s,background .12s,box-shadow .12s;text-align:left}
+.option:hover{border-color:var(--teal-border);background:var(--teal-bg2)}
+.option.sel{border-color:var(--teal);background:var(--teal-bg);box-shadow:0 0 0 1px var(--teal)}
+.opt-radio{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:2px solid var(--border);margin-top:1px;position:relative;transition:border-color .12s}
+.option:hover .opt-radio{border-color:var(--teal)}
+.option.sel .opt-radio{border-color:var(--teal)}
+.option.sel .opt-radio::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--teal)}
+.opt-text{font-size:1rem;color:var(--navy);line-height:1.5;font-weight:500}
+.nav-row{display:flex;align-items:center;gap:14px}
+.nav-back{background:none;border:none;color:var(--slate);font-family:inherit;font-size:.95rem;font-weight:600;cursor:pointer;padding:8px 4px}
+.nav-back:hover{color:var(--navy)}
+.nav-hint{font-size:.85rem;color:var(--slate);margin-left:auto}
+
+/* LOADING */
+.loading-wrap{text-align:center;padding:80px 0}
+.loading-label{font-size:1.15rem;font-weight:800;color:var(--navy);margin-bottom:18px;letter-spacing:-.01em}
+.loading-track{height:8px;max-width:340px;margin:0 auto;border-radius:6px;background:var(--bg-soft);overflow:hidden;border:1px solid var(--border)}
+.loading-fill{height:100%;width:0;background:var(--teal);border-radius:6px;transition:width .3s linear}
+.loading-status{font-size:.85rem;color:var(--slate);margin-top:14px}
+
+/* RESULT */
+.result-kicker{font-size:.76rem;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);font-weight:900;margin-bottom:14px}
+.score-hero{display:flex;align-items:center;gap:26px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-soft);padding:26px;margin-bottom:22px}
+.score-ring{position:relative;flex-shrink:0;width:120px;height:120px}
+.score-ring svg{transform:rotate(-90deg)}
+.score-ring-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-ring-val{font-size:2.1rem;font-weight:800;color:var(--navy);line-height:1}
+.score-ring-max{font-size:.8rem;color:var(--slate);font-weight:600}
+.score-level{font-size:1.5rem;font-weight:800;letter-spacing:-.02em;color:var(--navy);line-height:1.15;margin-bottom:8px}
+.score-summary{font-size:1rem;color:var(--slate2);line-height:1.65}
+.res-block-h{font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:800;margin:24px 0 12px}
+.bars{border:1px solid var(--border);border-radius:var(--radius);background:var(--white);padding:8px 18px}
+.bar-row{display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid var(--border)}
+.bar-row:last-child{border-bottom:none}
+.bar-lbl{font-size:.9rem;color:var(--navy);min-width:150px;font-weight:600}
+.bar-track{flex:1;height:9px;border-radius:6px;background:var(--bg-soft);overflow:hidden;border:1px solid var(--border)}
+.bar-fill{height:100%;width:0;border-radius:6px;transition:width .6s ease}
+.bar-pct{font-size:.85rem;color:var(--navy);min-width:40px;text-align:right;font-weight:700}
+.callout{border:1px solid var(--red-border,#eec7cd);border-left:4px solid var(--red);border-radius:var(--radius-sm);background:#fdeef0;padding:16px 18px;margin-top:18px}
+.callout-h{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--red-text);font-weight:900;margin-bottom:6px}
+.callout-t{font-size:1rem;color:var(--navy);line-height:1.6}
+.callout-t b{color:var(--red-text)}
+.cta{border:1px solid var(--teal-border);border-radius:var(--radius);background:var(--teal-bg2);padding:22px;margin-top:22px}
+.cta-h{font-size:1.15rem;font-weight:800;color:var(--navy);margin-bottom:8px;letter-spacing:-.01em}
+.cta-t{font-size:1rem;color:var(--slate2);line-height:1.7}
+.cta-t b{color:var(--teal-deep)}
+.reply-pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.reply-pill{font-size:.82rem;color:var(--slate);border:1px solid var(--border);background:var(--white);padding:8px 13px;border-radius:999px}
+.reply-pill b{color:var(--navy);font-weight:800}
+.restart{background:none;border:none;color:var(--slate);font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;margin-top:16px;text-decoration:underline}
+.restart:hover{color:var(--navy)}
+
+.disc{font-size:.78rem;color:var(--slate);line-height:1.7;margin-top:30px;padding-top:18px;border-top:1px solid var(--border)}
+.foot{margin-top:24px;padding-top:22px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.foot span{font-size:.85rem;color:var(--slate)}
+.foot b{color:var(--navy);font-weight:800}
+@media(max-width:640px){
+  .wrap{padding:30px 0 70px}
+  .chips{grid-template-columns:repeat(3,1fr)}
+  .score-hero{flex-direction:column;text-align:center;gap:18px}
+  .bar-lbl{min-width:120px;font-size:.82rem}
+  .foot{flex-direction:column;align-items:flex-start;gap:4px}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <img src="/assets/logo-variation.png" alt="Medigard — Growth + Compliance" class="offer-logo" decoding="async">
+  <span class="nav-tag">Growth Infrastructure<br>Scorecard · Resource 01</span>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="screen active" id="screen-hero">
+    <div class="eyebrow">Before your Growth Infrastructure Review</div>
+    <h1 class="title">Is your agency built to <b>scale</b> — or held together by you?</h1>
+    <p class="lead">Ten quick questions about how your agency runs today. We'll score you across the five systems that decide whether growth compounds or stalls — and show you exactly where you're exposed before your call.</p>
+    <div class="chips">
+      <div class="chip"><span class="n">01</span><span class="l">Acquisition</span></div>
+      <div class="chip"><span class="n">02</span><span class="l">Recruiting</span></div>
+      <div class="chip"><span class="n">03</span><span class="l">Capacity</span></div>
+      <div class="chip"><span class="n">04</span><span class="l">Follow-up</span></div>
+      <div class="chip"><span class="n">05</span><span class="l">Automation</span></div>
+    </div>
+    <button class="start-btn" onclick="start()"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Start the scorecard</button>
+    <p class="disclaimer">Takes about 3 minutes · Nothing to install · Your answers stay on this page</p>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div class="screen" id="screen-q">
+    <div class="progress-header">
+      <div class="progress-meta">
+        <span class="progress-label" id="q-progress">Question 1 of 10</span>
+        <span class="progress-system" id="q-system">Customer acquisition</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="q-fill"></div></div>
+    </div>
+    <div class="q-section" id="q-section">System 01 — Customer acquisition</div>
+    <div class="q-text" id="q-text">—</div>
+    <div class="options">
+      <button class="option" data-i="0" onclick="pick(0)"><span class="opt-radio"></span><span class="opt-text" id="opt-0"></span></button>
+      <button class="option" data-i="1" onclick="pick(1)"><span class="opt-radio"></span><span class="opt-text" id="opt-1"></span></button>
+      <button class="option" data-i="2" onclick="pick(2)"><span class="opt-radio"></span><span class="opt-text" id="opt-2"></span></button>
+      <button class="option" data-i="3" onclick="pick(3)"><span class="opt-radio"></span><span class="opt-text" id="opt-3"></span></button>
+    </div>
+    <div class="nav-row">
+      <button class="nav-back" id="q-back" onclick="back()">← Back</button>
+      <span class="nav-hint">Pick the one that sounds most like you</span>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div class="screen" id="screen-loading">
+    <div class="loading-wrap">
+      <div class="loading-label">Scoring your growth infrastructure…</div>
+      <div class="loading-track"><div class="loading-fill" id="load-fill"></div></div>
+      <div class="loading-status" id="load-status">Mapping your answers to the five systems…</div>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="screen" id="screen-result">
+    <div class="result-kicker">Your scorecard</div>
+    <div class="score-hero">
+      <div class="score-ring">
+        <svg width="120" height="120" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="52" fill="none" stroke="#e7edf2" stroke-width="10"/>
+          <circle id="score-arc" cx="60" cy="60" r="52" fill="none" stroke="#159a9c" stroke-width="10" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7" style="transition:stroke-dashoffset 1s ease, stroke .4s"/>
+        </svg>
+        <div class="score-ring-num"><span class="score-ring-val" id="score-val">0</span><span class="score-ring-max">/100</span></div>
+      </div>
+      <div>
+        <div class="score-level" id="score-level">—</div>
+        <div class="score-summary" id="score-summary"></div>
+      </div>
+    </div>
+
+    <div class="res-block-h">How you score, system by system</div>
+    <div class="bars">
+      <div class="bar-row"><span class="bar-lbl">Customer acquisition</span><span class="bar-track"><span class="bar-fill" id="bar-acq"></span></span><span class="bar-pct" id="pct-acq">0%</span></div>
+      <div class="bar-row"><span class="bar-lbl">Recruiting</span><span class="bar-track"><span class="bar-fill" id="bar-rec"></span></span><span class="bar-pct" id="pct-rec">0%</span></div>
+      <div class="bar-row"><span class="bar-lbl">Agent capacity</span><span class="bar-track"><span class="bar-fill" id="bar-cap"></span></span><span class="bar-pct" id="pct-cap">0%</span></div>
+      <div class="bar-row"><span class="bar-lbl">Follow-up systems</span><span class="bar-track"><span class="bar-fill" id="bar-fol"></span></span><span class="bar-pct" id="pct-fol">0%</span></div>
+      <div class="bar-row"><span class="bar-lbl">Automation</span><span class="bar-track"><span class="bar-fill" id="bar-aut"></span></span><span class="bar-pct" id="pct-aut">0%</span></div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-h">Your most exposed system</div>
+      <div class="callout-t" id="weak-t"></div>
+    </div>
+
+    <div class="cta">
+      <div class="cta-h">Bring this to your Growth Infrastructure Review</div>
+      <div class="cta-t">We'll go straight at <b><span id="cta-weak">your weakest system</span></b> and map exactly what it takes to close it — without another vendor or another hire. Come with one idle agent calendar and one recruit who signed but never launched.</div>
+      <div class="reply-pills">
+        <span class="reply-pill"><b>Reply 1</b> · Scorecard deep-dive</span>
+        <span class="reply-pill"><b>Reply 2</b> · Agent-to-Lead Capacity</span>
+        <span class="reply-pill"><b>Reply 3</b> · Bottleneck Map</span>
+      </div>
+    </div>
+    <button class="restart" onclick="restart()">↺ Start over</button>
+  </div>
+
+  <p class="disc">A self-assessment to focus your call, not an audit or certification. Medigard builds calendar-fill and recruiting infrastructure and ramps signed agents to working — we do not guarantee sales, commissions, or enrollments.</p>
+  <div class="foot"><span><b>Medigard</b> · Growth infrastructure for Medicare agencies</span><span>Calendar first · Scale infra next · Productivity last</span></div>
+</div>
+
+<script>
+const SYS={acq:'Customer acquisition',rec:'Recruiting',cap:'Agent capacity',fol:'Follow-up systems',aut:'Automation'};
+const SUBS={acq:'filling producer calendars',rec:'attracting agents at scale',cap:'turning signed into working',fol:'nurture & no-show protection',aut:'keeping you off the critical path'};
+const SECN={acq:'01 — Customer acquisition',rec:'02 — Recruiting',cap:'03 — Agent capacity',fol:'04 — Follow-up systems',aut:'05 — Automation'};
+
+// each option: [text, score 0-3]
+const Q=[
+ {sys:'acq',q:"How do appointments get onto your agents' calendars today?",o:[
+   ["We buy leads or run ads and my team chases them down by hand.",0],
+   ["We have a lead source, but getting people booked is hit or miss.",1],
+   ["Most leads get booked — though it depends who's following up.",2],
+   ["Compliant leads route to agents and book automatically, in minutes.",3]]},
+ {sys:'acq',q:"Do you know your contact, booking, and show rates?",o:[
+   ["Honestly, no — I couldn't tell you those numbers.",0],
+   ["I have a rough feel, but nothing I actually track.",1],
+   ["I track some of it in a spreadsheet or my CRM.",2],
+   ["Yes — I can see all three on a dashboard anytime.",3]]},
+ {sys:'rec',q:"How do new agents find their way to you?",o:[
+   ["Word of mouth and referrals, whenever they happen.",0],
+   ["I reach out when I have time, but it's inconsistent.",1],
+   ["I run recruiting ads sometimes, but applicants scatter.",2],
+   ["Done-for-you ads bring agents into one pipeline, tagged and tracked.",3]]},
+ {sys:'rec',q:"When an applicant comes in, what happens next?",o:[
+   ["It's on me to notice, reply, and try to schedule a call.",0],
+   ["They go in a list, but follow-up is manual and slips.",1],
+   ["We follow up, but nothing's automated.",2],
+   ["They're nurtured, qualified, and booked on my calendar automatically.",3]]},
+ {sys:'cap',q:"How busy are your current producers?",o:[
+   ["Some sit idle between lead batches — capacity is wasted.",0],
+   ["It's uneven — some are slammed, some are quiet.",1],
+   ["Mostly busy, but honestly I can't really tell.",2],
+   ["Steady appointment flow that matches what they can handle.",3]]},
+ {sys:'cap',q:"After an agent signs, how do they become productive?",o:[
+   ["We get them contracted and hope they start producing.",0],
+   ["There's onboarding, but no real ramp — a lot go quiet.",1],
+   ["We have a process, but it's not consistent.",2],
+   ["A defined 30-day ramp turns signed agents into working producers.",3]]},
+ {sys:'fol',q:"What happens to a lead or applicant who doesn't reply right away?",o:[
+   ["They usually go cold — we don't have time to keep chasing.",0],
+   ["Someone follows up if they remember.",1],
+   ["We follow up manually for a while, then stop.",2],
+   ["Automated nurture keeps going until they book or opt out.",3]]},
+ {sys:'fol',q:"How do you protect against no-shows?",o:[
+   ["We don't really — no-shows just happen.",0],
+   ["We send a reminder if we remember.",1],
+   ["We've got some reminders set up.",2],
+   ["Every booking gets automated reminders and no-show protection.",3]]},
+ {sys:'aut',q:"How much of the day-to-day runs without you?",o:[
+   ["Almost nothing — I'm the one holding it all together.",0],
+   ["Some pieces run, but I'm still in most of it.",1],
+   ["A fair amount runs, but I get pulled in constantly.",2],
+   ["Routing, nurture, and booking run on their own — I handle exceptions.",3]]},
+ {sys:'aut',q:"If you doubled your lead and recruiting volume tomorrow, what happens?",o:[
+   ["It would break — I couldn't keep up.",0],
+   ["It'd get messy and a lot would fall through.",1],
+   ["We'd manage, but it would be stressful.",2],
+   ["The system would absorb it — that's what it's built for.",3]]}
+];
+
+let cur=0;
+const ans=new Array(Q.length).fill(-1);
+const $=id=>document.getElementById(id);
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+
+function start(){cur=0;render();show('screen-q');}
+function restart(){cur=0;ans.fill(-1);render();show('screen-hero');}
+
+function render(){
+  const item=Q[cur];
+  $('q-progress').textContent='Question '+(cur+1)+' of '+Q.length;
+  $('q-system').textContent=SYS[item.sys];
+  $('q-section').textContent='System '+SECN[item.sys];
+  $('q-text').textContent=item.q;
+  $('q-fill').style.width=((cur)/(Q.length))*100+'%';
+  for(let i=0;i<4;i++){
+    $('opt-'+i).textContent=item.o[i][0];
+    const btn=document.querySelector('.option[data-i="'+i+'"]');
+    btn.classList.toggle('sel',ans[cur]===i);
+  }
+  $('q-back').style.visibility=cur===0?'hidden':'visible';
+}
+
+function pick(i){
+  ans[cur]=i;
+  document.querySelectorAll('.option').forEach(o=>o.classList.toggle('sel',+o.dataset.i===i));
+  $('q-fill').style.width=((cur+1)/(Q.length))*100+'%';
+  setTimeout(()=>{
+    if(cur<Q.length-1){cur++;render();}
+    else runLoading();
+  },260);
+}
+function back(){if(cur>0){cur--;render();}}
+
+function runLoading(){
+  show('screen-loading');
+  const msgs=['Mapping your answers to the five systems…','Scoring acquisition and recruiting…','Finding your most exposed system…','Building your read…'];
+  let p=0,mi=0;
+  $('load-fill').style.width='0%';$('load-status').textContent=msgs[0];
+  const t=setInterval(()=>{
+    p+=Math.random()*22+10;
+    if(p>=100){p=100;clearInterval(t);setTimeout(showResult,350);}
+    $('load-fill').style.width=Math.min(p,100)+'%';
+    mi=Math.min(msgs.length-1,Math.floor(p/26));$('load-status').textContent=msgs[mi];
+  },240);
+}
+
+function color(pct){return pct>=70?'#159a9c':pct>=40?'#d4a853':'#d1495b';}
+
+function showResult(){
+  const keys=['acq','rec','cap','fol','aut'];
+  const raw={},cnt={};keys.forEach(k=>{raw[k]=0;cnt[k]=0;});
+  Q.forEach((item,i)=>{raw[item.sys]+=Math.max(0,ans[i]);cnt[item.sys]+=1;});
+  const pct={};keys.forEach(k=>pct[k]=Math.round((raw[k]/(cnt[k]*3))*100));
+  const overall=Math.round((keys.reduce((s,k)=>s+raw[k],0)/(Q.length*3))*100);
+
+  show('screen-result');
+  // ring
+  const circ=326.7;
+  const arc=$('score-arc');
+  arc.setAttribute('stroke',color(overall));
+  requestAnimationFrame(()=>{arc.style.strokeDashoffset=circ*(1-overall/100);});
+  animateVal($('score-val'),overall);
+
+  const band=bandFor(overall);
+  $('score-level').textContent=band.name;
+  $('score-summary').textContent=band.desc;
+
+  keys.forEach(k=>{
+    const b=$('bar-'+k),p=$('pct-'+k);
+    b.style.background=color(pct[k]);
+    requestAnimationFrame(()=>{b.style.width=pct[k]+'%';});
+    p.textContent=pct[k]+'%';
+  });
+
+  // weakest
+  const weak=keys.reduce((a,k)=>pct[k]<pct[a]?k:a,keys[0]);
+  $('weak-t').textContent='Your '+SYS[weak].toLowerCase()+' scored '+pct[weak]+'% — '+SUBS[weak]+' is where growth leaks first. That’s the thread we’ll pull on your call.';
+  $('cta-weak').textContent=SYS[weak].toLowerCase();
+}
+
+function bandFor(pct){
+  if(pct<=40)return{name:'Forced-choice operator',desc:'Right now, growing means another hire or another vendor. Your pieces exist, but they don’t run as one system — so every push for more forces a choice between filling calendars and recruiting. That’s the single biggest thing capping your agency.'};
+  if(pct<=70)return{name:'Assembling operator',desc:'You’ve built real pieces and some run well — but they aren’t one machine yet, so growth still depends on you connecting the handoffs. Close the gaps and this becomes a system you turn up instead of a job you keep doing.'};
+  return{name:'Compound-growth operator',desc:'Most of your systems run without you on the critical path. The opportunity now is leverage — tightening your weakest rail so calendar-fill and recruiting compound together while you decide where to grow next.'};
+}
+
+function animateVal(el,target){
+  let v=0;const step=Math.max(1,Math.round(target/28));
+  const t=setInterval(()=>{v+=step;if(v>=target){v=target;clearInterval(t);}el.textContent=v;},28);
+}
+</script>
+</body>
+</html>

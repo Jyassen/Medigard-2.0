@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medigard — Growth Bottleneck Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --white:#fff;--navy:#102a43;--slate:#64748b;--slate2:#53677a;
+  --teal:#159a9c;--teal-dark:#117779;--teal-deep:#0f4c4d;
+  --gold:#d4a853;--gold-text:#a97e2f;--red:#d1495b;--red-text:#c23a4b;
+  --border:#dbe5ea;--border-soft:rgba(219,229,234,.7);
+  --bg-soft:#f5f8fa;--teal-bg:#e7f5f4;--teal-bg2:#f3fafc;--teal-border:#c5e4e5;
+  --gold-bg:#fff8e9;--red-bg:#fdeef0;--navy-bg:#eef2f6;
+  --sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --radius:14px;--radius-sm:10px;
+}
+html{-webkit-font-smoothing:antialiased}
+body{background:var(--white);color:var(--navy);font-family:var(--sans);line-height:1.6}
+.nav{width:min(1120px,calc(100% - 40px));margin:auto;min-height:88px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--border-soft)}
+.offer-logo{height:60px;width:auto;display:block}
+.nav-tag{font-size:.7rem;letter-spacing:.14em;font-weight:900;text-transform:uppercase;color:var(--teal);text-align:right}
+.wrap{width:min(720px,calc(100% - 40px));margin:0 auto;padding:44px 0 90px;min-height:60vh}
+.eyebrow{font-size:.76rem;letter-spacing:.15em;font-weight:900;color:var(--teal);text-transform:uppercase;margin-bottom:16px}
+.screen{display:none;animation:fade .35s ease}
+.screen.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h1.title{font-size:clamp(2.1rem,4.6vw,3rem);line-height:1.05;letter-spacing:-.045em;color:var(--navy);margin-bottom:16px}
+h1.title b{color:var(--teal);font-weight:800}
+.lead{font-size:1.1rem;color:var(--slate);line-height:1.7;margin-bottom:26px}
+.rails-intro{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:30px}
+.rail-card{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-soft);padding:14px 16px}
+.rail-card .t{font-size:.72rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}
+.rail-card .d{font-size:.85rem;color:var(--slate);line-height:1.4}
+.start-btn{display:inline-flex;align-items:center;gap:10px;background:var(--teal);color:#fff;border:none;padding:16px 26px;border-radius:var(--radius-sm);font-family:inherit;font-size:1.05rem;font-weight:800;cursor:pointer;box-shadow:0 8px 18px rgba(21,154,156,.18);transition:.2s}
+.start-btn:hover{background:var(--teal-dark);transform:translateY(-1px)}
+.start-btn svg{width:16px;height:16px;fill:#fff}
+.disclaimer{font-size:.8rem;color:var(--slate);margin-top:16px}
+.progress-header{margin-bottom:26px}
+.progress-meta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px}
+.progress-label{font-size:.8rem;font-weight:700;color:var(--slate)}
+.progress-system{font-size:.72rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
+.progress-track{height:6px;border-radius:6px;background:var(--bg-soft);overflow:hidden;border:1px solid var(--border)}
+.progress-fill{height:100%;border-radius:6px;background:var(--teal);width:0;transition:width .4s ease}
+.q-section{font-size:.72rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
+.q-text{font-size:clamp(1.35rem,3.2vw,1.7rem);font-weight:800;letter-spacing:-.02em;line-height:1.25;color:var(--navy);margin-bottom:24px}
+.options{display:grid;gap:11px;margin-bottom:20px}
+.option{display:flex;align-items:flex-start;gap:14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--white);padding:17px 19px;cursor:pointer;transition:border-color .12s,background .12s,box-shadow .12s;text-align:left}
+.option:hover{border-color:var(--teal-border);background:var(--teal-bg2)}
+.option.sel{border-color:var(--teal);background:var(--teal-bg);box-shadow:0 0 0 1px var(--teal)}
+.opt-radio{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:2px solid var(--border);margin-top:1px;position:relative;transition:border-color .12s}
+.option:hover .opt-radio{border-color:var(--teal)}
+.option.sel .opt-radio{border-color:var(--teal)}
+.option.sel .opt-radio::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--teal)}
+.opt-text{font-size:1rem;color:var(--navy);line-height:1.5;font-weight:500}
+.nav-row{display:flex;align-items:center;gap:14px}
+.nav-back{background:none;border:none;color:var(--slate);font-family:inherit;font-size:.95rem;font-weight:600;cursor:pointer;padding:8px 4px}
+.nav-back:hover{color:var(--navy)}
+.nav-hint{font-size:.85rem;color:var(--slate);margin-left:auto}
+.loading-wrap{text-align:center;padding:80px 0}
+.loading-label{font-size:1.15rem;font-weight:800;color:var(--navy);margin-bottom:18px}
+.loading-track{height:8px;max-width:340px;margin:0 auto;border-radius:6px;background:var(--bg-soft);overflow:hidden;border:1px solid var(--border)}
+.loading-fill{height:100%;width:0;background:var(--teal);border-radius:6px;transition:width .3s linear}
+.loading-status{font-size:.85rem;color:var(--slate);margin-top:14px}
+.result-kicker{font-size:.76rem;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);font-weight:900;margin-bottom:14px}
+.verdict-hero{border:1px solid var(--border);border-left:5px solid var(--red);border-radius:var(--radius);background:var(--red-bg);padding:24px;margin-bottom:24px}
+.vh-eye{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:900;margin-bottom:8px;color:var(--red-text)}
+.vh-name{font-size:clamp(1.7rem,4vw,2.2rem);font-weight:800;letter-spacing:-.02em;line-height:1.1;color:var(--navy);margin-bottom:12px}
+.vh-body{font-size:1.02rem;color:var(--slate2);line-height:1.7}
+.res-block-h{font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:800;margin:24px 0 14px}
+.rail-viz{border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-soft);padding:20px}
+.rv-rail{margin-bottom:20px}
+.rv-rail:last-child{margin-bottom:0}
+.rv-head{display:flex;align-items:center;gap:9px;margin-bottom:11px}
+.rv-tag{font-size:.68rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:999px}
+.rv-name{font-size:.92rem;font-weight:800;color:var(--navy)}
+.rv-stages{display:flex;align-items:stretch;gap:8px;overflow-x:auto;padding:6px 0 4px}
+.rv-stage{flex:1;min-width:96px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--white);padding:11px 10px;position:relative}
+.rv-stage .dot{width:9px;height:9px;border-radius:50%;background:var(--slate);margin-bottom:7px}
+.rv-stage .sn{font-size:.82rem;font-weight:700;color:var(--navy);line-height:1.25}
+.rv-stage .ss{display:block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-top:5px;color:var(--slate)}
+.rv-stage.bottleneck{border-width:2px;box-shadow:0 6px 16px rgba(209,73,91,.16)}
+.rv-stage .flag{position:absolute;top:-9px;right:8px;font-size:.6rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--red);padding:2px 7px;border-radius:999px;display:none}
+.rv-stage.bottleneck .flag{display:block}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:16px}
+.lg{display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--slate);font-weight:500}
+.lg-dot{width:9px;height:9px;border-radius:50%}
+.railnote{font-size:.95rem;color:var(--slate2);line-height:1.7;margin-top:18px;padding:14px 16px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--white)}
+.railnote b{color:var(--navy)}
+.cta{border:1px solid var(--teal-border);border-radius:var(--radius);background:var(--teal-bg2);padding:22px;margin-top:22px}
+.cta-h{font-size:1.15rem;font-weight:800;color:var(--navy);margin-bottom:8px;letter-spacing:-.01em}
+.cta-t{font-size:1rem;color:var(--slate2);line-height:1.7}
+.cta-t b{color:var(--teal-deep)}
+.reply-pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.reply-pill{font-size:.82rem;color:var(--slate);border:1px solid var(--border);background:var(--white);padding:8px 13px;border-radius:999px}
+.reply-pill b{color:var(--navy);font-weight:800}
+.restart{background:none;border:none;color:var(--slate);font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;margin-top:16px;text-decoration:underline}
+.restart:hover{color:var(--navy)}
+.disc{font-size:.78rem;color:var(--slate);line-height:1.7;margin-top:30px;padding-top:18px;border-top:1px solid var(--border)}
+.foot{margin-top:24px;padding-top:22px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.foot span{font-size:.85rem;color:var(--slate)}
+.foot b{color:var(--navy);font-weight:800}
+@media(max-width:640px){
+  .wrap{padding:30px 0 70px}
+  .rails-intro{grid-template-columns:1fr}
+  .foot{flex-direction:column;align-items:flex-start;gap:4px}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <img src="/assets/logo-variation.png" alt="Medigard — Growth + Compliance" class="offer-logo" decoding="async">
+  <span class="nav-tag">Growth Bottleneck<br>Map · Resource 03</span>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="screen active" id="screen-hero">
+    <div class="eyebrow">Before your Growth Infrastructure Review</div>
+    <h1 class="title">Find the <b>one stage</b> where your growth breaks.</h1>
+    <p class="lead">Growth doesn't stall everywhere — it stalls at one point. Answer six quick questions about how your agency runs, and we'll pinpoint your single biggest bottleneck and show you exactly where it sits.</p>
+    <div class="rails-intro">
+      <div class="rail-card"><div class="t" style="color:var(--teal-deep)">Rail A · Fill the calendar</div><div class="d">Turning attention into booked appointments your agents actually work.</div></div>
+      <div class="rail-card"><div class="t" style="color:var(--navy)">Rail B · Build capacity</div><div class="d">Turning strangers into signed agents who actually produce.</div></div>
+    </div>
+    <button class="start-btn" onclick="start()"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Find my bottleneck</button>
+    <p class="disclaimer">Takes about 2 minutes · Nothing to install · Your answers stay on this page</p>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div class="screen" id="screen-q">
+    <div class="progress-header">
+      <div class="progress-meta">
+        <span class="progress-label" id="q-progress">Question 1 of 6</span>
+        <span class="progress-system" id="q-system">Rail A · Fill the calendar</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="q-fill"></div></div>
+    </div>
+    <div class="q-section" id="q-section">Stage 1 — Lead flow</div>
+    <div class="q-text" id="q-text">—</div>
+    <div class="options">
+      <button class="option" data-i="0" onclick="pick(0)"><span class="opt-radio"></span><span class="opt-text" id="opt-0"></span></button>
+      <button class="option" data-i="1" onclick="pick(1)"><span class="opt-radio"></span><span class="opt-text" id="opt-1"></span></button>
+      <button class="option" data-i="2" onclick="pick(2)"><span class="opt-radio"></span><span class="opt-text" id="opt-2"></span></button>
+      <button class="option" data-i="3" onclick="pick(3)"><span class="opt-radio"></span><span class="opt-text" id="opt-3"></span></button>
+    </div>
+    <div class="nav-row">
+      <button class="nav-back" id="q-back" onclick="back()">← Back</button>
+      <span class="nav-hint">Pick the one that sounds most like you</span>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div class="screen" id="screen-loading">
+    <div class="loading-wrap">
+      <div class="loading-label">Finding your bottleneck…</div>
+      <div class="loading-track"><div class="loading-fill" id="load-fill"></div></div>
+      <div class="loading-status" id="load-status">Tracing both rails end to end…</div>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="screen" id="screen-result">
+    <div class="result-kicker">Your read</div>
+    <div class="verdict-hero" id="verdict-hero">
+      <div class="vh-eye" id="vh-eye">Your #1 growth bottleneck</div>
+      <div class="vh-name" id="vh-name">—</div>
+      <div class="vh-body" id="vh-body"></div>
+    </div>
+
+    <div class="res-block-h">Where it sits on your two rails</div>
+    <div class="rail-viz">
+      <div class="rv-rail">
+        <div class="rv-head"><span class="rv-tag" style="background:var(--teal-bg);color:var(--teal-deep)">Rail A</span><span class="rv-name">Fill the calendar</span></div>
+        <div class="rv-stages">
+          <div class="rv-stage" id="rv-s1"><span class="flag">Bottleneck</span><span class="dot"></span><span class="sn">Lead flow</span><span class="ss">—</span></div>
+          <div class="rv-stage" id="rv-s2"><span class="flag">Bottleneck</span><span class="dot"></span><span class="sn">Speed-to-lead</span><span class="ss">—</span></div>
+          <div class="rv-stage" id="rv-s3"><span class="flag">Bottleneck</span><span class="dot"></span><span class="sn">Booking &amp; show</span><span class="ss">—</span></div>
+        </div>
+      </div>
+      <div class="rv-rail">
+        <div class="rv-head"><span class="rv-tag" style="background:var(--navy);color:#fff">Rail B</span><span class="rv-name">Build capacity</span></div>
+        <div class="rv-stages">
+          <div class="rv-stage" id="rv-s4"><span class="flag">Bottleneck</span><span class="dot"></span><span class="sn">Attract agents</span><span class="ss">—</span></div>
+          <div class="rv-stage" id="rv-s5"><span class="flag">Bottleneck</span><span class="dot"></span><span class="sn">Book interviews</span><span class="ss">—</span></div>
+          <div class="rv-stage" id="rv-s6"><span class="flag">Bottleneck</span><span class="dot"></span><span class="sn">Activation → working</span><span class="ss">—</span></div>
+        </div>
+      </div>
+      <div class="legend">
+        <span class="lg"><span class="lg-dot" style="background:var(--teal)"></span>Strong</span>
+        <span class="lg"><span class="lg-dot" style="background:var(--gold)"></span>Leaking</span>
+        <span class="lg"><span class="lg-dot" style="background:var(--navy)"></span>Runs on you</span>
+        <span class="lg"><span class="lg-dot" style="background:var(--red)"></span>Broken</span>
+      </div>
+    </div>
+
+    <div class="railnote" id="railnote"></div>
+
+    <div class="cta">
+      <div class="cta-h">Bring this to your Growth Infrastructure Review</div>
+      <div class="cta-t">We'll take your bottleneck — <b><span id="cta-stage">this stage</span></b> — and map exactly what it takes to close it, plus keep the other rail paced so you don't just move the problem. Come with one idle agent calendar and one recruit who signed but never launched.</div>
+      <div class="reply-pills">
+        <span class="reply-pill"><b>Reply 1</b> · Scorecard deep-dive</span>
+        <span class="reply-pill"><b>Reply 2</b> · Agent-to-Lead Capacity</span>
+        <span class="reply-pill"><b>Reply 3</b> · Bottleneck Map</span>
+      </div>
+    </div>
+    <button class="restart" onclick="restart()">↺ Start over</button>
+  </div>
+
+  <p class="disc">A self-assessment to focus your call, not a diagnosis of your business. Medigard builds the calendar-fill and recruiting infrastructure and ramps signed agents to working — we do not guarantee sales, commissions, or enrollments.</p>
+  <div class="foot"><span><b>Medigard</b> · Growth infrastructure for Medicare agencies</span><span>Calendar first · Scale infra next · Productivity last</span></div>
+</div>
+
+<script>
+const STAGES=[
+ {id:'s1',rail:'A',railName:'Fill the calendar',sec:'Stage 1 — Lead flow',short:'Lead flow',
+  q:"How steady is the flow of appointments onto your agents' calendars?",
+  why:"Everything downstream depends on appointments existing. Until lead flow is steady, your producers sit idle no matter how good they are — so this is the first thing to fix.",
+  o:[["We don't have steady lead flow — calendars are often empty.",'broken'],
+     ["It's inconsistent — some weeks are good, some are dry.",'leak'],
+     ["It's steady, but only because I'm personally driving it.",'owner'],
+     ["Compliant lead flow runs consistently, without me.",'strong']]},
+ {id:'s2',rail:'A',railName:'Fill the calendar',sec:'Stage 2 — Speed-to-lead',short:'Speed-to-lead',
+  q:"When a new lead comes in, how fast does it reach an agent?",
+  why:"You're generating interest but losing it to slow follow-up. Speed-to-lead is usually the cheapest, fastest win — the leads already exist; they're just going cold before an agent reaches them.",
+  o:[["It doesn't reliably — leads slip through the cracks.",'broken'],
+     ["Eventually — hours later, sometimes the next day.",'leak'],
+     ["Fast, but only when I route it myself.",'owner'],
+     ["Within minutes, automatically, to the right agent.",'strong']]},
+ {id:'s3',rail:'A',railName:'Fill the calendar',sec:'Stage 3 — Booking & show',short:'Booking & show',
+  q:"Once someone's interested, do they become a kept appointment?",
+  why:"You're paying to create interest that isn't converting to kept appointments. Booking friction and no-shows quietly waste the lead spend you've already made.",
+  o:[["A lot never get booked at all.",'broken'],
+     ["They book, but no-shows kill us.",'leak'],
+     ["They book and show — as long as I stay on top of reminders.",'owner'],
+     ["They book and show — reminders and follow-up are automated.",'strong']]},
+ {id:'s4',rail:'B',railName:'Build capacity',sec:'Stage 4 — Attract agents',short:'Attract agents',
+  q:"How steadily do new agent applicants come in?",
+  why:"Your calendar can only grow as fast as your headcount. If applicants aren't coming in steadily, you'll cap out at your current team no matter how full the calendars get.",
+  o:[["Barely — recruiting has basically stalled.",'broken'],
+     ["In bursts, then it dries up.",'leak'],
+     ["Only when I personally go find them.",'owner'],
+     ["Consistently, through a system that runs on its own.",'strong']]},
+ {id:'s5',rail:'B',railName:'Build capacity',sec:'Stage 5 — Book interviews',short:'Book interviews',
+  q:"How do recruit conversations get onto your calendar?",
+  why:"You're attracting agents but losing them before the conversation. Recruits go cold in the gap between applying and getting on your calendar.",
+  o:[["They mostly don't — I lose track of applicants.",'broken'],
+     ["Some do, but many go cold before we talk.",'leak'],
+     ["They do, but I'm chasing every single one.",'owner'],
+     ["They're qualified and booked automatically.",'strong']]},
+ {id:'s6',rail:'B',railName:'Build capacity',sec:'Stage 6 — Activation → working',short:'Activation → working',
+  q:"After an agent signs, what usually happens?",
+  why:"This is the most expensive leak: you're signing agents who never become producers. Signed isn't capacity — working is — and a defined ramp is what turns one into the other.",
+  o:[["A lot sign and then go silent — they never really produce.",'broken'],
+     ["Some ramp up, but many stall out.",'leak'],
+     ["They ramp only if I personally walk them through it.",'owner'],
+     ["A defined 30-day ramp gets them to working.",'strong']]}
+];
+const STATUS_COLOR={strong:'#159a9c',leak:'#d4a853',owner:'#102a43',broken:'#d1495b'};
+const STATUS_BG={strong:'#ffffff',leak:'#fff8e9',owner:'#eef2f6',broken:'#fdeef0'};
+const STATUS_LABEL={strong:'Strong',leak:'Leaking',owner:'Runs on you',broken:'Broken'};
+const RANK={broken:0,leak:1,owner:1,strong:3};
+
+let cur=0;
+const ans=new Array(STAGES.length).fill(null);
+const $=id=>document.getElementById(id);
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+function start(){cur=0;render();show('screen-q');}
+function restart(){cur=0;ans.fill(null);render();show('screen-hero');}
+
+function render(){
+  const item=STAGES[cur];
+  $('q-progress').textContent='Question '+(cur+1)+' of '+STAGES.length;
+  $('q-system').textContent='Rail '+item.rail+' · '+item.railName;
+  $('q-section').textContent=item.sec;
+  $('q-text').textContent=item.q;
+  $('q-fill').style.width=(cur/STAGES.length)*100+'%';
+  for(let i=0;i<4;i++){
+    $('opt-'+i).textContent=item.o[i][0];
+    document.querySelector('.option[data-i="'+i+'"]').classList.toggle('sel',ans[cur]===i);
+  }
+  $('q-back').style.visibility=cur===0?'hidden':'visible';
+}
+function pick(i){
+  ans[cur]=i;
+  document.querySelectorAll('.option').forEach(o=>o.classList.toggle('sel',+o.dataset.i===i));
+  $('q-fill').style.width=((cur+1)/STAGES.length)*100+'%';
+  setTimeout(()=>{ if(cur<STAGES.length-1){cur++;render();} else runLoading(); },260);
+}
+function back(){if(cur>0){cur--;render();}}
+
+function runLoading(){
+  show('screen-loading');
+  const msgs=['Tracing both rails end to end…','Comparing every stage…','Locating the first break…','Building your map…'];
+  let p=0;$('load-fill').style.width='0%';$('load-status').textContent=msgs[0];
+  const t=setInterval(()=>{
+    p+=Math.random()*22+10;
+    if(p>=100){p=100;clearInterval(t);setTimeout(showResult,350);}
+    $('load-fill').style.width=Math.min(p,100)+'%';
+    $('load-status').textContent=msgs[Math.min(msgs.length-1,Math.floor(p/26))];
+  },240);
+}
+
+function showResult(){
+  show('screen-result');
+  const statuses=STAGES.map((s,i)=>s.o[ans[i]][1]);
+  STAGES.forEach((s,i)=>{
+    const st=statuses[i];const el=$('rv-'+s.id);
+    el.style.borderColor=STATUS_COLOR[st];
+    el.style.background=STATUS_BG[st];
+    el.querySelector('.dot').style.background=STATUS_COLOR[st];
+    const ss=el.querySelector('.ss');ss.textContent=STATUS_LABEL[st];ss.style.color=STATUS_COLOR[st];
+    el.classList.remove('bottleneck');
+  });
+
+  let bi=0,bestRank=99;
+  statuses.forEach((st,i)=>{ if(RANK[st]<bestRank){bestRank=RANK[st];bi=i;} });
+  const ownerCount=statuses.filter(s=>s==='owner').length;
+  const allStrong=statuses.every(s=>s==='strong');
+  const hero=$('verdict-hero');
+  const btStage=STAGES[bi];
+  const btStatus=statuses[bi];
+
+  if(allStrong){
+    paintHero(hero,'#0f7c7e','#e7f5f4','#159a9c','No single bottleneck','Both rails are running','Every stage you answered is running on its own — you’re rare. The opportunity now isn’t fixing a break, it’s tightening both rails so calendar-fill and recruiting compound together and hold AEP-level volume.');
+    $('cta-stage').textContent='keeping both rails in sync';
+    $('railnote').style.display='none';
+    return;
+  }
+
+  $('rv-'+btStage.id).classList.add('bottleneck');
+
+  let eye,name,body,heroCol,heroBg,heroBar;
+  if(btStatus==='broken'){ heroCol='#c23a4b';heroBg='#fdeef0';heroBar='#d1495b';
+    eye='Your #1 growth bottleneck'; name=btStage.short; body=btStage.why; }
+  else if(btStatus==='leak'){ heroCol='#a97e2f';heroBg='#fff8e9';heroBar='#d4a853';
+    eye='Where your growth leaks first'; name=btStage.short; body=btStage.why; }
+  else { heroCol='#102a43';heroBg='#eef2f6';heroBar='#102a43';
+    eye='Your bottleneck is you'; name=ownerCount>=3?'The whole thing runs on you':btStage.short+' — it runs on you';
+    body=(ownerCount>=3
+      ? 'No single stage is broken — but '+ownerCount+' of them only work because you personally do them. That’s the ceiling: the machine can’t hold more than your calendar can. Handing these stages to the system is what frees the agency to grow.'
+      : btStage.why+' Right now it only holds together because you’re personally doing it — which caps how far it can scale.'); }
+  paintHero(hero,heroCol,heroBg,heroBar,eye,name,body);
+  $('cta-stage').textContent=btStage.short.toLowerCase();
+
+  const railA=statuses.slice(0,3), railB=statuses.slice(3,6);
+  const aWeak=railA.some(s=>s==='broken'||s==='leak');
+  const bWeak=railB.some(s=>s==='broken'||s==='leak');
+  const note=$('railnote');note.style.display='';
+  if(btStage.rail==='A' && bWeak) note.textContent='Heads-up: your recruit rail is soft too. Fix the calendar and you’ll fill appointments faster than you can staff them — both rails have to move together, which is exactly what the review maps.';
+  else if(btStage.rail==='A') note.textContent='Your recruit rail is holding — so the win here is on the calendar side. Close this stage and the appointments you create will actually get worked.';
+  else if(btStage.rail==='B' && aWeak) note.textContent='Heads-up: your calendar rail is soft too. Fix recruiting and those new agents will land on empty calendars — both rails have to move together, which is exactly what the review maps.';
+  else note.textContent='Your calendar rail is holding — so the win here is on the capacity side. Close this stage and you’ll have producers ready for the appointments you’re already creating.';
+}
+
+function paintHero(hero,col,bg,bar,eye,name,body){
+  hero.style.background=bg;hero.style.borderLeftColor=bar;
+  $('vh-eye').textContent=eye;$('vh-eye').style.color=col;
+  $('vh-name').textContent=name;
+  $('vh-body').textContent=body;
+}
+</script>
+</body>
+</html>

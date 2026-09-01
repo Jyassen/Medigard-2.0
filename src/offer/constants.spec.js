@@ -6,6 +6,7 @@ describe("offerVariantFromPath", () => {
   test("reads the offer theme from the URL prefix", () => {
     expect([
       offerVariantFromPath("/"),
+      offerVariantFromPath("/book"),
       offerVariantFromPath("/privacy"),
       offerVariantFromPath("/terms"),
       offerVariantFromPath("/contact"),
@@ -14,7 +15,7 @@ describe("offerVariantFromPath", () => {
       offerVariantFromPath("/offer/v2/thank-you"),
       offerVariantFromPath("/offer/v3/privacy"),
       offerVariantFromPath("/offer/v4/contact"),
-    ]).toEqual(["v2", "v2", "v2", "v2", "v1", "v2", "v2", "v3", "v4"]);
+    ]).toEqual(["v2", "v2", "v2", "v2", "v2", "v1", "v2", "v2", "v3", "v4"]);
   });
 });
 

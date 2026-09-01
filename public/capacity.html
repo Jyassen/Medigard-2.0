@@ -64,6 +64,18 @@ h1.title b{color:var(--teal);font-weight:800}
 .plan{border:1px solid var(--teal-border);border-radius:var(--radius);background:var(--teal-bg2);padding:18px 20px;margin-top:18px}
 .plan-hd{font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);font-weight:900;margin-bottom:10px}
 .plan-t{font-size:1rem;color:var(--slate2);line-height:1.7}
+.start-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--teal);color:#fff;border:none;padding:16px 26px;border-radius:var(--radius-sm);font-family:inherit;font-size:1.05rem;font-weight:800;cursor:pointer;box-shadow:0 8px 18px rgba(21,154,156,.18);transition:.2s;text-decoration:none}
+.start-btn:hover{background:var(--teal-dark);transform:translateY(-1px)}
+.start-btn:disabled{opacity:.6;transform:none;cursor:wait}
+.cta{border:1px solid var(--teal-border);border-radius:var(--radius);background:var(--teal-bg2);padding:22px;margin-top:22px}
+.cta-h{font-size:1.15rem;font-weight:800;color:var(--navy);margin-bottom:8px;letter-spacing:-.01em}
+.cta-t{font-size:1rem;color:var(--slate2);line-height:1.7;margin-bottom:6px}
+.gate-form{display:grid;gap:12px;margin-top:16px;max-width:440px}
+.gate-form input{width:100%;padding:14px 16px;font-size:1rem;font-family:inherit;font-weight:600;color:var(--navy);border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--white)}
+.gate-form input:focus{outline:2px solid var(--teal)}
+.gate-error{display:none;color:var(--red-text);font-size:.9rem;font-weight:600}
+.gate-ok{display:none;color:var(--teal-deep);font-size:.95rem;font-weight:700}
+.book-cta{margin-top:16px}
 .disc{font-size:.78rem;color:var(--slate);line-height:1.7;margin-top:30px;padding-top:18px;border-top:1px solid var(--border)}
 .foot{margin-top:26px;padding-top:22px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .foot span{font-size:.85rem;color:var(--slate)}
@@ -125,6 +137,20 @@ h1.title b{color:var(--teal);font-weight:800}
   <div class="plan">
     <div class="plan-hd">What this means for the call</div>
     <div class="plan-t" id="planT"></div>
+  </div>
+
+  <div class="cta" id="capture">
+    <div class="cta-h">Email me this read — then book the review</div>
+    <div class="cta-t">We'll send a copy of this capacity read to your inbox so you can bring it to the 30-minute review.</div>
+    <form id="gate-form" class="gate-form" onsubmit="submitLead(event)">
+      <input type="text" id="gate-name" placeholder="Full name" required autocomplete="name">
+      <input type="email" id="gate-email" placeholder="Work email" required autocomplete="email">
+      <input type="tel" id="gate-phone" placeholder="Phone number" required autocomplete="tel">
+      <button type="submit" class="start-btn" id="gate-submit" data-label="Email me this read →">Email me this read →</button>
+      <p class="gate-error" id="gate-error">Something went wrong — please try again.</p>
+      <p class="gate-ok" id="gate-ok">Sent — check your inbox, then pick a time below.</p>
+    </form>
+    <a class="start-btn book-cta" href="/book">Book your review →</a>
   </div>
 
   <p class="disc">Estimates only, based on the numbers you enter. Real capacity depends on appointment length, agent tenure, product mix, and season. Medigard builds the calendar-fill and recruiting infrastructure and ramps signed agents to working — we do not guarantee sales, commissions, or enrollments.</p>
@@ -211,6 +237,71 @@ function paint(v,eye,head,body,c,eyeTxt,headTxt,bodyTxt){
 
 ['agents','appts','show','cap'].forEach(id=>$(id).addEventListener('input',calc));
 calc();
+
+function capacityRead(){
+  const agents=num('agents');
+  const appts=num('appts');
+  const show=Math.min(100,num('show'));
+  const per=Math.max(1,num('cap'));
+  const demand=appts*show/100;
+  const capacity=agents*per;
+  const gap=demand-capacity;
+  const util=capacity>0?Math.round((demand/capacity)*100):0;
+  return {
+    agents,appts,show,per,demand,capacity,gap,util,
+    verdict:$('vHead').textContent,
+    body:$('vBody').textContent,
+    plan:$('planT').textContent
+  };
+}
+
+async function submitLead(e){
+  e.preventDefault();
+  const name=$('gate-name').value.trim();
+  const email=$('gate-email').value.trim();
+  const phone=$('gate-phone').value.trim();
+  const btn=$('gate-submit');
+  const err=$('gate-error');
+  const ok=$('gate-ok');
+  btn.disabled=true;btn.textContent='Sending your copy…';err.style.display='none';ok.style.display='none';
+  const read=capacityRead();
+  const lines=[
+    'MEDIGARD AGENT-TO-LEAD CAPACITY READ',
+    '─────────────────────────────────────',
+    'Name:  '+name,'Email: '+email,'Phone: '+phone,'',
+    'Active agents: '+read.agents,
+    'Appointments generated / wk: '+read.appts,
+    'Show rate: '+read.show+'%',
+    'Appointments one agent can work / wk: '+read.per,'',
+    'Demand (shows / wk): '+Math.round(read.demand),
+    'Capacity (appts / wk): '+Math.round(read.capacity),
+    'Gap: '+(read.gap>0?'+':'')+Math.round(read.gap),
+    'Utilization: '+read.util+'%','',
+    'Verdict: '+read.verdict,'',
+    read.body,'',
+    read.plan,'',
+    'Book the review: https://medigard.io/book'
+  ];
+  try{
+    const resp=await fetch('/api/send-email',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        name,email,phone,sendCopy:true,
+        subject:'Capacity Read — '+name+' | '+read.verdict,
+        message:lines.join('\n')
+      })
+    });
+    if(!resp.ok) throw new Error('send failed');
+    ok.style.display='block';
+    btn.textContent=btn.dataset.label;
+    btn.disabled=false;
+  }catch(_){
+    err.style.display='block';
+    btn.disabled=false;
+    btn.textContent=btn.dataset.label;
+  }
+}
 </script>
 </body>
 </html>

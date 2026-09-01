@@ -2,6 +2,7 @@ import { ROUTES } from "../constants/routes";
 
 const SITE_V2_PATHS = new Set([
   ROUTES.home,
+  ROUTES.book,
   ROUTES.privacy,
   ROUTES.terms,
   ROUTES.contact,

@@ -1,5 +1,6 @@
 export const ROUTES = {
   home: "/",
+  book: "/book",
   systems: "/systems",
   launch: "/launch",
   launchBook: "/launch/book",

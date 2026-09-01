@@ -15,6 +15,7 @@ export const CRM_SOURCES = {
   growthBook: "medigard_growth_booking",
   offer: "medigard_offer",
   offerBook: "medigard_offer_booking",
+  reviewBook: "medigard_review_booking",
   compliance: "medigard_compliance",
   complianceBook: "medigard_compliance_booking",
 };
@@ -35,6 +36,7 @@ export const FUNNEL_STORAGE_KEY = "medigard_funnel";
 export const HUB_THANK_YOU = "/thank-you";
 
 export function getFunnelSource(pathname) {
+  if (pathname === ROUTES.book) return CRM_SOURCES.reviewBook;
   if (pathname === "/" || pathname.startsWith("/offer")) {
     return CRM_SOURCES.offer;
   }
@@ -71,7 +73,7 @@ export function canEmbedBooking(url) {
 const SITE_WIDE_PATHS = new Set([ROUTES.privacy, ROUTES.terms, ROUTES.contact]);
 
 export function funnelFromPathname(pathname) {
-  if (pathname === "/") return FUNNEL_IDS.offerV2;
+  if (pathname === "/" || pathname === ROUTES.book) return FUNNEL_IDS.offerV2;
   if (pathname.startsWith("/offer/v4")) return FUNNEL_IDS.offerV4;
   if (pathname.startsWith("/offer/v3")) return FUNNEL_IDS.offerV3;
   if (pathname.startsWith("/offer/v2")) return FUNNEL_IDS.offerV2;
@@ -105,6 +107,7 @@ export function thankYouPathForFunnel(funnelId) {
 
 export function funnelFromCrmSource(source) {
   if (!source) return "";
+  if (source.includes("review_booking")) return FUNNEL_IDS.offerV2;
   if (source.includes("offer")) return FUNNEL_IDS.offer;
   if (source.includes("growth")) return FUNNEL_IDS.launch;
   if (source.includes("compliance")) return FUNNEL_IDS.compliance;

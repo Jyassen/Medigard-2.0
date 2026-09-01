@@ -21,11 +21,13 @@ describe("getFunnelSource", () => {
     expect([
       getFunnelSource("/launch/book"),
       getFunnelSource("/offer/book"),
+      getFunnelSource("/book"),
       getFunnelSource("/compliance/book"),
       getFunnelSource("/"),
     ]).toEqual([
       CRM_SOURCES.growth,
       CRM_SOURCES.offer,
+      CRM_SOURCES.reviewBook,
       CRM_SOURCES.compliance,
       CRM_SOURCES.offer,
     ]);
@@ -36,11 +38,13 @@ describe("funnelFromPathname", () => {
   test("treats the homepage as offer v2 and the old VSL page as compliance v2", () => {
     expect([
       funnelFromPathname("/"),
+      funnelFromPathname("/book"),
       funnelFromPathname("/offer/v2"),
       funnelFromPathname("/compliance/v2"),
       funnelFromPathname("/compliance"),
       funnelFromPathname("/systems"),
     ]).toEqual([
+      FUNNEL_IDS.offerV2,
       FUNNEL_IDS.offerV2,
       FUNNEL_IDS.offerV2,
       FUNNEL_IDS.complianceV2,
@@ -112,6 +116,15 @@ describe("resolveBookingThankYouPath", () => {
         storedFunnel: FUNNEL_IDS.hub,
       }),
     ).toBe(ROUTES.offerThankYou);
+  });
+
+  test("sends standalone review bookings to the offer v2 thank-you page", () => {
+    expect(
+      resolveBookingThankYouPath({
+        search: "?source=medigard_review_booking",
+        storedFunnel: FUNNEL_IDS.hub,
+      }),
+    ).toBe(ROUTES.offerV2ThankYou);
   });
 });
 

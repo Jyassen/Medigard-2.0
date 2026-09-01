@@ -40,7 +40,9 @@ export default function BookingWidget({
   }, [navigate, thankYouTo]);
 
   return (
-    <div className={`overflow-hidden rounded-3xl bg-white ${className}`}>
+    <div
+      className={`relative min-h-[700px] overflow-hidden rounded-3xl bg-white ${className}`}
+    >
       <iframe
         src={src}
         title={title}

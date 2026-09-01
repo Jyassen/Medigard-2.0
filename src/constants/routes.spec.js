@@ -5,6 +5,7 @@ describe("ROUTES", () => {
   test("defines one canonical destination for every Medigard offer", () => {
     expect(ROUTES).toEqual({
       home: "/",
+      book: "/book",
       systems: "/systems",
       launch: "/launch",
       launchBook: "/launch/book",

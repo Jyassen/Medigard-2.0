@@ -18,6 +18,7 @@ import OfferHomeV2 from "./pages/offer/OfferHomeV2";
 import OfferHomeV3 from "./pages/offer/OfferHomeV3";
 import OfferHomeV4 from "./pages/offer/OfferHomeV4";
 import OfferBooking from "./pages/offer/OfferBooking";
+import ReviewBooking from "./pages/offer/ReviewBooking";
 import OfferThankYou from "./pages/offer/OfferThankYou";
 import OfferContact from "./pages/offer/OfferContact";
 import OfferPrivacy from "./pages/offer/OfferPrivacy";
@@ -37,6 +38,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Routes>
         <Route element={<OfferLayout />}>
           <Route path="/" element={<OfferHomeV2 />} />
+          <Route path="/book" element={<ReviewBooking />} />
           <Route path="/contact" element={<OfferContact />} />
           <Route path="/privacy" element={<OfferPrivacy />} />
           <Route path="/terms" element={<OfferTerms />} />
@@ -109,10 +111,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route
           path="/services"
           element={<Navigate to="/compliance#benefits" replace />}
-        />
-        <Route
-          path="/book"
-          element={<Navigate to={{ pathname: "/", hash: "#book" }} replace />}
         />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

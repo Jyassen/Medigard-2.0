@@ -431,6 +431,36 @@
   color: #e5ffff;
 }
 
+.offer-shell .ghl-booking {
+  width: 100%;
+  min-height: 700px;
+  overflow: visible;
+}
+
+.offer-shell .ghl-booking iframe {
+  display: block;
+  width: 100%;
+  min-height: 700px;
+  border: 0;
+  background: #fff;
+}
+
+.offer-shell .optin-frame {
+  width: 100%;
+  max-width: 640px;
+  min-height: 643px;
+  margin: 24px auto 0;
+}
+
+.offer-shell .optin-frame iframe {
+  display: block;
+  width: 100%;
+  min-height: 643px;
+  height: 740px;
+  border: 0;
+  border-radius: 4px;
+}
+
 .offer-shell .footer {
   padding: 34px 0;
   display: flex;
@@ -659,6 +689,66 @@
   position: static;
 }
 
+.offer-shell .review-book {
+  padding: 48px 0 80px;
+}
+
+.offer-shell .review-book-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 36px;
+  align-items: start;
+  margin-bottom: 36px;
+}
+
+.offer-shell .review-book h1 {
+  font-size: clamp(2.1rem, 4.2vw, 3.1rem);
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+}
+
+.offer-shell .review-book .hero-copy {
+  margin-top: 16px;
+  font-size: 1.05rem;
+  color: #53677a;
+}
+
+.offer-shell .review-book-visual {
+  display: grid;
+  gap: 10px;
+}
+
+.offer-shell .review-book-visual article {
+  border: 1px solid #dbe5ea;
+  border-radius: 14px;
+  padding: 14px 16px;
+  background: #f5f8fa;
+}
+
+.offer-shell .review-book-visual b {
+  color: #159a9c;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+}
+
+.offer-shell .review-book-visual h2 {
+  margin: 4px 0 6px;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+}
+
+.offer-shell .review-book-visual p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #53677a;
+  line-height: 1.5;
+}
+
+.offer-shell .review-book .calendar-card {
+  position: static;
+  min-width: 0;
+}
+
 .offer-shell .video-frame .thank-vsl {
   border: 0;
   border-radius: 0;
@@ -867,8 +957,25 @@
     gap: 30px;
   }
 
+  .offer-shell .review-book-intro {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    margin-bottom: 28px;
+  }
+
   .offer-shell .calendar-card {
     position: static;
+    padding: 16px;
+    overflow: visible;
+  }
+
+  .offer-shell .ghl-booking,
+  .offer-shell .ghl-booking iframe {
+    min-height: 1180px;
+  }
+
+  .offer-shell .hero-v2 .vsl-slot h3 {
+    text-align: center;
   }
 
   .offer-shell .compare-after {

@@ -29,12 +29,17 @@ function OfferNav({ paths }) {
   const { pathname } = useLocation();
   const onV2 = paths.variant === "v2";
   const onHome = pathname === paths.home;
+  const onBook = pathname === ROUTES.book;
   const onThanks = pathname === paths.thanks;
 
   return (
     <header className="nav container">
       <OfferLogo to={paths.home} />
-      {onThanks ? null : onV2 ? (
+      {onThanks ? null : onBook ? (
+        <Link className="text-link" to={paths.home}>
+          ← Back home
+        </Link>
+      ) : onV2 ? (
         <a className="btn btn-small" href={`${paths.home}#book`}>
           Book a Review
         </a>

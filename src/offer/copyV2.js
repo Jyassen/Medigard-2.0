@@ -18,6 +18,13 @@ export const OFFER_V2 = {
     subhead:
       "Choose a slot for your 30-minute review. Come ready with one producer who should already be working—but is not.",
   },
+  reviewBook: {
+    kicker: "Growth Infrastructure Review",
+    headline: "Pick a time.",
+    headlineAccent: "We'll map the system around your agency.",
+    subhead:
+      "30 minutes. Bring one idle producer calendar and one recruit who signed but never launched.",
+  },
   problem: {
     kicker: "The problem",
     heading: "Growing usually means",
@@ -149,5 +156,12 @@ export const OFFER_V2 = {
     heading: "Ready to grow without the headaches?",
     subhead:
       "Book a 30-minute review. We’ll show you exactly what we’d build around your agency — no pressure, no pitch.",
+  },
+  optIn: {
+    kicker: "Stay in the loop",
+    heading: "Want the next update",
+    headingAccent: "without booking a call?",
+    subhead:
+      "Leave your info and we’ll send the Growth Infrastructure Review notes that matter — no spam.",
   },
 };

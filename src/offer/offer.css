@@ -431,6 +431,36 @@
   color: #e5ffff;
 }
 
+.offer-shell .ghl-booking {
+  width: 100%;
+  min-height: 700px;
+  overflow: visible;
+}
+
+.offer-shell .ghl-booking iframe {
+  display: block;
+  width: 100%;
+  min-height: 700px;
+  border: 0;
+  background: #fff;
+}
+
+.offer-shell .optin-frame {
+  width: 100%;
+  max-width: 640px;
+  min-height: 643px;
+  margin: 24px auto 0;
+}
+
+.offer-shell .optin-frame iframe {
+  display: block;
+  width: 100%;
+  min-height: 643px;
+  height: 740px;
+  border: 0;
+  border-radius: 4px;
+}
+
 .offer-shell .footer {
   padding: 34px 0;
   display: flex;
@@ -935,6 +965,17 @@
 
   .offer-shell .calendar-card {
     position: static;
+    padding: 16px;
+    overflow: visible;
+  }
+
+  .offer-shell .ghl-booking,
+  .offer-shell .ghl-booking iframe {
+    min-height: 1180px;
+  }
+
+  .offer-shell .hero-v2 .vsl-slot h3 {
+    text-align: center;
   }
 
   .offer-shell .compare-after {

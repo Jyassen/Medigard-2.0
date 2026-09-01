@@ -157,4 +157,11 @@ export const OFFER_V2 = {
     subhead:
       "Book a 30-minute review. We’ll show you exactly what we’d build around your agency — no pressure, no pitch.",
   },
+  optIn: {
+    kicker: "Stay in the loop",
+    heading: "Want the next update",
+    headingAccent: "without booking a call?",
+    subhead:
+      "Leave your info and we’ll send the Growth Infrastructure Review notes that matter — no spam.",
+  },
 };

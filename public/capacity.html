@@ -24,66 +24,75 @@ body{background:var(--white);color:var(--navy);font-family:var(--sans);line-heig
 .nav{width:min(1120px,calc(100% - 40px));margin:auto;min-height:88px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--border-soft)}
 .offer-logo{height:60px;width:auto;display:block}
 .nav-tag{font-size:.7rem;letter-spacing:.14em;font-weight:900;text-transform:uppercase;color:var(--teal);text-align:right}
-.wrap{width:min(800px,calc(100% - 40px));margin:0 auto;padding:44px 0 90px}
+.wrap{width:min(720px,calc(100% - 40px));margin:0 auto;padding:44px 0 90px;min-height:60vh}
 .eyebrow{font-size:.76rem;letter-spacing:.15em;font-weight:900;color:var(--teal);text-transform:uppercase;margin-bottom:16px}
-h1.title{font-size:clamp(2.1rem,4.6vw,3.2rem);line-height:1.02;letter-spacing:-.045em;color:var(--navy);margin-bottom:16px;max-width:640px}
+.screen{display:none;animation:fade .35s ease}
+.screen.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h1.title{font-size:clamp(2.1rem,4.6vw,3rem);line-height:1.05;letter-spacing:-.045em;color:var(--navy);margin-bottom:16px}
 h1.title b{color:var(--teal);font-weight:800}
-.lead{font-size:1.12rem;color:var(--slate);line-height:1.7;max-width:640px;margin-bottom:26px}
-.lead em{color:var(--navy);font-style:italic;font-weight:500}
-.card{border:1px solid var(--border);border-radius:var(--radius);background:var(--white);overflow:hidden;margin-bottom:18px}
-.card-hd{background:var(--bg-soft);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
-.card-hd-t{font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);font-weight:800}
-.card-bd{padding:22px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.ig label{display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:800;margin-bottom:7px}
-.ig label span{color:var(--teal);text-transform:none;letter-spacing:0;font-size:.72rem}
-.ig-wrap{position:relative}
-.ig input{width:100%;padding:13px 15px;font-size:1.25rem;font-weight:700;color:var(--navy);font-family:var(--sans);border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-soft);transition:.15s}
-.ig input:focus{outline:2px solid var(--teal);background:var(--white)}
-.ig-suffix{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:.95rem;color:var(--slate);pointer-events:none;font-weight:600}
-.ig-note{font-size:.78rem;color:var(--slate);margin-top:7px;line-height:1.4}
-.verdict{border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:18px;transition:all .2s;background:var(--bg-soft)}
-.v-eye{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:9px;color:var(--slate);font-weight:900}
-.v-head{font-size:1.6rem;font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-bottom:11px;color:var(--navy)}
-.v-body{font-size:1rem;color:var(--slate2);line-height:1.7}
-.bars{margin:20px 0 4px}
-.bar-row{margin-bottom:16px}
-.bar-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
-.bar-name{font-size:.85rem;color:var(--slate);font-weight:600}
-.bar-val{font-size:1rem;color:var(--navy);font-weight:800}
-.bar-track{height:16px;border-radius:8px;background:var(--white);overflow:hidden;border:1px solid var(--border)}
-.bar-fill{height:100%;border-radius:8px;width:0;transition:width .4s ease,background .2s}
-.metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px}
-.metric{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 18px}
-.metric-lbl{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);font-weight:800;margin-bottom:8px;line-height:1.4}
-.metric-val{font-size:1.7rem;font-weight:800;color:var(--navy);line-height:1;letter-spacing:-.02em}
-.metric-sub{font-size:.78rem;color:var(--slate);margin-top:7px;line-height:1.4}
-.metric-val.pos{color:var(--red-text)}
-.metric-val.neg{color:var(--gold-text)}
-.metric-val.ok{color:var(--teal-deep)}
-.plan{border:1px solid var(--teal-border);border-radius:var(--radius);background:var(--teal-bg2);padding:18px 20px;margin-top:18px}
-.plan-hd{font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);font-weight:900;margin-bottom:10px}
-.plan-t{font-size:1rem;color:var(--slate2);line-height:1.7}
-.start-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--teal);color:#fff;border:none;padding:16px 26px;border-radius:var(--radius-sm);font-family:inherit;font-size:1.05rem;font-weight:800;cursor:pointer;box-shadow:0 8px 18px rgba(21,154,156,.18);transition:.2s;text-decoration:none}
+.lead{font-size:1.1rem;color:var(--slate);line-height:1.7;margin-bottom:26px}
+.chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:30px}
+.chip{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-soft);padding:12px 8px;text-align:center}
+.chip .n{display:block;font-weight:800;color:var(--teal);font-size:.9rem;margin-bottom:3px}
+.chip .l{font-size:.72rem;color:var(--slate);font-weight:600;line-height:1.2}
+.start-btn{display:inline-flex;align-items:center;gap:10px;background:var(--teal);color:#fff;border:none;padding:16px 26px;border-radius:var(--radius-sm);font-family:inherit;font-size:1.05rem;font-weight:800;cursor:pointer;box-shadow:0 8px 18px rgba(21,154,156,.18);transition:.2s}
 .start-btn:hover{background:var(--teal-dark);transform:translateY(-1px)}
-.start-btn:disabled{opacity:.6;transform:none;cursor:wait}
+.start-btn svg{width:16px;height:16px;fill:#fff}
+.disclaimer{font-size:.8rem;color:var(--slate);margin-top:16px}
+.progress-header{margin-bottom:26px}
+.progress-meta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px}
+.progress-label{font-size:.8rem;font-weight:700;color:var(--slate);letter-spacing:.02em}
+.progress-system{font-size:.72rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
+.progress-track{height:6px;border-radius:6px;background:var(--bg-soft);overflow:hidden;border:1px solid var(--border)}
+.progress-fill{height:100%;border-radius:6px;background:var(--teal);width:0;transition:width .4s ease}
+.q-section{font-size:.72rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
+.q-text{font-size:clamp(1.35rem,3.2vw,1.7rem);font-weight:800;letter-spacing:-.02em;line-height:1.25;color:var(--navy);margin-bottom:24px}
+.options{display:grid;gap:11px;margin-bottom:20px}
+.option{display:flex;align-items:flex-start;gap:14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--white);padding:17px 19px;cursor:pointer;transition:border-color .12s,background .12s,box-shadow .12s;text-align:left}
+.option:hover{border-color:var(--teal-border);background:var(--teal-bg2)}
+.option.sel{border-color:var(--teal);background:var(--teal-bg);box-shadow:0 0 0 1px var(--teal)}
+.opt-radio{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:2px solid var(--border);margin-top:1px;position:relative;transition:border-color .12s}
+.option:hover .opt-radio{border-color:var(--teal)}
+.option.sel .opt-radio{border-color:var(--teal)}
+.option.sel .opt-radio::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--teal)}
+.opt-text{font-size:1rem;color:var(--navy);line-height:1.5;font-weight:500}
+.nav-row{display:flex;align-items:center;gap:14px}
+.nav-back{background:none;border:none;color:var(--slate);font-family:inherit;font-size:.95rem;font-weight:600;cursor:pointer;padding:8px 4px}
+.nav-back:hover{color:var(--navy)}
+.nav-hint{font-size:.85rem;color:var(--slate);margin-left:auto}
+.loading-wrap{text-align:center;padding:80px 0}
+.loading-label{font-size:1.15rem;font-weight:800;color:var(--navy);margin-bottom:18px;letter-spacing:-.01em}
+.loading-track{height:8px;max-width:340px;margin:0 auto;border-radius:6px;background:var(--bg-soft);overflow:hidden;border:1px solid var(--border)}
+.loading-fill{height:100%;width:0;background:var(--teal);border-radius:6px;transition:width .3s linear}
+.loading-status{font-size:.85rem;color:var(--slate);margin-top:14px}
+.result-kicker{font-size:.76rem;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);font-weight:900;margin-bottom:14px}
+.verdict-hero{border:1px solid var(--border);border-left:5px solid var(--teal);border-radius:var(--radius);background:var(--bg-soft);padding:24px;margin-bottom:24px}
+.vh-eye{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:900;margin-bottom:8px}
+.vh-name{font-size:clamp(1.7rem,4vw,2.2rem);font-weight:800;letter-spacing:-.02em;line-height:1.1;color:var(--navy);margin-bottom:12px}
+.vh-body{font-size:1.02rem;color:var(--slate2);line-height:1.7}
 .cta{border:1px solid var(--teal-border);border-radius:var(--radius);background:var(--teal-bg2);padding:22px;margin-top:22px}
 .cta-h{font-size:1.15rem;font-weight:800;color:var(--navy);margin-bottom:8px;letter-spacing:-.01em}
-.cta-t{font-size:1rem;color:var(--slate2);line-height:1.7;margin-bottom:6px}
-.gate-form{display:grid;gap:12px;margin-top:16px;max-width:440px}
-.gate-form input{width:100%;padding:14px 16px;font-size:1rem;font-family:inherit;font-weight:600;color:var(--navy);border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--white)}
-.gate-form input:focus{outline:2px solid var(--teal)}
-.gate-error{display:none;color:var(--red-text);font-size:.9rem;font-weight:600}
-.gate-ok{display:none;color:var(--teal-deep);font-size:.95rem;font-weight:700}
+.cta-t{font-size:1rem;color:var(--slate2);line-height:1.7}
+.cta-t b{color:var(--teal-deep)}
+.restart{background:none;border:none;color:var(--slate);font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;margin-top:16px;text-decoration:underline}
+.restart:hover{color:var(--navy)}
+.lead-gate{max-width:440px}
+.gate-h{font-size:clamp(1.6rem,3.5vw,2.1rem);font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:10px;color:var(--navy)}
+.gate-sub{font-size:1.05rem;color:var(--slate);line-height:1.65}
+.gate-form{display:grid;gap:12px;margin-top:18px}
+.gate-form input{width:100%;padding:14px 16px;font-size:1rem;font-family:inherit;font-weight:600;color:var(--navy);border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-soft)}
+.gate-form input:focus{outline:2px solid var(--teal);background:#fff}
+.gate-error{display:none;color:var(--red-text);font-size:.9rem;font-weight:600;text-align:center}
+a.start-btn{text-decoration:none}
 .book-cta{margin-top:16px}
 .disc{font-size:.78rem;color:var(--slate);line-height:1.7;margin-top:30px;padding-top:18px;border-top:1px solid var(--border)}
-.foot{margin-top:26px;padding-top:22px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.foot{margin-top:24px;padding-top:22px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .foot span{font-size:.85rem;color:var(--slate)}
 .foot b{color:var(--navy);font-weight:800}
 @media(max-width:640px){
   .wrap{padding:30px 0 70px}
-  .grid{grid-template-columns:1fr}
-  .metrics{grid-template-columns:1fr}
+  .chips{grid-template-columns:1fr}
   .foot{flex-direction:column;align-items:flex-start;gap:4px}
 }
 </style>
@@ -96,211 +105,242 @@ h1.title b{color:var(--teal);font-weight:800}
 </header>
 
 <div class="wrap">
-  <div class="eyebrow">Before your Growth Infrastructure Review</div>
-  <h1 class="title">More leads aren’t growth if you <b>can’t work them.</b></h1>
-  <p class="lead">This compares the appointments your lead flow generates against the appointments your active agents can actually work. It shows you — in one number — whether you’re <em>starving calendars</em>, <em>wasting leads</em>, or balanced. Enter rough numbers; you don’t need them to be perfect.</p>
 
-  <div class="card">
-    <div class="card-hd"><span class="card-hd-t">Your numbers</span><span class="card-hd-t" style="color:var(--teal)">per week</span></div>
-    <div class="card-bd">
-      <div class="grid">
-        <div class="ig"><label>Active producing agents</label><div class="ig-wrap"><input type="number" id="agents" value="8" min="0" step="1"></div><div class="ig-note">Producers who can take appointments today.</div></div>
-        <div class="ig"><label>Appointments generated <span>/ week</span></label><div class="ig-wrap"><input type="number" id="appts" value="120" min="0" step="1"></div><div class="ig-note">Booked appointments from your current lead flow.</div></div>
-        <div class="ig"><label>Show rate</label><div class="ig-wrap"><input type="number" id="show" value="65" min="0" max="100" step="1"><span class="ig-suffix">%</span></div><div class="ig-note">Share of booked appointments that actually show.</div></div>
-        <div class="ig"><label>Appointments one agent can work <span>/ week</span></label><div class="ig-wrap"><input type="number" id="cap" value="20" min="1" step="1"></div><div class="ig-note">A healthy weekly load for one producer.</div></div>
-      </div>
+  <div class="screen active" id="screen-hero">
+    <div class="eyebrow">Before your Growth Infrastructure Review</div>
+    <h1 class="title">More leads aren’t growth if you <b>can’t work them.</b></h1>
+    <p class="lead">Four quick questions. We'll tell you whether you're starving calendars, wasting leads, or balanced — so you know which rail to fix first on the call.</p>
+    <div class="chips">
+      <div class="chip"><span class="n">01</span><span class="l">Starved calendars</span></div>
+      <div class="chip"><span class="n">02</span><span class="l">Wasted leads</span></div>
+      <div class="chip"><span class="n">03</span><span class="l">Balanced</span></div>
+    </div>
+    <button class="start-btn" onclick="start()"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Start the capacity read</button>
+    <p class="disclaimer">Takes about 2 minutes · Nothing to install · We'll email you a copy of your read</p>
+  </div>
+
+  <div class="screen" id="screen-lead">
+    <div class="lead-gate">
+      <div class="result-kicker">Before the questions</div>
+      <h2 class="gate-h">Where should we send your read?</h2>
+      <p class="gate-sub">Name, work email, and phone — then four questions. We'll email you a copy and you can book a Growth Infrastructure Review when you're done.</p>
+      <form id="gate-form" class="gate-form" onsubmit="submitLead(event)">
+        <input type="text" id="gate-name" placeholder="Full name" required autocomplete="name">
+        <input type="email" id="gate-email" placeholder="Work email" required autocomplete="email">
+        <input type="tel" id="gate-phone" placeholder="Phone number" required autocomplete="tel">
+        <button type="submit" class="start-btn" id="gate-submit" data-label="Continue to the questions →">Continue to the questions →</button>
+        <p class="gate-error" id="gate-error">Something went wrong — please try again.</p>
+      </form>
+      <p class="disclaimer">We'll send this read to your inbox. No spam.</p>
     </div>
   </div>
 
-  <div class="verdict" id="verdict">
-    <div class="v-eye" id="vEye">Your read</div>
-    <div class="v-head" id="vHead">—</div>
-    <div class="v-body" id="vBody"></div>
-    <div class="bars">
-      <div class="bar-row">
-        <div class="bar-top"><span class="bar-name">Demand — appointments that show / wk</span><span class="bar-val" id="demandVal">0</span></div>
-        <div class="bar-track"><div class="bar-fill" id="demandBar" style="background:var(--teal)"></div></div>
+  <div class="screen" id="screen-q">
+    <div class="progress-header">
+      <div class="progress-meta">
+        <span class="progress-label" id="q-progress">Question 1 of 4</span>
+        <span class="progress-system" id="q-system">Demand vs seats</span>
       </div>
-      <div class="bar-row">
-        <div class="bar-top"><span class="bar-name">Capacity — appointments agents can work / wk</span><span class="bar-val" id="capVal">0</span></div>
-        <div class="bar-track"><div class="bar-fill" id="capBar" style="background:var(--navy)"></div></div>
-      </div>
+      <div class="progress-track"><div class="progress-fill" id="q-fill"></div></div>
+    </div>
+    <div class="q-section" id="q-section">Demand vs seats</div>
+    <div class="q-text" id="q-text">—</div>
+    <div class="options">
+      <button class="option" data-i="0" onclick="pick(0)"><span class="opt-radio"></span><span class="opt-text" id="opt-0"></span></button>
+      <button class="option" data-i="1" onclick="pick(1)"><span class="opt-radio"></span><span class="opt-text" id="opt-1"></span></button>
+      <button class="option" data-i="2" onclick="pick(2)"><span class="opt-radio"></span><span class="opt-text" id="opt-2"></span></button>
+      <button class="option" data-i="3" onclick="pick(3)"><span class="opt-radio"></span><span class="opt-text" id="opt-3"></span></button>
+    </div>
+    <div class="nav-row">
+      <button class="nav-back" id="q-back" onclick="back()">← Back</button>
+      <span class="nav-hint">Pick the one that sounds most like you</span>
     </div>
   </div>
 
-  <div class="metrics">
-    <div class="metric"><div class="metric-lbl">Weekly gap</div><div class="metric-val" id="mGap">0</div><div class="metric-sub" id="mGapSub">demand vs capacity</div></div>
-    <div class="metric"><div class="metric-lbl">Capacity utilization</div><div class="metric-val" id="mUtil">0%</div><div class="metric-sub">how full your agents are</div></div>
-    <div class="metric"><div class="metric-lbl" id="mFixLbl">To balance</div><div class="metric-val" id="mFix">—</div><div class="metric-sub" id="mFixSub"></div></div>
+  <div class="screen" id="screen-loading">
+    <div class="loading-wrap">
+      <div class="loading-label">Reading your capacity…</div>
+      <div class="loading-track"><div class="loading-fill" id="load-fill"></div></div>
+      <div class="loading-status" id="load-status">Comparing demand to seats…</div>
+    </div>
   </div>
 
-  <div class="plan">
-    <div class="plan-hd">What this means for the call</div>
-    <div class="plan-t" id="planT"></div>
+  <div class="screen" id="screen-result">
+    <div class="result-kicker">Your capacity read</div>
+    <div class="verdict-hero" id="verdict-hero">
+      <div class="vh-eye" id="vh-eye">Your constraint</div>
+      <div class="vh-name" id="vh-name">—</div>
+      <div class="vh-body" id="vh-body"></div>
+    </div>
+    <div class="cta">
+      <div class="cta-h">Bring this to your Growth Infrastructure Review</div>
+      <div class="cta-t">We'll take this read — <b><span id="cta-weak">your constraint</span></b> — and map exactly what it takes to fill calendars and add working agents in lockstep. Come with one idle agent calendar and one recruit who signed but never launched.</div>
+      <a class="start-btn book-cta" href="/book">Book a Growth Infrastructure Review →</a>
+    </div>
+    <button class="restart" onclick="restart()">↺ Start over</button>
   </div>
 
-  <div class="cta" id="capture">
-    <div class="cta-h">Email me this read — then book the review</div>
-    <div class="cta-t">We'll send a copy of this capacity read to your inbox so you can bring it to the 30-minute review.</div>
-    <form id="gate-form" class="gate-form" onsubmit="submitLead(event)">
-      <input type="text" id="gate-name" placeholder="Full name" required autocomplete="name">
-      <input type="email" id="gate-email" placeholder="Work email" required autocomplete="email">
-      <input type="tel" id="gate-phone" placeholder="Phone number" required autocomplete="tel">
-      <button type="submit" class="start-btn" id="gate-submit" data-label="Email me this read →">Email me this read →</button>
-      <p class="gate-error" id="gate-error">Something went wrong — please try again.</p>
-      <p class="gate-ok" id="gate-ok">Sent — check your inbox, then pick a time below.</p>
-    </form>
-    <a class="start-btn book-cta" href="/book">Book your review →</a>
-  </div>
-
-  <p class="disc">Estimates only, based on the numbers you enter. Real capacity depends on appointment length, agent tenure, product mix, and season. Medigard builds the calendar-fill and recruiting infrastructure and ramps signed agents to working — we do not guarantee sales, commissions, or enrollments.</p>
+  <p class="disc">A self-assessment to focus your call, not a capacity audit. Medigard builds calendar-fill and recruiting infrastructure and ramps signed agents to working — we do not guarantee sales, commissions, or enrollments.</p>
   <div class="foot"><span><b>Medigard</b> · Growth infrastructure for Medicare agencies</span><span>Calendar first · Scale infra next · Productivity last</span></div>
 </div>
 
 <script>
+const Q=[
+ {sec:'Demand vs seats', q:"How full are your producers' calendars this week?", o:[
+   ["Mostly empty — they're waiting on appointments.",'starved'],
+   ["Uneven — some weeks are full, some are quiet.",'fragile'],
+   ["Pretty full most weeks.",'balanced'],
+   ["Overflowing — we can't work everything that comes in.",'wasted']
+ ]},
+ {sec:'Lead flow', q:"When a new lead comes in, what usually happens?", o:[
+   ["It sits. Nobody reliably books it.",'starved'],
+   ["Someone chases it if they have time.",'fragile'],
+   ["Most get booked, but it's still on us.",'balanced'],
+   ["They book faster than agents can take them.",'wasted']
+ ]},
+ {sec:'Headcount', q:"If you signed five more agents this month, what happens to their calendars?", o:[
+   ["They'd sit idle. We don't have the appointments.",'starved'],
+   ["We'd scramble week to week.",'fragile'],
+   ["We'd fill them, but it would be tight.",'balanced'],
+   ["We already have more demand than seats — they'd get work immediately.",'wasted']
+ ]},
+ {sec:'The constraint', q:"What's actually capping growth right now?", o:[
+   ["Not enough appointments for the agents I already pay.",'starved'],
+   ["It flips — some months calendars, some months people.",'fragile'],
+   ["We're keeping up, but only because I'm in the middle of it.",'balanced'],
+   ["Not enough working agents to take the appointments we create.",'wasted']
+ ]}
+];
+const COPY={
+  starved:{eye:'Your constraint',name:'Starved calendars',cta:'starved calendars',
+    col:'#a97e2f',bg:'#fff8e9',bar:'#d4a853',
+    body:"You're paying producers who don't have enough appointments. More recruiting would deepen the hole. Fill the calendars you already have before you add a seat."},
+  wasted:{eye:'Your constraint',name:'Wasted leads',cta:'wasted leads',
+    col:'#c23a4b',bg:'#fdeef0',bar:'#d1495b',
+    body:"You're creating more appointments than your agents can work. More lead spend won't fix this. You need working capacity — signed agents who actually take the appointments."},
+  fragile:{eye:'Your constraint',name:'It flips week to week',cta:'keeping both rails in lockstep',
+    col:'#102a43',bg:'#eef2f6',bar:'#102a43',
+    body:"Some weeks calendars sit empty. Some weeks leads fall through. Growth still depends on you connecting the two. The machine has to move appointments and agents together."},
+  balanced:{eye:'Your read',name:'Balanced — for now',cta:'keeping both rails in lockstep',
+    col:'#0f7c7e',bg:'#e7f5f4',bar:'#159a9c',
+    body:"Supply and seats look matched right now — and that's fragile. The moment you add agents or turn up leads without the other, you tip back into starved calendars or wasted leads."}
+};
+
+let cur=0;
+let lead=null;
+const ans=new Array(Q.length).fill(-1);
 const $=id=>document.getElementById(id);
-const num=id=>Math.max(0,+$(id).value||0);
-const fmt=n=>Math.round(n).toLocaleString();
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
 
-function calc(){
-  const agents=num('agents');
-  const appts=num('appts');
-  const show=Math.min(100,num('show'));
-  const per=Math.max(1,num('cap'));
+function start(){cur=0;ans.fill(-1);show('screen-lead');}
+function restart(){cur=0;ans.fill(-1);lead=null;$('gate-form').reset();$('gate-submit').disabled=false;$('gate-submit').textContent=$('gate-submit').dataset.label;show('screen-hero');}
 
-  const demand=appts*show/100;
-  const capacity=agents*per;
-  const gap=demand-capacity;
-  const util=capacity>0?Math.round((demand/capacity)*100):0;
-
-  const max=Math.max(demand,capacity,1);
-  $('demandBar').style.width=(demand/max*100)+'%';
-  $('capBar').style.width=(capacity/max*100)+'%';
-  $('demandVal').textContent=fmt(demand);
-  $('capVal').textContent=fmt(capacity);
-
-  const gm=$('mGap');
-  gm.textContent=(gap>0?'+':'')+fmt(gap);
-  gm.className='metric-val '+(gap>capacity*0.1?'pos':(gap<-capacity*0.1?'neg':'ok'));
-  $('mGapSub').textContent=gap>0?'appts/wk fall through':(gap<0?'appts/wk of idle capacity':'well matched');
-
-  const um=$('mUtil');
-  um.textContent=util+'%';
-  um.className='metric-val '+(util>110?'pos':(util<90?'neg':'ok'));
-
-  const v=$('verdict'),eye=$('vEye'),head=$('vHead'),body=$('vBody'),plan=$('planT');
-  const fixLbl=$('mFixLbl'),fix=$('mFix'),fixSub=$('mFixSub');
-
-  if(agents===0 && appts===0){
-    v.style.borderColor='var(--border)';v.style.background='var(--bg-soft)';
-    eye.style.color='var(--slate)';eye.textContent='Your read';
-    head.style.color='var(--navy)';head.textContent='Enter your numbers above';
-    body.textContent='The read updates live as you type.';
-    fixLbl.textContent='To balance';fix.textContent='—';fix.className='metric-val';fixSub.textContent='';
-    plan.textContent='Fill in your agents and appointment volume to see where your growth is capped.';
-    return;
+function render(){
+  const item=Q[cur];
+  $('q-progress').textContent='Question '+(cur+1)+' of '+Q.length;
+  $('q-system').textContent=item.sec;
+  $('q-section').textContent=item.sec;
+  $('q-text').textContent=item.q;
+  $('q-fill').style.width=((cur)/(Q.length))*100+'%';
+  for(let i=0;i<4;i++){
+    $('opt-'+i).textContent=item.o[i][0];
+    document.querySelector('.option[data-i="'+i+'"]').classList.toggle('sel',ans[cur]===i);
   }
-
-  if(gap>capacity*0.1){
-    const overflow=gap, needAgents=Math.ceil(overflow/per);
-    paint(v,eye,head,body,'red','Capped by capacity','Wasted leads',
-      'You’re generating '+fmt(overflow)+' more appointments a week than your '+agents+' agents can work. They show up, but no one’s free to take them — so you’re paying to book appointments that fall through. More lead spend won’t fix this. You need capacity, not leads.');
-    fixLbl.textContent='Working agents to add';fix.textContent='+'+needAgents;fix.className='metric-val pos';
-    fixSub.textContent='to absorb the overflow';
-    plan.textContent='Your constraint is the recruit rail. To convert the demand you already create, you need roughly '+needAgents+' more working producer'+(needAgents===1?'':'s')+' — which is exactly why recruiting has to run in parallel with lead flow, not after it. On the call we’ll map the Attract → Book → 30-day ramp so signed names become working capacity before this overflow keeps leaking.';
-  } else if(gap<-capacity*0.1){
-    const shortfall=-gap, needAppts=Math.ceil(shortfall/(show/100||1));
-    paint(v,eye,head,body,'gold','Idle capacity','Starved calendars',
-      'Your '+agents+' agents can work '+fmt(shortfall)+' more appointments a week than your lead flow delivers. That’s payroll burning on empty calendars while producers wait. Recruiting more agents right now would deepen the hole. You need calendar fill, not headcount.');
-    fixLbl.textContent='Appointments to add';fix.textContent='+'+fmt(needAppts);fix.className='metric-val neg';
-    fixSub.textContent='booked/wk to fill agents';
-    plan.textContent='Your constraint is the calendar rail. To keep your current producers busy you need about '+fmt(needAppts)+' more booked appointments a week (at a '+show+'% show rate). On the call we’ll map compliant lead flow and speed-to-lead routing to fill those calendars first — before you add a single seat.';
-  } else {
-    paint(v,eye,head,body,'teal','Well matched','Balanced — for now',
-      'Your appointment supply and your '+agents+' agents’ capacity are within ~10% of each other. That’s the sweet spot — but it’s fragile. The moment you add agents or turn up lead spend without the other, you tip back into starved calendars or wasted leads. Growth has to move both rails together.');
-    fixLbl.textContent='Headroom';fix.textContent=util+'%';fix.className='metric-val ok';
-    fixSub.textContent='utilized — room to scale';
-    plan.textContent='You’re balanced at your current size, which makes this the right moment to build the machine that keeps both rails in sync as you scale. On the call we’ll map how to add appointments and agents in lockstep so you never re-create the forced choice at a bigger size.';
-  }
+  $('q-back').style.visibility=cur===0?'hidden':'visible';
 }
 
-function paint(v,eye,head,body,c,eyeTxt,headTxt,bodyTxt){
-  const map={red:['#c23a4b','var(--red-border)','var(--red-bg)'],
-             gold:['#a97e2f','var(--gold-border)','var(--gold-bg)'],
-             teal:['#0f7c7e','var(--teal-border)','var(--teal-bg)']};
-  const [col,bord,bg]=map[c];
-  v.style.borderColor=bord;v.style.background=bg;
-  eye.style.color=col;eye.textContent=eyeTxt;
-  head.style.color=col;head.textContent=headTxt;
-  body.textContent=bodyTxt;
+function pick(i){
+  ans[cur]=i;
+  document.querySelectorAll('.option').forEach(o=>o.classList.toggle('sel',+o.dataset.i===i));
+  $('q-fill').style.width=((cur+1)/(Q.length))*100+'%';
+  setTimeout(()=>{
+    if(cur<Q.length-1){cur++;render();}
+    else runLoading();
+  },260);
 }
+function back(){if(cur>0){cur--;render();}}
 
-['agents','appts','show','cap'].forEach(id=>$(id).addEventListener('input',calc));
-calc();
+function runLoading(){
+  show('screen-loading');
+  const msgs=['Comparing demand to seats…','Checking lead flow against headcount…','Finding the constraint…','Building your read…'];
+  let p=0,mi=0;
+  $('load-fill').style.width='0%';$('load-status').textContent=msgs[0];
+  const t=setInterval(()=>{
+    p+=Math.random()*22+10;
+    if(p>=100){p=100;clearInterval(t);setTimeout(function(){sendResultsEmail().then(showResult);},350);}
+    $('load-fill').style.width=Math.min(p,100)+'%';
+    mi=Math.min(msgs.length-1,Math.floor(p/26));$('load-status').textContent=msgs[mi];
+  },240);
+}
 
 function capacityRead(){
-  const agents=num('agents');
-  const appts=num('appts');
-  const show=Math.min(100,num('show'));
-  const per=Math.max(1,num('cap'));
-  const demand=appts*show/100;
-  const capacity=agents*per;
-  const gap=demand-capacity;
-  const util=capacity>0?Math.round((demand/capacity)*100):0;
-  return {
-    agents,appts,show,per,demand,capacity,gap,util,
-    verdict:$('vHead').textContent,
-    body:$('vBody').textContent,
-    plan:$('planT').textContent
-  };
+  const counts={starved:0,fragile:0,balanced:0,wasted:0};
+  Q.forEach(function(item,i){
+    const a=ans[i];
+    if(a>=0) counts[item.o[a][1]]++;
+  });
+  const order=['starved','wasted','fragile','balanced'];
+  let winner='balanced',best=-1;
+  order.forEach(function(k){ if(counts[k]>best){best=counts[k];winner=k;} });
+  return {winner,counts,copy:COPY[winner]};
 }
 
-async function submitLead(e){
+function submitLead(e){
   e.preventDefault();
-  const name=$('gate-name').value.trim();
-  const email=$('gate-email').value.trim();
-  const phone=$('gate-phone').value.trim();
-  const btn=$('gate-submit');
-  const err=$('gate-error');
-  const ok=$('gate-ok');
-  btn.disabled=true;btn.textContent='Sending your copy…';err.style.display='none';ok.style.display='none';
+  lead={
+    name:$('gate-name').value.trim(),
+    email:$('gate-email').value.trim(),
+    phone:$('gate-phone').value.trim()
+  };
+  cur=0;render();show('screen-q');
+}
+
+function answerLines(){
+  return Q.map(function(item,i){
+    const a=ans[i];
+    const pick=a>=0?item.o[a][0]:'(skipped)';
+    return 'Q'+(i+1)+'. '+item.q+'\nA: '+pick;
+  });
+}
+
+async function sendResultsEmail(){
+  if(!lead) return;
   const read=capacityRead();
   const lines=[
     'MEDIGARD AGENT-TO-LEAD CAPACITY READ',
     '─────────────────────────────────────',
-    'Name:  '+name,'Email: '+email,'Phone: '+phone,'',
-    'Active agents: '+read.agents,
-    'Appointments generated / wk: '+read.appts,
-    'Show rate: '+read.show+'%',
-    'Appointments one agent can work / wk: '+read.per,'',
-    'Demand (shows / wk): '+Math.round(read.demand),
-    'Capacity (appts / wk): '+Math.round(read.capacity),
-    'Gap: '+(read.gap>0?'+':'')+Math.round(read.gap),
-    'Utilization: '+read.util+'%','',
-    'Verdict: '+read.verdict,'',
-    read.body,'',
-    read.plan,'',
-    'Book the review: https://medigard.io/book'
+    'Name:  '+lead.name,'Email: '+lead.email,'Phone: '+lead.phone,'',
+    'Verdict: '+read.copy.name,'',
+    read.copy.body,'',
+    'ANSWERS',''
   ];
+  answerLines().forEach(function(line){lines.push(line,'');});
+  lines.push('Book a Growth Infrastructure Review: https://medigard.io/book');
   try{
-    const resp=await fetch('/api/send-email',{
+    await fetch('/api/send-email',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        name,email,phone,sendCopy:true,
-        subject:'Capacity Read — '+name+' | '+read.verdict,
+        name:lead.name,email:lead.email,phone:lead.phone,sendCopy:true,
+        subject:'Capacity Read — '+lead.name+' | '+read.copy.name,
         message:lines.join('\n')
       })
     });
-    if(!resp.ok) throw new Error('send failed');
-    ok.style.display='block';
-    btn.textContent=btn.dataset.label;
-    btn.disabled=false;
-  }catch(_){
-    err.style.display='block';
-    btn.disabled=false;
-    btn.textContent=btn.dataset.label;
-  }
+  }catch(_){}
+}
+
+function showResult(){
+  const read=capacityRead();
+  const copy=read.copy;
+  const hero=$('verdict-hero');
+  hero.style.background=copy.bg;
+  hero.style.borderLeftColor=copy.bar;
+  $('vh-eye').textContent=copy.eye;
+  $('vh-eye').style.color=copy.col;
+  $('vh-name').textContent=copy.name;
+  $('vh-body').textContent=copy.body;
+  $('cta-weak').textContent=copy.cta;
+  show('screen-result');
 }
 </script>
 </body>

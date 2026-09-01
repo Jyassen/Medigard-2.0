@@ -1,5 +1,6 @@
 import BookingWidget from "../../components/BookingWidget";
 import { useOfferPaths } from "../../components/offer/OfferFunnelContext";
+import OfferOptIn from "../../components/offer/OfferOptIn";
 import VslPlayer from "../../components/VslPlayer";
 import {
   BOOKING_URLS,
@@ -28,6 +29,7 @@ export default function OfferHomeV2() {
         <div className="vsl-slot" id="vsl">
           <VslPlayer
             title="See how the Medigard Growth System works"
+            titleClassName="text-center md:text-left"
             src={VSL_VIDEO}
             wistiaId={GROWTH_VSL_WISTIA_ID || undefined}
             wistiaAspect={GROWTH_VSL_ASPECT}
@@ -216,6 +218,8 @@ export default function OfferHomeV2() {
           </a>
         </div>
       </section>
+
+      <OfferOptIn />
     </main>
   );
 }

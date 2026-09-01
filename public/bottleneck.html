@@ -142,6 +142,23 @@ a.start-btn{text-decoration:none}
     <p class="disclaimer">Takes about 2 minutes · Nothing to install · We'll email you a copy of your read</p>
   </div>
 
+  <!-- LEAD GATE -->
+  <div class="screen" id="screen-lead">
+    <div class="lead-gate">
+      <div class="result-kicker">Before the questions</div>
+      <h2 class="gate-h">Where should we send your read?</h2>
+      <p class="gate-sub">Name, work email, and phone — then six questions. We'll email you a copy and you can book a Growth Infrastructure Review when you're done.</p>
+      <form id="gate-form" class="gate-form" onsubmit="submitLead(event)">
+        <input type="text" id="gate-name" placeholder="Full name" required autocomplete="name">
+        <input type="email" id="gate-email" placeholder="Work email" required autocomplete="email">
+        <input type="tel" id="gate-phone" placeholder="Phone number" required autocomplete="tel">
+        <button type="submit" class="start-btn" id="gate-submit" data-label="Continue to the questions →">Continue to the questions →</button>
+        <p class="gate-error" id="gate-error">Something went wrong — please try again.</p>
+      </form>
+      <p class="disclaimer">We'll send this read to your inbox. No spam.</p>
+    </div>
+  </div>
+
   <!-- QUESTIONS -->
   <div class="screen" id="screen-q">
     <div class="progress-header">
@@ -171,23 +188,6 @@ a.start-btn{text-decoration:none}
       <div class="loading-label">Finding your bottleneck…</div>
       <div class="loading-track"><div class="loading-fill" id="load-fill"></div></div>
       <div class="loading-status" id="load-status">Tracing both rails end to end…</div>
-    </div>
-  </div>
-
-  <!-- LEAD GATE -->
-  <div class="screen" id="screen-lead">
-    <div class="lead-gate">
-      <div class="result-kicker">Your results are ready</div>
-      <h2 class="gate-h">We'll email you a copy.</h2>
-      <p class="gate-sub">Enter your info to view your bottleneck map and get a copy in your inbox.</p>
-      <form id="gate-form" class="gate-form" onsubmit="submitLead(event)">
-        <input type="text" id="gate-name" placeholder="Full name" required autocomplete="name">
-        <input type="email" id="gate-email" placeholder="Work email" required autocomplete="email">
-        <input type="tel" id="gate-phone" placeholder="Phone number" required autocomplete="tel">
-        <button type="submit" class="start-btn" id="gate-submit" data-label="View my map →">View my map →</button>
-        <p class="gate-error" id="gate-error">Something went wrong — please try again.</p>
-      </form>
-      <p class="disclaimer">We'll send this read to your inbox. No spam.</p>
     </div>
   </div>
 
@@ -231,7 +231,7 @@ a.start-btn{text-decoration:none}
     <div class="cta">
       <div class="cta-h">Bring this to your Growth Infrastructure Review</div>
       <div class="cta-t">We'll take your bottleneck — <b><span id="cta-stage">this stage</span></b> — and map exactly what it takes to close it, plus keep the other rail paced so you don't just move the problem. Come with one idle agent calendar and one recruit who signed but never launched.</div>
-      <a class="start-btn book-cta" href="/book">Book your review →</a>
+      <a class="start-btn book-cta" href="/book">Book a Growth Infrastructure Review →</a>
     </div>
     <button class="restart" onclick="restart()">↺ Start over</button>
   </div>
@@ -291,11 +291,12 @@ const STATUS_LABEL={strong:'Strong',leak:'Leaking',owner:'Runs on you',broken:'B
 const RANK={broken:0,leak:1,owner:1,strong:3};
 
 let cur=0;
+let lead=null;
 const ans=new Array(STAGES.length).fill(null);
 const $=id=>document.getElementById(id);
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
-function start(){cur=0;render();show('screen-q');}
-function restart(){cur=0;ans.fill(null);render();show('screen-hero');}
+function start(){cur=0;ans.fill(null);show('screen-lead');}
+function restart(){cur=0;ans.fill(null);lead=null;$('gate-form').reset();$('gate-submit').disabled=false;$('gate-submit').textContent=$('gate-submit').dataset.label;show('screen-hero');}
 
 function render(){
   const item=STAGES[cur];
@@ -324,7 +325,7 @@ function runLoading(){
   let p=0;$('load-fill').style.width='0%';$('load-status').textContent=msgs[0];
   const t=setInterval(()=>{
     p+=Math.random()*22+10;
-    if(p>=100){p=100;clearInterval(t);setTimeout(function(){show('screen-lead');},350);}
+    if(p>=100){p=100;clearInterval(t);setTimeout(function(){sendResultsEmail().then(showResult);},350);}
     $('load-fill').style.width=Math.min(p,100)+'%';
     $('load-status').textContent=msgs[Math.min(msgs.length-1,Math.floor(p/26))];
   },240);
@@ -344,35 +345,48 @@ function bottleneckRead(){
   };
 }
 
-async function submitLead(e){
+function submitLead(e){
   e.preventDefault();
-  const name=$('gate-name').value.trim();
-  const email=$('gate-email').value.trim();
-  const phone=$('gate-phone').value.trim();
-  const btn=$('gate-submit');
-  const err=$('gate-error');
-  btn.disabled=true;btn.textContent='Sending your copy…';err.style.display='none';
+  lead={
+    name:$('gate-name').value.trim(),
+    email:$('gate-email').value.trim(),
+    phone:$('gate-phone').value.trim()
+  };
+  cur=0;render();show('screen-q');
+}
+
+function answerLines(){
+  return STAGES.map(function(item,i){
+    const a=ans[i];
+    const pick=a!=null?item.o[a][0]:'(skipped)';
+    return 'Q'+(i+1)+'. '+item.q+'\nA: '+pick;
+  });
+}
+
+async function sendResultsEmail(){
+  if(!lead) return;
   const read=bottleneckRead();
   const lines=[
     'MEDIGARD GROWTH BOTTLENECK MAP',
     '─────────────────────────────────────',
-    'Name:  '+name,'Email: '+email,'Phone: '+phone,'',
+    'Name:  '+lead.name,'Email: '+lead.email,'Phone: '+lead.phone,'',
     'Bottleneck: '+read.headline,'',
     read.why,'','STAGE READ'
   ].concat(read.rows);
-  lines.push('','Book the review: https://medigard.io/book');
+  lines.push('','ANSWERS','');
+  answerLines().forEach(function(line){lines.push(line,'');});
+  lines.push('Book a Growth Infrastructure Review: https://medigard.io/book');
   try{
     await fetch('/api/send-email',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        name,email,phone,sendCopy:true,
-        subject:'Bottleneck Map — '+name+' | '+read.headline,
+        name:lead.name,email:lead.email,phone:lead.phone,sendCopy:true,
+        subject:'Bottleneck Map — '+lead.name+' | '+read.headline,
         message:lines.join('\n')
       })
     });
   }catch(_){}
-  showResult();
 }
 
 function showResult(){

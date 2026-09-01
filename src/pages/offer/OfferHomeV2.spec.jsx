@@ -75,6 +75,20 @@ describe("OfferHomeV2", () => {
     expect(
       screen.queryByRole("link", { name: /Open agency review calendar/i }),
     ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", {
+        name: "See how the Medigard Growth System works",
+      }),
+    ).toHaveClass("text-center", "md:text-left");
+    const ctaBand = container.querySelector(".cta-band");
+    const optIn = container.querySelector("#opt-in");
+    expect(ctaBand.nextElementSibling).toBe(optIn);
+    const optInForm = screen.getByTitle(/Opt-in Form/);
+    expect(optInForm).toHaveAttribute(
+      "src",
+      "https://api.leadconnectorhq.com/widget/form/Wwb6Zz1dHUZZ5V5ugbc9",
+    );
+    expect(optInForm).toHaveAttribute("data-form-id", "Wwb6Zz1dHUZZ5V5ugbc9");
   }, 15000);
 
   test("keeps the /offer/v2 URL as the same homepage", () => {

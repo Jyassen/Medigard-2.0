@@ -21,8 +21,12 @@ describe("BookingWidget", () => {
       "https://example.com/calendar?source=launch",
     );
     expect(calendar).toHaveAttribute("allow", "payment");
-    expect(calendar).toHaveClass("!h-[700px]");
-    expect(calendar).not.toHaveClass("min-h-[1100px]");
+    expect(calendar).not.toHaveAttribute("loading", "lazy");
+    expect(calendar).not.toHaveAttribute("scrolling", "no");
+    expect(calendar.parentElement).toHaveClass("ghl-booking");
+    expect(calendar.parentElement.className).not.toMatch(/overflow-hidden/);
+    expect(calendar.style.minHeight).toBe("700px");
+    expect(calendar).toHaveAttribute("id", "calendar");
   });
 
   test("sends a completed GHL booking to the funnel thank-you page", () => {

@@ -8,17 +8,25 @@ const LIVE_ASSETS = [
 ];
 
 describe("live growth assets", () => {
-  test("each tool collects contact info, emails a copy of the results, and books a review", () => {
+  test("each tool captures the lead first, emails their answers, and books a Growth Infrastructure Review", () => {
     expect(
       LIVE_ASSETS.map(([name, path]) => {
         const html = readFileSync(path, "utf8");
+        const leadAt = html.indexOf('id="screen-lead"');
+        const questionsAt = html.indexOf('id="screen-q"');
         return {
           name,
           hasName: html.includes('id="gate-name"'),
           hasEmail: html.includes('id="gate-email"'),
           hasPhone: html.includes('id="gate-phone"'),
+          captureBeforeQuestions: leadAt !== -1 && questionsAt !== -1 && leadAt < questionsAt,
+          startOpensCapture: /function start\(\)\{[^}]*show\('screen-lead'\)/.test(html),
+          emailsAnswers: html.includes("ANSWERS"),
           sendsCopy: html.includes("/api/send-email"),
-          booksReview: /href="\/book/.test(html),
+          booksReview:
+            /href="\/book/.test(html) &&
+            html.includes("Book a Growth Infrastructure Review"),
+          isQuestionFlow: html.includes('id="screen-q"') && html.includes('class="option"'),
         };
       }),
     ).toEqual(
@@ -27,8 +35,12 @@ describe("live growth assets", () => {
         hasName: true,
         hasEmail: true,
         hasPhone: true,
+        captureBeforeQuestions: true,
+        startOpensCapture: true,
+        emailsAnswers: true,
         sendsCopy: true,
         booksReview: true,
+        isQuestionFlow: true,
       })),
     );
   });

@@ -7,6 +7,15 @@ import {
 
 const GHL_FORM_EMBED_SRC = "https://link.msgsndr.com/js/form_embed.js";
 
+function bookingFrameId(src) {
+  try {
+    const parts = new URL(src).pathname.split("/").filter(Boolean);
+    return parts[parts.length - 1] || "ghl-booking-frame";
+  } catch {
+    return "ghl-booking-frame";
+  }
+}
+
 export default function BookingWidget({
   src,
   title,
@@ -40,18 +49,15 @@ export default function BookingWidget({
   }, [navigate, thankYouTo]);
 
   return (
-    <div
-      className={`relative min-h-[700px] overflow-hidden rounded-3xl bg-white ${className}`}
-    >
+    <div className={`ghl-booking relative w-full bg-white ${className}`}>
       <iframe
         src={src}
+        id={bookingFrameId(src)}
         title={title}
         allow="payment"
-        scrolling="no"
-        className="block !h-[700px] w-full border-0"
-        loading="lazy"
+        className="block w-full border-0"
         referrerPolicy="strict-origin-when-cross-origin"
-        style={{ overflow: "hidden" }}
+        style={{ minHeight: "700px", width: "100%", border: "none" }}
       />
     </div>
   );
